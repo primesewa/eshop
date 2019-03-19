@@ -14,9 +14,10 @@ class CreateMaincategoriesTable extends Migration
     public function up()
     {
         Schema::create('maincategories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('main_category');
             $table->integer('position')->unique();
+            $table->boolean('confirmed')->default(0);
             $table->timestamps();
         });
     }

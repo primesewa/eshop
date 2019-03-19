@@ -21,6 +21,15 @@ Route::get('/', function () {
 });
 Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
     route::any('/', 'DashboardController@index')->name('dashboard');
+    route::get('/banner', 'DashboardController@banner')->name('banner');
+    route::post('/createbanner', 'DashboardController@createbanner')->name('banner.store');
+    route::delete('/dropbanner/{id}', 'DashboardController@dropbanner')->name('banner.drop');
+    route::get('/homesection', 'DashboardController@homesection')->name('section');//user home title and description for begining, middle and end
+    route::post('/createsection', 'DashboardController@createsection')->name('section.store');
+    route::get('/section', 'DashboardController@showsection')->name('section.show');
+    route::get('/editsection/{id}', 'DashboardController@editsection')->name('section.edit');
+    route::put('/updatesection/{id}', 'DashboardController@updatesection')->name('section.update');
+    route::delete('/dropsection/{id}', 'DashboardController@dropsection')->name('section.destroy');
     route::resource('/books', 'BookController');
     route::resource('/admins', 'UserController');
     route::get('/add/maincategory', 'CategoryController@get_main_category')->name('main.category');
@@ -37,5 +46,13 @@ Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
 
 
 
+
+});
+
+Route::group(['namespace'=> 'Frontend', 'prefix'=>'/'], function(){
+    route::any('/', 'PageController@index');
+    route::get('/{slug}', 'PageController@index');
+    route::get('/bookbycategory/{id}', 'PageController@getbookorderbycate');
+    route::get('/{slug}/{id}', 'PageController@index');
 
 });

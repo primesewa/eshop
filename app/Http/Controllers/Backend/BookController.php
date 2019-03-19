@@ -81,7 +81,6 @@ class BookController extends Controller
             'file' => 'file|required',
             'file.*' =>'mimes:doc,pdf,docx,zip',
         ]);
-
         /**
          * @param $validatedData
          */
@@ -141,6 +140,7 @@ class BookController extends Controller
         $subcategory=$this->subcategory->all();
         $minicategory=$this->minicategory->all();
 
+
         return view('backend.pages.dashboard.products.editbooks',compact('book','maincategory','subcategory','minicategory'));
 
     }
@@ -158,7 +158,9 @@ class BookController extends Controller
             'Title' => 'required|min:3|max:50',
             'Author' => 'required|min:3|max:50',
             'Description' => 'min:3|max:200',
-            'Categories' => 'required|min:3|max:50',
+            'main_id' => 'required|min:1|max:50',
+            'sub_id' => 'required|min:1|max:50',
+            'mini_id' => 'required|min:1|max:50',
             'Main_price' => 'required|min:2|max:7|alpha_num',
             'Discount_price' => 'required|min:2|max:7|alpha_num',
             'Image' =>'image',

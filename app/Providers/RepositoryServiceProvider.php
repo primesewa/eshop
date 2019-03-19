@@ -19,6 +19,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->maincategoryrepo();
         $this->subcategoryrepo();
         $this->minicategoryrepo();
+        $this->homesection();
 
 
     }
@@ -58,8 +59,13 @@ class RepositoryServiceProvider extends ServiceProvider
 
     }
     public function minicategoryrepo()
+{
+    return $this->app->bind('App\Repositories\MinicategoryInterface','App\Repositories\MinicategoryRepo');
+
+}
+    public function homesection()
     {
-        return $this->app->bind('App\Repositories\MinicategoryInterface','App\Repositories\MinicategoryRepo');
+        return $this->app->bind('App\Repositories\HomesectionInterface','App\Repositories\HomesectionRepo');
 
     }
 }

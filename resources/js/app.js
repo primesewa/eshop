@@ -28,7 +28,32 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import Fetch from './core/Fetch';
+import axios from 'axios';
+import vue from 'vue';
+window.axios = axios;
+window.Fetch = Fetch;
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data() {
+        return {
+
+            fetch : new Fetch({}),
+
+        }    },
+    created()
+    {
+
+        this.getdata();
+    },
+    methods:
+        {
+            getdata(id) {
+
+                this.fetch.Get('get', 'http://127.0.0.1:8000/bookbycategory/'+id);
+
+            },
+        }
+
 });

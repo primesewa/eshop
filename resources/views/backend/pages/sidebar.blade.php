@@ -59,6 +59,20 @@
 
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                    <span>Home Section</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+
+                    <a class="dropdown-item" href="{{route('banner')}}">Add Banner</a>
+                    <a class="dropdown-item" href="{{route('section')}}">Add Section</a>
+                    <a class="dropdown-item" href="{{route('section.show')}}">Show Section</a>
+
+
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>

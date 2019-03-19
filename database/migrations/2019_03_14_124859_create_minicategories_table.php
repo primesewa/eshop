@@ -14,9 +14,10 @@ class CreateMinicategoriesTable extends Migration
     public function up()
     {
         Schema::create('minicategories', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->Integer('sub_id');
+            $table->bigIncrements('id')->unsigned();
+            $table->Integer('sub_id')->unsigned();
             $table->string('mini_category');
+            $table->boolean('confirmed')->default(0);
             $table->timestamps();
         });
     }

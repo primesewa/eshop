@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 class Admin extends Model
 {
+    protected $table ='admins';
     protected $fillable = [
         'Username','First_name','Last_name','Nick_name','Email','Password','Role','Image',
     ];

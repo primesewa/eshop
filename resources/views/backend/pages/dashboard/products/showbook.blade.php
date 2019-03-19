@@ -39,7 +39,7 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Author</th>
-                            <th>Categories</th>
+                            <th>Mini Category</th>
                             <th>Main price</th>
                             <th>Discount price</th>
                             <th>Image</th>
@@ -56,7 +56,7 @@
                             <td>{{$book->Title}}</td>
                             <td>{{$book->Description}}</td>
                             <td>{{$book->Author}}</td>
-                            <td>{{$book->Categories}}</td>
+                            <td>{{$book->mini_id}}</td>
                             <td>{{$book->Main_price}}</td>
                             <td>{{$book->Discount_price}}</td>
                             <td> <img src="/storage/image/{{$book->Image}}" style="width: 50px; hight:10px;"></td>
@@ -67,7 +67,7 @@
                                     <form method="post" action="{{route('books.destroy',[$book->id])}}">
                                         @csrf
                                         <input name ="_method" type="hidden" value="DELETE">
-                                        <button class="btn btn-danger"><span><i class="fas fa-trash-alt"></i></span></button>
+                                        <button onclick="return confirm('Are you sure want to delete this product?')" class="btn btn-danger"><span><i class="fas fa-trash-alt"></i></span></button>
                                     </form>
                                 </td>
 
@@ -77,7 +77,7 @@
                         </tbody>
                         @endforeach
                     </table>
-                {{$books->render()}}
+
                 </div>
 
 

@@ -14,8 +14,9 @@ class CreateSubcategoriesTable extends Migration
     public function up()
     {
         Schema::create('subcategories', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->Integer('main_id');
+            $table->bigIncrements('id')->unsigned();
+            $table->Integer('main_id')->unsigned();
+            $table->boolean('confirmed')->default(0);
             $table->string('sub_category');
             $table->timestamps();
         });

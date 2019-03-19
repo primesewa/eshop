@@ -139,7 +139,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label >Description</label>
-                                    <textarea rows="10" cols="50" type="text" class="form-control  {{ $errors->has('Description') ? ' is-invalid' : '' }}" placeholder="Description" name="Description"  ></textarea>
+                                    <textarea rows="10" cols="50" type="text" class="form-control  {{ $errors->has('Description') ? ' is-invalid' : '' }}" placeholder="Description" name="Description"  >{{$book->Description}}</textarea>
                                     @if($errors->has('Description'))
                                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('Description') }}</strong>

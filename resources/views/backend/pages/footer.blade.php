@@ -37,10 +37,8 @@
         </div>
     </div>
 </div>
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
 <script src="{{url('js/admin.js')}}"></script>
-
-
 @yield('script')
 </body>
 

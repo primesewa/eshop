@@ -8,9 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Dashboard</title>
+    @yield('style')
     <link href="{{url('css/admin.css')}}" rel="stylesheet">
 
-    @yield('style')
+
 </head>
 
 <body id="page-top">

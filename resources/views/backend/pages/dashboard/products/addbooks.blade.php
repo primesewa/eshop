@@ -146,6 +146,8 @@
                             <div class="form-group">
                                 <label >Upload image</label>
                                 <input type="file" class="form-control-file  {{ $errors->has('Image') ? ' is-invalid' : '' }}" name="Image">
+
+
                                 @if($errors->has('Image'))
                                     <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('Image') }}</strong>
@@ -165,7 +167,7 @@
                             </div>
                         </div>
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                     </div>
@@ -180,6 +182,8 @@
 @section('script')
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script  type="text/javascript">
+
+
 
         $.ajaxSetup({
 
@@ -203,7 +207,7 @@
                                 $.each(data, function(key, element) {
 
                                     $('#model').append("<option value='" +element.id +"'>" + element.sub_category + "</option>");
-                                    $('#model').prepend("<option value=''>Select</option>");
+
 
                                 });
                                 show2();
@@ -224,7 +228,7 @@
                                 $.each(data, function (key, element) {
 
                                     $('#mini').append("<option value='" + element.id + "'>" + element.mini_category + "</option>");
-                                    $('#mini').prepend("<option value=''>Select</option>");
+
                                 });
 
                             }

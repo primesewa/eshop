@@ -7,7 +7,7 @@
  */
 namespace App\Repositories;
 use App\subcategory;
-use DB;
+
 class SubcategoryRepo extends Repository implements SubcategoryInterface
 {
     protected $model;

@@ -14,6 +14,10 @@ class MaincategoryRepo extends Repository implements MaincategoryInterface
     {
         $this->model = $model;
     }
+    public  function all()
+    {
+       return $this->model->take(4)->get();
+    }
 
 
 }

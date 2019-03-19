@@ -9,10 +9,13 @@ namespace App\Repositories;
 
 interface BookInterface{
     public  function all();
+    public  function getsection();
     public function create(array $data);
     public function update(array  $data, $id);
     public  function delete($id);
     public function find($id);
     public function show($id);
+    public function findbycategory($id);
     public  function paginate($perpage =10, $column= array('*'));
+
 }
