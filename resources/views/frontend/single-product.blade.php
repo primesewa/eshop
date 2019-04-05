@@ -1,25 +1,25 @@
 ﻿@extends('frontend.layouts.layout')
 @section('content')
-        <div class="ht__bradcaump__area bg-image--4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="bradcaump__inner text-center">
-                        	<h2 class="bradcaump-title">Shop Single</h2>
-                            <nav class="bradcaump-content">
-                              <a class="breadcrumb_item" href="index.html">Home</a>
-                              <span class="brd-separetor">/</span>
-                              <span class="breadcrumb_item active">Shop Single</span>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Bradcaump area -->
-        <!-- Start main Content -->
+
         <div class="maincontent bg--white pt--80 pb--55">
         	<div class="container">
+                <div class="col-md-12">
+                    @if(session('success'))
+
+                        <div class="alert alert-success">
+                            {{session('success')}}
+                        </div>
+
+                    @endif
+
+                    @if(session('error'))
+
+                        <div class="alert alert-danger">
+                            {{session('error')}}
+                        </div>
+
+                    @endif
+                </div>
         		<div class="row">
         			<div class="col-lg-9 col-12">
         				<div class="wn__single__product">
@@ -27,20 +27,20 @@
         						<div class="col-lg-6 col-12">
         							<div class="wn__fotorama__wrapper">
 	        							<div class="fotorama wn__fotorama__action" data-nav="thumbs">
-		        							  <a href="1.jpg"><img src="assets/images/product/1.jpg" alt=""></a>
-		        							  <a href="2.jpg"><img src="assets/images/product/2.jpg" alt=""></a>
-		        							  <a href="3.jpg"><img src="assets/images/product/3.jpg" alt=""></a>
-		        							  <a href="4.jpg"><img src="assets/images/product/4.jpg" alt=""></a>
-		        							  <a href="5.jpg"><img src="assets/images/product/5.jpg" alt=""></a>
-		        							  <a href="6.jpg"><img src="assets/images/product/6.jpg" alt=""></a>
-		        							  <a href="7.jpg"><img src="assets/images/product/7.jpg" alt=""></a>
-		        							  <a href="8.jpg"><img src="assets/images/product/8.jpg" alt=""></a>
+		        							  <a href="1.jpg"><img src="/storage/image/{{$book->Image}}" alt="" height="400px;" width="300px;"></a>
+		        							  {{--<a href="2.jpg"><img src="assets/images/product/2.jpg" alt=""></a>--}}
+		        							  {{--<a href="3.jpg"><img src="assets/images/product/3.jpg" alt=""></a>--}}
+		        							  {{--<a href="4.jpg"><img src="assets/images/product/4.jpg" alt=""></a>--}}
+		        							  {{--<a href="5.jpg"><img src="assets/images/product/5.jpg" alt=""></a>--}}
+		        							  {{--<a href="6.jpg"><img src="assets/images/product/6.jpg" alt=""></a>--}}
+		        							  {{--<a href="7.jpg"><img src="assets/images/product/7.jpg" alt=""></a>--}}
+		        							  {{--<a href="8.jpg"><img src="assets/images/product/8.jpg" alt=""></a>--}}
 	        							</div>
         							</div>
         						</div>
         						<div class="col-lg-6 col-12">
         							<div class="product__info__main">
-        								<h1>Chaz Kangeroo Hoodie</h1>
+        								<h1>{{$book->Title}}</h1>
         								<div class="product-reviews-summary d-flex">
         									<ul class="rating-summary d-flex">
     											<li><i class="zmdi zmdi-star-outline"></i></li>
@@ -51,54 +51,85 @@
         									</ul>
         								</div>
         								<div class="price-box">
-        									<span>$52.00</span>
+        									<span>{{$book->currency}} {{$book->Discount_price}}</span>
         								</div>
 										<div class="product__overview">
-        									<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.</p>
-        									<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. </p>
+        									<p>{{$book->currency}} {{$book->Description}}</p>
         								</div>
         								<div class="box-tocart d-flex">
-        									<span>Qty</span>
-        									<input id="qty" class="input-text qty" name="qty" min="1" value="1" title="Qty" type="number">
+
         									<div class="addtocart__actions">
-        										<button class="tocart" type="submit" title="Add to Cart">Add to Cart</button>
+                                                <form action="{{route('add.library',[$book->id])}}" method="post">
+                                                    <input name ="_method" type="hidden" value="get">
+                                                            @csrf
+                                                    <button class="tocart" type="submit">Add to Library</button>
+                                                </form>
         									</div>
-											<div class="product-addto-links clearfix">
-												<a class="wishlist" href="#"></a>
-												<a class="compare" href="#"></a>
-											</div>
         								</div>
 										<div class="product_meta">
 											<span class="posted_in">Categories:
-												<a href="#">Adventure</a>,
-												<a href="#">Kids' Music</a>
+												{{$book->maincategory->main_category}}/{{$book->subcategory->sub_category}}/{{$book->minicategory->mini_category}}
 											</span>
 										</div>
-										<div class="product-share">
-											<ul>
-												<li class="categories-title">Share :</li>
-												<li>
-													<a href="#">
-														<i class="icon-social-twitter icons"></i>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<i class="icon-social-tumblr icons"></i>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<i class="icon-social-facebook icons"></i>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<i class="icon-social-linkedin icons"></i>
-													</a>
-												</li>
-											</ul>
-										</div>
+                                        <br>
+                                        <div class="box-tocart d-flex">
+
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                Show Demo
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content" id="model">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Demo</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </div>
+                                                        <center>
+                                                        <div id="magazine">
+                                                            <div class="hard" style="background-color: darkorange">
+                                                                Popular Quotes
+                                                            </div>
+                                                            <div class="hard" style="background-color: greenyellow"></div>
+                                                            <div style="background-color: lightgrey">
+                                                                “Don't cry because it's over, smile because it happened.”
+                                                                ― Dr. Seuss
+                                                            </div>
+                                                            <div style="background-color: lightgrey">
+                                                                “I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best.”
+                                                                ― Marilyn Monroe
+
+                                                            </div>
+                                                            <div style="background-color: lightgrey">
+                                                                “Be yourself; everyone else is already taken.”
+                                                                ― Oscar Wilde
+
+                                                            </div>
+                                                            <div style="background-color: lightgrey">
+                                                                “So many books, so little time.”
+                                                                ― Frank Zappa
+                                                            </div>
+                                                            <div style="background-color: lightgrey">
+                                                                “A room without books is like a body without a soul.”
+                                                                ― Marcus Tullius Cicero
+                                                            </div>
+                                                            <div style="background-color: lightgrey">
+                                                                “Always forgive your enemies; nothing annoys them so much.”
+                                                                ― Oscar Wilde
+                                                            </div>
+                                                            <div class="hard"  style="background-color: greenyellow"></div>
+                                                            <div class="hard" style="background-color: darkorange"></div>
+                                                        </div>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
         							</div>
         						</div>
         					</div>
@@ -112,12 +143,7 @@
 	                        	<!-- Start Single Tab Content -->
 	                        	<div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
 									<div class="description__attribute">
-										<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.</p>
-										<ul>
-											<li>• Two-tone gray heather hoodie.</li>
-											<li>• Drawstring-adjustable hood. </li>
-											<li>• Machine wash/dry.</li>
-										</ul>
+                                        <p>{{$book->Description}}</p>
 									</div>
 	                        	</div>
 	                        	<!-- End Single Tab Content -->
@@ -226,544 +252,99 @@
 	                        	<!-- End Single Tab Content -->
 	                        </div>
         				</div>
+                        @if(count($relatedbooks)>0)
 						<div class="wn__related__product pt--80 pb--50">
 							<div class="section__title text-center">
 								<h2 class="title__be--2">Related Products</h2>
 							</div>
 							<div class="row mt--60">
+
 								<div class="productcategory__slide--2 arrows_style owl-carousel owl-theme">
-									<!-- Start Single Product -->
+                                    @foreach($relatedbooks as $related)
 									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
 										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="assets/images/books/1.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="assets/images/books/2.jpg" alt="product image"></a>
+											<a class="first__img" href="{{route('book.show',[$related->id])}}"><img src="/storage/image/{{$related->Image}}" alt="product image"></a>
 											<div class="hot__box">
-												<span class="hot-label">BEST SALLER</span>
+												<span class="hot-label">{{$related->feature}}</span>
 											</div>
 										</div>
 										<div class="product__content content--center">
-											<h4><a href="/single-product">robin parrish</a></h4>
+											<h4><a href="/single-product">{{$related->Title}}</a></h4>
 											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$35.00</li>
+												<li>{{$book->currency}}{{$related->Discount_price}}</li>
+												<li class="old_prize">{{$book->currency}}{{$related->Main_price}}</li>
 											</ul>
 											<div class="action">
 												<div class="actions_inner">
 													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
+														<li><a class="cart" href="{{route('add.library',[$related->id])}}"><i class="bi bi-shopping-bag4"></i></a></li>
 													</ul>
 												</div>
 											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
 										</div>
 									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/3.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/4.jpg" alt="product image"></a>
-											<div class="hot__box color--2">
-												<span class="hot-label">HOT</span>
-											</div>
-										</div>
-										<div class="product__content content--center">
-											<h4><a href="/single-product">The Remainng</a></h4>
-											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="assets/images/books/7.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="assets/images/books/8.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">HOT</span>
-											</div>
-										</div>
-										<div class="product__content content--center">
-											<h4><a href="/single-product">Lando</a></h4>
-											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$50.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="assets/images/books/9.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="assets/images/books/10.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">HOT</span>
-											</div>
-										</div>
-										<div class="product__content content--center">
-											<h4><a href="/single-product">Doctor Wldo</a></h4>
-											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="assets/images/books/11.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="assets/images/books/2.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">BEST SALER</span>
-											</div>
-										</div>
-										<div class="product__content content--center content--center">
-											<h4><a href="/single-product">Animals Life</a></h4>
-											<ul class="prize d-flex">
-												<li>$50.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/1.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/6.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">BEST SALER</span>
-											</div>
-										</div>
-										<div class="product__content content--center content--center">
-											<h4><a href="/single-product">Olio Madu</a></h4>
-											<ul class="prize d-flex">
-												<li>$50.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
+                                    @endforeach
 								</div>
 							</div>
+
+
 						</div>
-						<div class="wn__related__product">
-							<div class="section__title text-center">
-								<h2 class="title__be--2">upsell products</h2>
-							</div>
-							<div class="row mt--60">
-								<div class="productcategory__slide--2 arrows_style owl-carousel owl-theme">
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/1.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/2.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">BEST SALLER</span>
-											</div>
-										</div>
-										<div class="product__content content--center">
-											<h4><a href="/single-product">robin parrish</a></h4>
-											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/3.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/4.jpg" alt="product image"></a>
-											<div class="hot__box color--2">
-												<span class="hot-label">HOT</span>
-											</div>
-										</div>
-										<div class="product__content content--center">
-											<h4><a href="/single-product">The Remainng</a></h4>
-											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/7.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/8.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">HOT</span>
-											</div>
-										</div>
-										<div class="product__content content--center">
-											<h4><a href="/single-product">Lando</a></h4>
-											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$50.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/9.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/10.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">HOT</span>
-											</div>
-										</div>
-										<div class="product__content content--center">
-											<h4><a href="/single-product">Doctor Wldo</a></h4>
-											<ul class="prize d-flex">
-												<li>$35.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/11.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/2.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">BEST SALER</span>
-											</div>
-										</div>
-										<div class="product__content content--center content--center">
-											<h4><a href="/single-product">Animals Life</a></h4>
-											<ul class="prize d-flex">
-												<li>$50.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-									<!-- Start Single Product -->
-									<div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-										<div class="product__thumb">
-											<a class="first__img" href="/single-product"><img src="images/books/1.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="/single-product"><img src="images/books/6.jpg" alt="product image"></a>
-											<div class="hot__box">
-												<span class="hot-label">BEST SALER</span>
-											</div>
-										</div>
-										<div class="product__content content--center content--center">
-											<h4><a href="/single-product">Olio Madu</a></h4>
-											<ul class="prize d-flex">
-												<li>$50.00</li>
-												<li class="old_prize">$35.00</li>
-											</ul>
-											<div class="action">
-												<div class="actions_inner">
-													<ul class="add_to_links">
-														<li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-														<li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-														<li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-														<li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product__hover--content">
-												<ul class="rating d-flex">
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li class="on"><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-													<li><i class="fa fa-star-o"></i></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<!-- Start Single Product -->
-								</div>
-							</div>
-						</div>
+                        @endif
+
         			</div>
         			<div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
         				<div class="shop__sidebar">
         					<aside class="wedget__categories poroduct--cat">
         						<h3 class="wedget__title">Product Categories</h3>
         						<ul>
-        							<li><a href="#">Biography <span>(3)</span></a></li>
-        							<li><a href="#">Business <span>(4)</span></a></li>
-        							<li><a href="#">Cookbooks <span>(6)</span></a></li>
-        							<li><a href="#">Health & Fitness <span>(7)</span></a></li>
-        							<li><a href="#">History <span>(8)</span></a></li>
-        							<li><a href="#">Mystery <span>(9)</span></a></li>
-        							<li><a href="#">Inspiration <span>(13)</span></a></li>
-        							<li><a href="#">Romance <span>(20)</span></a></li>
-        							<li><a href="#">Fiction/Fantasy <span>(22)</span></a></li>
-        							<li><a href="#">Self-Improvement <span>(13)</span></a></li>
-        							<li><a href="#">Humor Books <span>(17)</span></a></li>
-        							<li><a href="#">Harry Potter <span>(20)</span></a></li>
-        							<li><a href="#">Land of Stories <span>(34)</span></a></li>
-        							<li><a href="#">Kids' Music <span>(60)</span></a></li>
-        							<li><a href="#">Toys & Games <span>(3)</span></a></li>
-        							<li><a href="#">hoodies <span>(3)</span></a></li>
+                                    @foreach($categorylist as $cat)
+                                        <li><a href="{{route('get.maincategorys',[$cat->id])}}">{{$cat->main_category}} <span>{{$cat->c}}</span></a></li>
+                                    @endforeach
         						</ul>
         					</aside>
-        					<aside class="wedget__categories pro--range">
-        						<h3 class="wedget__title">Filter by price</h3>
-        						<div class="content-shopby">
-        						    <div class="price_filter s-filter clear">
-        						        <form action="#" method="GET">
-        						            <div id="slider-range"></div>
-        						            <div class="slider__range--output">
-        						                <div class="price__output--wrap">
-        						                    <div class="price--output">
-        						                        <span>Price :</span><input type="text" id="amount" readonly="">
-        						                    </div>
-        						                    <div class="price--filter">
-        						                        <a href="#">Filter</a>
-        						                    </div>
-        						                </div>
-        						            </div>
-        						        </form>
-        						    </div>
-        						</div>
-        					</aside>
-        					<aside class="wedget__categories poroduct--compare">
-        						<h3 class="wedget__title">Compare</h3>
-        						<ul>
-        							<li><a href="#">x</a><a href="#">Condimentum posuere</a></li>
-        							<li><a href="#">x</a><a href="#">Condimentum posuere</a></li>
-        							<li><a href="#">x</a><a href="#">Dignissim venenatis</a></li>
-        						</ul>
-        					</aside>
+        					{{--<aside class="wedget__categories pro--range">--}}
+        						{{--<h3 class="wedget__title">Filter by price</h3>--}}
+        						{{--<div class="content-shopby">--}}
+        						    {{--<div class="price_filter s-filter clear">--}}
+        						        {{--<form action="#" method="GET">--}}
+        						            {{--<div id="slider-range"></div>--}}
+        						            {{--<div class="slider__range--output">--}}
+        						                {{--<div class="price__output--wrap">--}}
+        						                    {{--<div class="price--output">--}}
+        						                        {{--<span>Price :</span><input type="text" id="amount" readonly="">--}}
+        						                    {{--</div>--}}
+        						                    {{--<div class="price--filter">--}}
+        						                        {{--<a href="#">Filter</a>--}}
+        						                    {{--</div>--}}
+        						                {{--</div>--}}
+        						            {{--</div>--}}
+        						        {{--</form>--}}
+        						    {{--</div>--}}
+        						{{--</div>--}}
+        					{{--</aside>--}}
+        					{{--<aside class="wedget__categories poroduct--compare">--}}
+        						{{--<h3 class="wedget__title">Compare</h3>--}}
+        						{{--<ul>--}}
+        							{{--<li><a href="#">x</a><a href="#">Condimentum posuere</a></li>--}}
+        							{{--<li><a href="#">x</a><a href="#">Condimentum posuere</a></li>--}}
+        							{{--<li><a href="#">x</a><a href="#">Dignissim venenatis</a></li>--}}
+        						{{--</ul>--}}
+        					{{--</aside>--}}
         					<aside class="wedget__categories poroduct--tag">
-        						<h3 class="wedget__title">Product Tags</h3>
+        						<h3 class="wedget__title">Book Tags</h3>
         						<ul>
-        							<li><a href="#">Biography</a></li>
-        							<li><a href="#">Business</a></li>
-        							<li><a href="#">Cookbooks</a></li>
-        							<li><a href="#">Health & Fitness</a></li>
-        							<li><a href="#">History</a></li>
-        							<li><a href="#">Mystery</a></li>
-        							<li><a href="#">Inspiration</a></li>
-        							<li><a href="#">Religion</a></li>
-        							<li><a href="#">Fiction</a></li>
-        							<li><a href="#">Fantasy</a></li>
-        							<li><a href="#">Music</a></li>
-        							<li><a href="#">Toys</a></li>
-        							<li><a href="#">Hoodies</a></li>
+
+
+                                             @foreach(explode(',',$book->tag) as $tag)
+
+                                                <li><a href="#">{{$tag}}</a></li>
+
+
+                                            @endforeach
+
+
+
         						</ul>
-        					</aside>
-        					<aside class="wedget__categories sidebar--banner">
-								<img src="images/others/banner_left.jpg" alt="banner images">
-								<div class="text">
-									<h2>new products</h2>
-									<h6>save up to <br> <strong>40%</strong>off</h6>
-								</div>
         					</aside>
         				</div>
         			</div>
@@ -785,60 +366,56 @@
 				<span>close</span>
 			</div>
 		</div>
-		<!-- End Search Popup -->
-		<!-- Footer Area -->
-		<footer id="wn__footer" class="footer__area bg__cat--8 brown--color">
-			<div class="footer-static-top">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="footer__widget footer__menu">
-								<div class="ft__logo">
-									<a href="index.html">
-										<img src="images/logo/3.png" alt="logo">
-									</a>
-									<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered duskam alteration variations of passages</p>
-								</div>
-								<div class="footer__content">
-									<ul class="social__net social__net--2 d-flex justify-content-center">
-										<li><a href="#"><i class="bi bi-facebook"></i></a></li>
-										<li><a href="#"><i class="bi bi-google"></i></a></li>
-										<li><a href="#"><i class="bi bi-twitter"></i></a></li>
-										<li><a href="#"><i class="bi bi-linkedin"></i></a></li>
-										<li><a href="#"><i class="bi bi-youtube"></i></a></li>
-									</ul>
-									<ul class="mainmenu d-flex justify-content-center">
-										<li><a href="index.html">Trending</a></li>
-										<li><a href="index.html">Best Seller</a></li>
-										<li><a href="index.html">All Product</a></li>
-										<li><a href="index.html">Wishlist</a></li>
-										<li><a href="index.html">Blog</a></li>
-										<li><a href="index.html">Contact</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="copyright__wrapper">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6 col-md-6 col-sm-12">
-							<div class="copyright">
-								<div class="copy__right__inner text-left">
-									<p>Copyright <i class="fa fa-copyright"></i> <a href="https://freethemescloud.com/">Free themes Cloud.</a> All Rights Reserved</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-12">
-							<div class="payment text-right">
-								<img src="images/icons/payment.png" alt="" />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</footer>
+
 
 @endsection
+@section('script')
+<script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{asset('js/turn.js')}}"></script>
+<script type="text/javascript">
+    $(window).ready(function() {
+        $('#magazine').turn({
+            width: 400,
+            height: 300,
+            autoCenter: true,
+
+            gradients: !$.isTouch,
+
+            when: {
+                turned: function(e, page) {
+                    /*console.log('Current view: ', $(this).turn('view'));*/
+                }
+            }
+        });
+    });
+    $(window).bind('keydown', function(e){
+        if (e.keyCode==37)
+            $('#magazine').turn('previous');
+        else if (e.keyCode==39)
+            $('#magazine').turn('next');
+    });
+</script>
+
+@endsection
+@section('style')
+    <style type="text/css">
+        #magazine{
+            width:400px;
+            height:300px;
+            padding-top: 100px;
+            margin-top: 50px;
+        }
+        #magazine .turn-page{
+            background-color:#ccc;
+            background-size:100% 100%;
+        }
+        #model
+        {
+
+            height: 400px;
+        }
+    </style>
+    @endsection

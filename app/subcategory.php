@@ -10,7 +10,7 @@ class subcategory extends Model
 
     protected $fillable = [
         'sub_category',
-        'main_id'
+        'main_id','confirmed','price','expire_date'
     ];
     public function minicategory()
     {

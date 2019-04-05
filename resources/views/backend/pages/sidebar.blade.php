@@ -16,6 +16,9 @@
                     <h6 class="dropdown-header">Books Screens:</h6>
                     <a class="dropdown-item" href="{{route('books.create')}}">Add Books</a>
                     <a class="dropdown-item" href="{{route('books.index')}}">Show Books</a>
+                    <a class="dropdown-item" href="{{route('demo')}}">Add Demo Book</a>
+
+
                 </div>
             </li>
 
@@ -25,14 +28,12 @@
                     <span>Pages</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                    <h6 class="dropdown-header">Login Screens:</h6>
-                    <a class="dropdown-item" href="login.html">Login</a>
-                    <a class="dropdown-item" href="register.html">Register</a>
-                    <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header">Other Pages:</h6>
-                    <a class="dropdown-item" href="404.html">404 Page</a>
-                    <a class="dropdown-item" href="blank.html">Blank Page</a>
+                    <h6 class="dropdown-header">Pages:</h6>
+                    <a class="dropdown-item" href="{{route('aboutus')}}">About Us</a>
+                    <a class="dropdown-item" href="register.html">Plans & pricing</a>
+                    <a class="dropdown-item" href="register.html">Our Clients</a>
+                    <a class="dropdown-item" href="register.html">Terms & Conditions</a>
+                    <a class="dropdown-item" href="register.html">Privacy Policy</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -48,7 +49,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-folder-open"></i>
                     <span>Category</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
@@ -61,11 +62,12 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-home"></i>
                     <span>Home Section</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-
+                    <a class="dropdown-item" href="{{route('role')}}">Add Role</a>
+                    <a class="dropdown-item" href="{{route('icon')}}">Add Icon</a>
                     <a class="dropdown-item" href="{{route('banner')}}">Add Banner</a>
                     <a class="dropdown-item" href="{{route('section')}}">Add Section</a>
                     <a class="dropdown-item" href="{{route('section.show')}}">Show Section</a>
@@ -73,16 +75,46 @@
 
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-users"></i>
+                    <span>Contact Info</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+
+
+                    <a class="dropdown-item" href="{{route('contact.info')}}">Contact-info</a>
+                    <a class="dropdown-item" href="{{route('contact.show')}}">Show Contact-info</a>
+                    <a class="dropdown-item" href="{{route('contact.message')}}">Messages</a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-users"></i>
+                    <span>Customer</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="{{route('customer')}}">Customers</a>
+                </div>
             </li>
+
+            <li  class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>logout</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+
+                    <a  class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"  onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" class="waves-effect"><i class="fas fa-sign-out-alt"></i> logout</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </li>
+
+
+
         </ul>
 
   @endsection

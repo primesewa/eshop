@@ -39,21 +39,20 @@ const app = new Vue({
     data() {
         return {
 
-            fetch : new Fetch({}),
+            library : new Fetch({}),
 
         }    },
     created()
     {
 
-        this.getdata();
+
     },
     methods:
         {
-            getdata(id) {
+            add_to_library(id) {
+            console.log(id);
+            }
 
-                this.fetch.Get('get', 'http://127.0.0.1:8000/bookbycategory/'+id);
-
-            },
         }
 
 });

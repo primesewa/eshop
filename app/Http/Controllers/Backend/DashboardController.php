@@ -2,9 +2,18 @@
 namespace App\Http\Controllers\Backend;
 use  App\Repositories\BookInterface;
 use  App\Repositories\HomesectionInterface;
+use Illuminate\Validation\Rule;
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\banner;
+use App\Contactinfo;
+use App\Icon;
+use App\contact;
+use App\About;
+use App\Demo;
+use Illuminate\Support\Facades\File;
+
 class DashboardController extends Controller
 {
     //
@@ -13,17 +22,73 @@ class DashboardController extends Controller
     {
         $this->book = $book;
         $this->section=$section;
+//        $this->middleware('auth:admin');
+
 
     }
     public function index(){
-        return view('backend.pages.dashboard.dashboard');
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Wellcome Dashboard'));
+        return view('backend.pages.dashboard.dashboard',$this->data,compact('icons'));
     }
+
+        public function tag()
+    {
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add a Tag'));
+        $books = $this->book->all();
+        $tags = Tag::all();
+        return view('backend.pages.dashboard.products.tag',$this->data,compact('icons','books','tags'));
+    }
+    public function tag_store(Request $request)
+    {
+        $validateData= $request->validate([
+            'book_id' => 'required',
+            'tag' => 'required'
+        ]);
+        $validateData['tag'] =implode(",",$request->input('tag'));
+        Tag::create($validateData);
+        return redirect()->back()->with('success','Tag Added');
+    }
+    public function tag_update(Request $request,$id)
+    {
+        $validateData= $request->validate([
+            'book_id' => 'required',
+            'tag' => 'required'
+        ]);
+        $validateData['tag'] =implode(",",$request->input('tag'));
+        $tag=Tag::find($id);
+        $tag->update($validateData);
+        return redirect()->route('tag')->with('success','Tag updated');
+    }
+    public function tag_delete($id)
+    {
+        $tag = Tag::find($id);
+        $tag->destroy($id);
+
+        return redirect()->back()->with('success','Tag Deleted');
+
+    }
+
+    public function tag_edit($id)
+    {
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add a Tag'));
+        $books = $this->book->all();
+        $tag = Tag::find($id);
+        return view('backend.pages.dashboard.products.tagedit',$this->data,compact('icons','books','tag'));
+
+    }
+
 
     public function banner(){
         $banner=banner::all();
         $i=0;
-        return view('backend.pages.dashboard.banner',compact('banner','i'));
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Banner'));
+        return view('backend.pages.dashboard.banner',$this->data,compact('banner','i','icons'));
     }
+
     public function createbanner(Request $request){
 
     $validatedData = $request->validate([
@@ -51,7 +116,9 @@ class DashboardController extends Controller
     public  function homesection()
     {
         $books = $this->book->all();
-        return view('backend.pages.dashboard.homesection',compact('books'));
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Section'));
+        return view('backend.pages.dashboard.homesection',$this->data,compact('books','icons'));
 
     }
     public  function showsection()
@@ -59,7 +126,9 @@ class DashboardController extends Controller
         $sections=$this->book->getsection();
         $books = $this->book->all();
         $i=0;
-        return view('backend.pages.dashboard.showsection',compact('sections','books','i'));
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Section'));
+        return view('backend.pages.dashboard.showsection',$this->data,compact('sections','books','i','icons'));
 
     }
     public  function createsection(Request $request)
@@ -78,8 +147,10 @@ class DashboardController extends Controller
 {
     $section=$this->section->sectionget($id);
     $books = $this->book->all();
-//        dd($section);
-    return view('backend.pages.dashboard.sectionedit',compact('section','books'));
+      // dd($section);
+    $icons = Icon::all()->take(1);
+    $this->data('title',$this->make_title('Edit Section'));
+    return view('backend.pages.dashboard.sectionedit',$this->data,compact('section','books','icons'));
 
 }
     public  function updatesection(Request $request,$id)
@@ -90,6 +161,7 @@ class DashboardController extends Controller
             'position' => 'required',
             'book_id' =>'required'
         ]);
+
         $section=$this->section->update($validatedData,$id);
         return redirect()->back()->with('success','Section Updated');
 
@@ -102,6 +174,145 @@ class DashboardController extends Controller
         return redirect()->back()->with('success','Section Deleted');
 
     }
+
+    public  function Contactinfo()
+    {
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Contact-Info'));
+        return view('backend.pages.dashboard.contactinfo',$this->data,compact('icons'));
+
+    }
+    public  function Contactedit()
+    {
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Edit Contact-Info'));
+        return view('backend.pages.dashboard.editcontact',$this->data,compact('icons'));
+
+    }
+    public  function showcontact()
+    {
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('show Contact-Info'));
+        $contacts = Contactinfo::all();
+        $i=0;
+        return view('backend.pages.dashboard.showcontact',$this->data,compact('icons','contacts','i'));
+
+    }
+    public  function Contact_store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'address' => 'required|min:3|max:20',
+             'phonenumber' => 'required|min:3|max:15',
+            'email' => 'required|min:3|max:30',
+            'name'  => 'required|min:3|max:30',
+            'facebook' => 'required|min:3|max:50',
+            'twitter' => 'required|min:3|max:50',
+            'gmail' => 'required|min:3|max:50',
+            'youtube' => 'required|min:3|max:50',
+            'linkedin' => 'required|min:3|max:50',
+            'about_us' => 'required|min:3|max:500',
+            'office_info' => 'required|min:3|max:500',
+            'introduction' =>'required|min:3|max:500'
+        ]);
+        Contactinfo::create($validatedData);
+        return redirect()->back()->with('success','Contact Info Added');
+    }
+
+    public  function contact_message()
+    {
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Show Contact'));
+        $messages = contact::all();
+        return view('backend.pages.dashboard.messages',$this->data,compact('icons','messages'));
+
+    }
+    public function about()
+    {
+        $icons = Icon::all()->take(1);
+        $about = About::all();
+        $this->data('title',$this->make_title('About us pages'));
+        return view('backend.pages.dashboard.footer.about',$this->data,compact('icons','about'));
+    }
+    public function about_edit($id)
+    {
+        $icons = Icon::all()->take(1);
+        $about = About::find($id);
+        $this->data('title',$this->make_title('About us pages'));
+        return view('backend.pages.dashboard.footer.editabout',$this->data,compact('icons','about'));
+    }
+    public function about_store(Request $request)
+    {
+        $valadateDate = $request->validate([
+           'title' => 'required|min:3|max:200',
+           'description' =>'required|min:3|max:500',
+            'status' =>'required|unique:abouts,status'
+        ]);
+        About::create($valadateDate);
+        return redirect()->back()->with('success','Data added');
+
+    }
+    public function about_update(Request $request,$id)
+    {
+        $valadateDate = $request->validate([
+            'title' => 'required|min:3|max:200',
+            'description' =>'min:3|max:500',
+            'status' =>['required',Rule::unique('abouts','status')->ignore($id)],
+
+        ]);
+        $about=About::find($id);
+        $about->update($valadateDate);
+        return redirect()->route('aboutus')->with('success','Data added');
+
+    }
+    public function about_delete($id)
+    {
+        $about = About::find($id);
+        $about->delete($id);
+        return redirect()->back()->with('success','Data Deleted');
+
+    }
+
+    public function demo()
+    {
+        $demos = Demo::all();
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add a Demo Book'));
+
+        return view('backend.pages.dashboard.products.demo',$this->data,compact('icons','demos'));
+    }
+    public function demo_store(Request $request)
+    {
+        $valadateDate = $request->validate([
+            'title' => 'required|min:3|max:200',
+            'file' =>'required'
+        ]);
+        $file = public_path("storage/file/{$request->file}");
+
+        if (File::exists($file))
+        {
+            return redirect()->back()->with('error','File Exist, Please Select Another Or Rename The File');
+        }
+        Demo::create($valadateDate);
+        return redirect()->back()->with('success','Demo File Added');
+
+    }
+    public function demo_delete($id)
+    {
+
+        $demo = Demo::find($id);
+
+        $file = public_path("storage/file/{$demo->file}");
+      //  dd($file);
+        if (File::exists($file))
+        {
+            File::delete($file);
+        }
+        $demo->delete($id);
+        return redirect()->back()->with('success','Data Deleted');
+
+
+    }
+
 
 
 }

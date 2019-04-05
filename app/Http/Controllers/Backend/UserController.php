@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\RoleInterface;
 use App\Repositories\AdminInterface;
-
+use App\Icon;
 class UserController extends Controller
 {
     /**
@@ -24,8 +24,9 @@ class UserController extends Controller
     {
         $admins = $this->admin->paginate();
         $i=0;
-
-        return view('backend.pages.dashboard.user.showuser',compact('admins','i'));
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Show Users'));
+        return view('backend.pages.dashboard.user.showuser',$this->data,compact('admins','i','icons'));
 
     }
 
@@ -37,7 +38,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = $this->role->all();
-        return view('backend.pages.dashboard.user.adduser',compact('roles'));
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Users'));
+        return view('backend.pages.dashboard.user.adduser',$this->data,compact('roles','icons'));
     }
 
     /**
@@ -49,27 +52,27 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'Username' => 'required|min:3|max:50',
-            'First_name' => 'required|min:3|max:50',
-            'Last_name' => 'required|min:3|max:50',
-            'Nick_name' => 'required|min:3|max:50',
-            'Email' => 'required',
-            'Password' => 'required|min:2|max:50',
-            'Role'=>'required',
-            'Image' =>'image|required',
-            'Image.*' =>'mimes:jpeg,png,bmp,gif,svg'
+            'username' => 'required|min:3|max:50|unique:admins,username',
+            'first_name' => 'required|min:3|max:50',
+            'last_name' => 'required|min:3|max:50',
+            'nick_name' => 'required|min:3|max:50',
+            'email' => 'required|unique:admins,email',
+            'password' => 'required|min:2|max:50',
+            'role'=>'required',
+            'image' =>'image|required',
+            'image.*' =>'mimes:jpeg,png,bmp,gif,svg'
         ]);
 
-        if($request->hasFile('Image')) {
-            $filenameWithExt = $request->file('Image')->getClientOriginalName();
+        if($request->hasFile('image')) {
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
-            $extension = $request->file('Image')->getClientOriginalExtension();
+            $extension = $request->file('image')->getClientOriginalExtension();
             // Filename to store
-            $validatedData['Image'] = $filename . '_' . time() . '.' . $extension;
+            $validatedData['image'] = $filename . '_' . time() . '.' . $extension;
             // Upload Image
-            $path = $request->file('Image')->storeAs('public/image', $validatedData['Image']);
+            $path = $request->file('image')->storeAs('public/image', $validatedData['image']);
         }
         $this->admin->create($validatedData);
         return redirect()->back()->with('success','User added');
@@ -99,7 +102,9 @@ class UserController extends Controller
     {
       $admin =  $this->admin->find($id);
       $roles = $this->role->all();
-        return view('backend.pages.dashboard.user.edituser',compact('admin','roles'));
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Show Users'));
+        return view('backend.pages.dashboard.user.edituser',$this->data,compact('admin','roles','icons'));
     }
 
     /**
@@ -112,27 +117,27 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'Username' => 'required|min:3|max:50',
-            'First_name' => 'required|min:3|max:50',
-            'Last_name' => 'required|min:3|max:50',
-            'Nick_name' => 'required|min:3|max:50',
-            'Email' => 'required',
-            'Role'=>'required',
-            'Password'=>'',
-            'Image' =>'image',
-            'Image.*' =>'mimes:jpeg,png,bmp,gif,svg'
+            'username' => 'required|min:3|max:50',
+            'first_name' => 'required|min:3|max:50',
+            'last_name' => 'required|min:3|max:50',
+            'nick_name' => 'required|min:3|max:50',
+            'email' => 'required',
+            'role'=>'required',
+            'password'=>'',
+            'image' =>'image',
+            'image.*' =>'mimes:jpeg,png,bmp,gif,svg'
         ]);
 
-        if($request->hasFile('Image')) {
-            $filenameWithExt = $request->file('Image')->getClientOriginalName();
+        if($request->hasFile('image')) {
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
-            $extension = $request->file('Image')->getClientOriginalExtension();
+            $extension = $request->file('image')->getClientOriginalExtension();
             // Filename to store
-            $validatedData['Image'] = $filename . '_' . time() . '.' . $extension;
+            $validatedData['image'] = $filename . '_' . time() . '.' . $extension;
             // Upload Image
-            $path = $request->file('Image')->storeAs('public/image', $validatedData['Image']);
+            $path = $request->file('image')->storeAs('public/image', $validatedData['image']);
         }
         $this->admin->update($validatedData,$id);
         return redirect()->route('admins.index')->with('success','User updated');

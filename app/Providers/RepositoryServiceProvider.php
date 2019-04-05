@@ -20,8 +20,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->subcategoryrepo();
         $this->minicategoryrepo();
         $this->homesection();
-
-
+        $this->order();
     }
 
     /**
@@ -68,4 +67,11 @@ class RepositoryServiceProvider extends ServiceProvider
         return $this->app->bind('App\Repositories\HomesectionInterface','App\Repositories\HomesectionRepo');
 
     }
+    public  function order()
+    {
+        return $this->app->bind('App\Repositories\OrderInterface','App\Repositories\OrderRepo');
+
+    }
+
+
 }

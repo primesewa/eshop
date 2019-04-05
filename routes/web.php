@@ -32,27 +32,144 @@ Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
     route::delete('/dropsection/{id}', 'DashboardController@dropsection')->name('section.destroy');
     route::resource('/books', 'BookController');
     route::resource('/admins', 'UserController');
+
     route::get('/add/maincategory', 'CategoryController@get_main_category')->name('main.category');
     route::post('/add/maincategory', 'CategoryController@add_main_category')->name('main.store');
+    route::put('/status/maincategory/{id}', 'CategoryController@status_main_category')->name('main.conform');
+    route::get('/edit/maincategory/{id}', 'CategoryController@edit_main_category')->name('main.edit');
+    route::put('/update/maincategory/{id}', 'CategoryController@update_main_category')->name('main.update');
+    route::delete('/delete/maincategory/{id}', 'CategoryController@delete_main_category')->name('main.delete');
+
     route::get('/add/subcategory', 'CategoryController@get_sub_category')->name('sub.category');
     route::post('/add/subcategory', 'CategoryController@add_sub_category')->name('sub.store');
+    route::put('/status/subcategory/{id}', 'CategoryController@status_sub_category')->name('sub.conform');
+    route::get('/edit/subcategory/{id}', 'CategoryController@edit_sub_category')->name('sub.edit');
+    route::put('/update/subcategory/{id}', 'CategoryController@update_sub_category')->name('sub.update');
+    route::delete('/delete/subcategory/{id}', 'CategoryController@delete_sub_category')->name('sub.delete');
+
     route::get('/add/minicategory', 'CategoryController@get_mini_category')->name('mini.category');
     route::post('/add/minicategory', 'CategoryController@add_mini_category')->name('mini.store');
+    route::put('/status/minicategory/{id}', 'CategoryController@status_mini_category')->name('mini.conform');
+    route::get('/edit/minicategory/{id}', 'CategoryController@edit_mini_category')->name('mini.edit');
+    route::put('/update/minicategory/{id}', 'CategoryController@update_mini_category')->name('mini.update');
+    route::delete('/delete/minicategory/{id}', 'CategoryController@delete_mini_category')->name('mini.delete');
+
+
     route::get('/subcategory/{id}', 'BookController@getsubcategory');
     route::get('/minicategory/{id}', 'BookController@getminicategory');
 
+    route::get('/costomers', 'CustomerController@customer')->name('customer');
+    route::get('/costomer/{id}', 'CustomerController@getcustomer')->name('customer.show');
+
+    route::get('/role', 'RoleController@index')->name('role');
+    route::post('/role/upload', 'RoleController@store')->name('role.store');
+    route::delete('/role/delete/{id}', 'RoleController@delete')->name('role.delete');
+    route::get('/role/edit/{id}', 'RoleController@edit')->name('role.edit');
+    route::put('/role/update/{id}', 'RoleController@update')->name('role.update');
+
+    route::get('/icon', 'IconController@index')->name('icon');
+    route::post('/icon/upload', 'IconController@store')->name('icon.store');
+    route::delete('/icon/delete/{id}', 'IconController@delete')->name('icon.delete');
+
+    route::get('/contact_info', 'DashboardController@Contactinfo')->name('contact.info');
+    route::post('/contact_info/store', 'DashboardController@Contact_store')->name('contact.store');
+    route::get('/contact/show', 'DashboardController@showcontact')->name('contact.show');
+    route::get('/contact/edit/{id}', 'DashboardController@editcontact')->name('contact.edit');
+
+    route::get('/about', 'DashboardController@about')->name('aboutus');
+
+
+    route::post('/about/upload', 'DashboardController@about_store')->name('about.store');
+    route::delete('/about/delete/{id}', 'DashboardController@about_delete')->name('about.delete');
+    route::get('/about/edit/{id}', 'DashboardController@about_edit')->name('about.edit');
+    route::put('/about/update/{id}', 'DashboardController@about_update')->name('about.update');
+
+    route::get('/tag', 'DashboardController@tag')->name('tag');
+    route::post('/tag/upload', 'DashboardController@tag_store')->name('tag.store');
+    route::delete('/tag/delete/{id}', 'DashboardController@tag_delete')->name('tag.delete');
+    route::get('/tag/edit/{id}', 'DashboardController@tag_edit')->name('tag.edit');
+    route::put('/tag/update/{id}', 'DashboardController@tag_update')->name('tag.update');
+
+    route::get('/demo', 'DashboardController@demo')->name('demo');
+    route::post('/demo/store', 'DashboardController@demo_store')->name('demo.store');
+    route::delete('/demo/delete/{id}', 'DashboardController@demo_delete')->name('demo.delete');
 
 
 
+
+
+
+
+
+
+
+    route::get('/contact_messages', 'DashboardController@contact_message')->name('contact.message');
 
 
 
 });
+
+
+
 
 Route::group(['namespace'=> 'Frontend', 'prefix'=>'/'], function(){
-    route::any('/', 'PageController@index');
-    route::get('/{slug}', 'PageController@index');
-    route::get('/bookbycategory/{id}', 'PageController@getbookorderbycate');
-    route::get('/{slug}/{id}', 'PageController@index');
+
+    route::get('/', 'PageController@index')->name('books');
+    route::get('/book_show/{id}/', 'PageController@show')->name('book.show');
+    route::get('/pending', 'PageController@pending')->name('pending');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/library/{id}', 'libraryController@add_to_library')->name('add.library');
+    Route::get('/show', 'libraryController@Productcount');
+    Route::get('/delete/book/{id}', 'libraryController@delete_library')->name('delete.library');
+    Route::get('/profile', 'PageController@profile')->name('user.profile');
+    Route::get('/billing', 'PageController@billing')->name('billing');
+    Route::get('/expire/book', 'PageController@expire')->name('expire');
+    Route::get('/user/setting', 'PageController@setting')->name('user.setting');
+
+    Route::post('/upload', 'PageController@userpic')->name('upload.pic');
+    Route::put('/update/pic/{id}', 'PageController@updatepic')->name('update.pic');
+    Route::get('/payment', 'OrderController@payment')->name('user.pay');
+    Route::get('/mylibrary', 'PageController@mylibrary')->name('user.library');
+    Route::get('/mylibrary/{id}/', 'PageController@openbook')->name('user.book');
+
+    Route::get('/contact', 'HomePageController@contact')->name('Contact');
+    Route::post('/sent/message', 'HomePageController@message')->name('message.contact');
+
+    Route::get('/about_us', 'HomePageController@aboutus')->name('about.us');
+    route::get('/plan&policy', 'HomePageController@Plan')->name('Plan');
+    route::get('/term&condition', 'HomePageController@Term')->name('Term');
+    route::get('/privacy&policy', 'HomePageController@Privacy')->name('Privacy');
+
+    route::get('/search', 'HomePageController@search')->name('search');
+
+
+    Route::get('/category/{id}', 'HomePageController@maincategory')->name('get.maincategorys');
+    Route::get('/Category/{id}', 'HomePageController@minicategory')->name('get.minicategory');
+
+
+    Route::get('/my-category', 'PageController@folder')->name('my.category');
+    Route::get('/buy-category', 'PageController@archive')->name('buy.category');
+
+    Route::get('/demo', 'PageController@demo')->name('demo.show');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
+Auth::routes();
+Route::post('/user/login', 'Auth\UserloginController@login')->name('user.login');
+Route::get('/admin', 'Auth\AdminloginController@index')->name('admin.form');
+Route::post('/admin/login', 'Auth\AdminloginController@login')->name('admin.login');

@@ -8,8 +8,8 @@ use  App\Repositories\BookInterface;
 use App\Repositories\MaincategoryInterface;
 use App\Repositories\subcategoryInterface;
 use App\Repositories\minicategoryInterface;
-
-
+use Illuminate\Support\Facades\Storage;
+use App\Icon;
 class BookController extends Controller
 {
     /**
@@ -24,13 +24,18 @@ class BookController extends Controller
         $this->maincategory = $maincategory;
         $this->subcategory = $subcategory;
         $this->minicategory =$minicategory;
+//        $this->middleware('auth:admin');
+
     }
 
     public function index()
     {
         $books = $this->book->paginate();
         $i=0;
-        return view('backend.pages.dashboard.products.showbook',compact('books','i'));
+        $icons = Icon::all()->take(1);
+        $icon = Icon::all();
+        $this->data('title',$this->make_title('Show Books'));
+        return view('backend.pages.dashboard.products.showbook',$this->data,compact('books','i','icons','icon'));
 
     }
 
@@ -41,8 +46,10 @@ class BookController extends Controller
      */
     public function create()
     {
+        $icons = Icon::all()->take(1);
         $maincategory=$this->maincategory->all();
-        return view('backend.pages.dashboard.products.addbooks',compact('maincategory'));
+        $this->data('title',$this->make_title('Add Books'));
+        return view('backend.pages.dashboard.products.addbooks',$this->data,compact('maincategory','icons'));
 
     }
     public function getsubcategory($id)
@@ -67,51 +74,72 @@ class BookController extends Controller
     public function store(Request $request)
     {
 
+
         $validatedData = $request->validate([
             'Title' => 'required|min:3|max:50',
             'Author' => 'required|min:3|max:50',
             'Description' => 'required|min:3|max:200',
-            'main_id' => '',
-            'sub_id' => '',
-            'mini_id' => '',
+            'main_id' => 'required',
+            'sub_id' => 'required',
+            'mini_id' => 'required',
             'Main_price' => 'required|min:2|max:7|alpha_num',
             'Discount_price' => 'required|min:2|max:7|alpha_num',
             'Image' =>'image|required',
             'Image.*' =>'mimes:jpeg,png,bmp,gif,svg',
+//            'images' =>'required',
+//            'image.*' =>'image,mimes:jpeg,png,bmp,gif,svg',
             'file' => 'file|required',
             'file.*' =>'mimes:doc,pdf,docx,zip',
+            'currency' =>'required',
+            'feature' =>'required',
+            'expire_date' =>'required',
+            'tag' =>'required'
         ]);
+    //    dd($validatedData);
+        $validatedData['tag'] =implode(",",$request->input('tag'));
+
+//        if($request->hasfile('images'))
+//        {
+//
+//            $path = public_path('storage/image/'.$request->input('Title'));
+//           // dd($path);
+//            if (!file_exists($path)) {
+//                mkdir($path,0777,true);
+//                foreach($request->file('images') as $image)
+//                {
+//                    $name=time() . '.' . $image->getClientOriginalName();
+//                    $image->move($path,$name);
+//                    $data[] = $name;
+//                }
+//            }
+//            else
+//            {
+//                return redirect()->back()->with('error', 'Directory aleady exist, ');
+//
+//            }
+//            $validatedData['path']=$path;
+//        }
+//        $validatedData['images']=implode(",",$data);
+
+
         /**
          * @param $validatedData
          */
-        if($request->hasFile('Image') and $request->hasFile('file') ){
-            $filenameWithExt = $request->file('Image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('Image')->getClientOriginalExtension();
-            // Filename to store
-            $validatedData['Image']= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('Image')->storeAs('public/image',$validatedData['Image']);
-
-            $filenameWithExt = $request->file('file')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('file')->getClientOriginalExtension();
-            // Filename to store
-            $validatedData['file']= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('file')->storeAs('public/file',$validatedData['file']);
-
+        if($request->hasFile('Image') and $request->hasFile('file')){
+           //for one image
+            $image = $request->file('Image')->getClientOriginalName();
+            $path = $request->file('Image')->storeAs('public/image',$image);
+            $validatedData['Image'] = $image;
+            //for one file
+            $file = $request->file('file')->getClientOriginalName();
+            $path = $request->file('file')->storeAs('public/file',$file);
+            $validatedData['file'] = $file;
+            //for morethan one images
 
         }
 
         $this->book->create($validatedData);
         return redirect()->back()->with('success', 'Book Added');
-
-
 
     }
 
@@ -136,12 +164,16 @@ class BookController extends Controller
     public function edit($id)
     {
         $book=$this->book->find($id);
+        $books=$this->book->all();
+
         $maincategory=$this->maincategory->all();
         $subcategory=$this->subcategory->all();
         $minicategory=$this->minicategory->all();
+        $icons = Icon::all()->take(1);
 
+        $this->data('title',$this->make_title('Add Books'));
 
-        return view('backend.pages.dashboard.products.editbooks',compact('book','maincategory','subcategory','minicategory'));
+        return view('backend.pages.dashboard.products.editbooks',$this->data,compact('book','maincategory','subcategory','minicategory','icons','books'));
 
     }
 
@@ -165,37 +197,63 @@ class BookController extends Controller
             'Discount_price' => 'required|min:2|max:7|alpha_num',
             'Image' =>'image',
             'Image.*' =>'mimes:jpeg,png,bmp,gif,svg',
+//            'image' =>'image',
+//            'image.*' =>'mimes:jpeg,png,bmp,gif,svg',
             'file' => 'file',
             'file.*' =>'mimes:doc,pdf,docx,zip',
+            'currency' =>'',
+            'feature' =>'',
+            'expire_date' =>'',
+            'tag' =>'required'
+
         ]);
 
         /**
          * @param $validatedData
          */
-        if($request->hasFile('Image') and $request->hasFile('file') ){
-            $filenameWithExt = $request->file('Image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('Image')->getClientOriginalExtension();
-            // Filename to store
-            $validatedData['Image']= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('Image')->storeAs('public/image',$validatedData['Image']);
+        $validatedData['tag'] =implode(",",$request->input('tag'));
+        if($request->hasFile('Image')){
+            $image = $request->file('Image')->getClientOriginalName();
 
-            $filenameWithExt = $request->file('file')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('file')->getClientOriginalExtension();
-            // Filename to store
-            $validatedData['file']= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('file')->storeAs('public/file',$validatedData['file']);
-
-
+            $path = $request->file('Image')->storeAs('public/image',$image);
+            $validatedData['Image']=$image;
         }
-        // dd($validatedData);
+
+        if($request->hasFile('file')){
+            $file = $request->file('file')->getClientOriginalName();
+
+            $path = $request->file('file')->storeAs('public/file',$file);
+            $validatedData['file']=$file;
+        }
+//        if($request->hasfile('images'))
+//        {
+//
+//            $path = public_path('storage/image/'.$request->input('Title'));
+//            // dd($path);
+//            if (file_exists($path)) {
+//
+//                foreach($request->file('images') as $image)
+//                {
+//                    $name=time() . '.' . $image->getClientOriginalName();
+//                    $image->move($path,$name);
+//                    $data[] = $name;
+//                }
+//            }
+//            else
+//            {
+//                return redirect()->back()->with('error', 'Directory aleady exist, ');
+//
+//            }
+//            $validatedData['path']=$path;
+//
+//        }
+//        if(isset($data))
+//        {
+//            $validatedData['images']=implode(",",$data);
+//            $validatedData['path']=$path;
+//
+//        }
+
         $this->book->update($validatedData,$id);
         return redirect()->route('books.index')->with('success', 'Book Updated');
     }

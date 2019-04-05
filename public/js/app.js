@@ -49013,15 +49013,13 @@ var app = new Vue({
   el: '#app',
   data: function data() {
     return {
-      fetch: new _core_Fetch__WEBPACK_IMPORTED_MODULE_0__["default"]({})
+      library: new _core_Fetch__WEBPACK_IMPORTED_MODULE_0__["default"]({})
     };
   },
-  created: function created() {
-    this.getdata();
-  },
+  created: function created() {},
   methods: {
-    getdata: function getdata(id) {
-      this.fetch.Get('get', 'http://127.0.0.1:8000/bookbycategory/' + id);
+    add_to_library: function add_to_library(id) {
+      console.log(id);
     }
   }
 });
@@ -49266,16 +49264,28 @@ function () {
 
 /***/ }),
 
+/***/ "./resources/sass/user.scss":
+/*!**********************************!*\
+  !*** ./resources/sass/user.scss ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*****************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/admin.scss ***!
-  \*****************************************************************************************/
+/*!********************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/admin.scss ./resources/sass/user.scss ***!
+  \********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\xampp\htdocs\ebook\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\xampp\htdocs\ebook\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\ebook\resources\sass\admin.scss */"./resources/sass/admin.scss");
+__webpack_require__(/*! C:\xampp\htdocs\ebook\resources\sass\admin.scss */"./resources/sass/admin.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\ebook\resources\sass\user.scss */"./resources/sass/user.scss");
 
 
 /***/ })

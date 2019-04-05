@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item active">Add Main Category</li>
             </ol>
             <div class="row justify-content-center">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     @if(session('success'))
 
                         <div class="alert alert-success">
@@ -50,7 +50,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Position</label>
-                                    <input type="number" min="0" max="10" class="form-control {{ $errors->has('position') ? ' is-invalid' : '' }}" placeholder="Position of main category" name="position" value="{{ old('position') }}" >
+                                    <input type="number" min="0" max="50" class="form-control {{ $errors->has('position') ? ' is-invalid' : '' }}" placeholder="Position of main category" name="position" value="{{ old('position') }}" >
                                     @if($errors->has('position'))
                                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('position') }}</strong>
@@ -65,6 +65,54 @@
                         </center>
 
                     </form>
+                    <br>
+                        <div class="container">
+                            <h2>Main Category</h2>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>S.N</th>
+                                    <th>Main category</th>
+                                    <th>Status</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                @foreach($maincategory as $main)
+                                <tbody>
+                                <tr>
+
+                                        <td>{{++$i}}</td>
+                                    <td>
+                                       {{$main->main_category}}
+                                    </td>
+                                    <td> <form method="post" action="{{route('main.conform',[$main->id])}}">
+                                            @csrf
+                                            <input name ="_method" type="hidden" value="put">
+
+                                            @if($main->confirmed == 1)
+                                                <button class="btn btn-success"><i class="far fa-check-circle"></i></button>
+                                            @endif
+                                            @if($main->confirmed == 0)
+                                                <button class="btn btn-danger"><i class="far fa-times-circle"></i></button>
+                                            @endif
+
+                                        </form></td>
+                                    <td><a href="{{route('main.edit',[$main->id])}}" class="btn btn-primary"><i class="fas fa-edit"></i></a> </td>
+                                <td>
+                                    <form method="post" action="{{route('main.delete',[$main->id])}}">
+                                        @csrf
+                                        <input name ="_method" type="hidden" value="DELETE">
+                                        <button onclick="return confirm('Are you sure want to delete this category?')" class="btn btn-danger"><span><i class="fas fa-trash-alt"></i></span></button>
+                                    </form>
+                                </td>
+                                </tr>
+
+                                </tbody>
+                                @endforeach
+                            </table>
+                        </div>
+
                 </div>
                 </div>
             </div>
@@ -72,16 +120,4 @@
     </div>
 
 @endsection
-@section('script')
-    <script type="javascript">
-        $(document).ready(function() {
-            $('#select').select2();
-        });
-    </script>
-@endsection
 
-@section('style')
-    <style>
-
-    </style>
-@endsection

@@ -14,6 +14,12 @@ interface MaincategoryInterface{
     public  function delete($id);
     public function find($id);
     public function show($id);
+    public  function takefour();
+    public  function categorybycount();
+    public  function bookbycategory($id);
+    public  function allcategory();
+    public  function getmaincategory();
+    public  function conformed($id);
     public  function paginate($perpage =10, $column= array('*'));
 
 }

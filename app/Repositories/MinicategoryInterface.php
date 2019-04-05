@@ -14,6 +14,8 @@ interface MinicategoryInterface{
     public  function delete($id);
     public function find($id);
     public function show($id);
+    public function conformed($id);
     public function getminicategory($id);
+    public function bookbycategory($id);
     public  function paginate($perpage =10, $column= array('*'));
 }

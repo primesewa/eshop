@@ -2,22 +2,26 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
-
-class Admin extends Model
+use Illuminate\Notifications\Notifiable;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class Admin extends Authenticatable
 {
+    use Notifiable;
+
     protected $table ='admins';
+    protected $guard ='admin';
     protected $fillable = [
-        'Username','First_name','Last_name','Nick_name','Email','Password','Role','Image',
+        'username','first_name','last_name','nick_name','email','password','role','image',
     ];
     public function setPasswordAttribute($value){
 
-        $this->attributes['Password'] = Hash::make($value);
+        $this->attributes['password'] = Hash::make($value);
 
     }
 
     protected $hidden = [
-        'Password', 'remember_token',
+        'password', 'remember_token',
     ];
 }

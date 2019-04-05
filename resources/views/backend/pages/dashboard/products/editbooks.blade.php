@@ -57,6 +57,27 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label >Expire date</label>
+                                    <select  id="select" class="form-control{{ $errors->has('expire_date') ? ' is-invalid' : '' }}" name="expire_date">
+                                        <option value="">Select</option>
+
+                                        <option value="7" @if($book->expire_date == 7) selected @endif>Week</option>
+                                        <option value="15" @if($book->expire_date == 15) selected @endif>Half a month</option>
+                                        <option value="30" @if($book->expire_date == 30) selected @endif>A month</option>
+                                        <option value="90" @if($book->expire_date == 90) selected @endif>A 3 month</option>
+                                        <option value="180" @if($book->expire_date == 180) selected @endif>A 6 month</option>
+                                        <option value="240" @if($book->expire_date == 240) selected @endif>A 8 month</option>
+                                        <option value="360" @if($book->expire_date == 360)selected @endif>A year</option>
+                                    </select>
+                                    @if($errors->has('expire_date'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('expire_date') }}</strong>
+                                            </span>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="col-md-8">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -150,7 +171,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label >Upload image</label>
                                     <input type="file" class="form-control-file  {{ $errors->has('Image') ? ' is-invalid' : '' }}" name="Image" value="{{$book->Image}}">
@@ -161,7 +182,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label >Upload File</label>
                                     <input type="file" class="form-control-file  {{ $errors->has('file') ? ' is-invalid' : '' }}" name="file" value="{{$book->file}}">
@@ -172,9 +193,76 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-success">Success</button>
-                            </div>
+                                    {{--<div class="col-md-6">--}}
+                                        {{--<div class="form-group">--}}
+                                            {{--<label >Upload images<span> <small>(can upload more than one image)</small></span></label>--}}
+                                            {{--<input type="file" class="form-control-file  {{ $errors->has('images') ? ' is-invalid' : '' }}" name="images[]" multiple="multiple" value="{{$book->images}}">--}}
+                                            {{--@if($errors->has('images'))--}}
+                                                {{--<span class="invalid-feedback" role="alert">--}}
+                                                {{--<strong>{{ $errors->first('images') }}</strong>--}}
+                                            {{--</span>--}}
+                                            {{--@endif--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    <div class="col-md-6">
+                                        <div class="form-group" id="drop">
+                                            <label >Books</label>
+                                            <select id="select2"  class="form-control {{ $errors->has('tag') ? ' is-invalid' : '' }}"  name="tag[]" multiple="multiple">
+                                                @foreach($books as $boo)
+                                                    <?php echo $boo;?>
+                                                    @foreach(explode(",",$book->tag) as $ta)
+                                                        @if($boo->id != $book->id)
+                                                            @continue
+                                                        @else
+                                                            <option value="{{$ta}}" selected>{{$ta}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </select>
+                                            @if($errors->has('tag'))
+                                                <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('tag') }}</strong>
+                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label >Currency</label>
+                                            <select  id="select" class="form-control{{ $errors->has('currency') ? ' is-invalid' : '' }}" name="currency" value="{{$book->currency}}">
+                                            <option value="">Select</option>
+                                            <option value="$" @if($book->currency=='$')selected @endif>USD($)</option>
+                                            <option value="Rs" @if($book->currency=='Rs')selected @endif>Nepali(rupee)</option>
+                                            </select>
+                                            @if($errors->has('currency'))
+                                                <span class="invalid-feedback" role="alert">
+                                             <strong>{{ $errors->first('currency') }}</strong>
+                                             </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label >Feature</label>
+                                            <select  id="select" class="form-control{{ $errors->has('feature') ? ' is-invalid' : '' }}" name="feature" value="{{$book->feature}}">
+                                                <option value="">Select</option>
+
+                                                <option value="Hot" @if($book->feature=='Hot')selected @endif>Hot</option>
+                                                <option value="Best seller"@if($book->feature=='Best seller')selected @endif>Best Seller</option>
+                                                <option value="Top Feature"@if($book->feature=='Top Feature')selected @endif>Top Feature</option>
+
+
+                                            </select>
+                                            @if($errors->has('feature'))
+                                                <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('feature') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit"  class="btn btn-primary btn-lg btn-block">Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -187,8 +275,27 @@
 
 @endsection
 @section('script')
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#select2').select2(
+                {
+                    dropdownParent: $('#drop'),
+                    placeholder:'Enter tags',
+                    tags: true,
+                    tokenSeparators: [',', ' ']
+                }
+            );
+
+        });
+    </script>
+    {{--<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>--}}
     <script  type="text/javascript">
+
+
 
         $.ajaxSetup({
 
@@ -199,7 +306,6 @@
             }
 
         });
-
         function show(thisObj)
         {
             var main_id = $(thisObj).val();
@@ -213,7 +319,7 @@
                         $.each(data, function(key, element) {
 
                             $('#model').append("<option value='" +element.id +"'>" + element.sub_category + "</option>");
-                            $('#model').prepend("<option value=''>Select</option>");
+
 
                         });
                         show2();
@@ -234,7 +340,7 @@
                         $.each(data, function (key, element) {
 
                             $('#mini').append("<option value='" + element.id + "'>" + element.mini_category + "</option>");
-                            $('#mini').prepend("<option value=''>Select</option>");
+
                         });
 
                     }

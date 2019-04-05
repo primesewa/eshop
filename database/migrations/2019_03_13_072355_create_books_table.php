@@ -18,13 +18,14 @@ class CreateBooksTable extends Migration
             $table->string('Title');
             $table->string('Description');
             $table->string('Author');
-            $table->integer('main_id')->unsigned();
-            $table->integer('sub_id')->unsigned();
-            $table->integer('mini_id')->unsigned();
+            $table->integer('main_id')->unsigned()->nullable();
+            $table->integer('sub_id')->unsigned()->nullable();
+            $table->integer('mini_id')->unsigned()->nullable();
             $table->integer('Main_price')->unsigned();
             $table->integer('Discount_price')->unsigned();
             $table->string('Image');
             $table->string('file');
+            $table->longText('tag');
             $table->timestamps();
         });
     }

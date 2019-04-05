@@ -52,13 +52,13 @@
                         <tbody>
                         <tr>
                             <td>{{++$i}}</td>
-                            <td>{{$admin->Username}}</td>
-                            <td>{{$admin->First_name}}</td>
-                            <td>{{$admin->Last_name}}</td>
-                            <td>{{$admin->Nick_name}}</td>
-                            <td>{{$admin->Email}}</td>
-                            <td>{{$admin->Role}}</td>
-                            <td> <img src="/storage/image/{{$admin->Image}}" style="width: 50px; hight:10px;"></td>
+                            <td>{{$admin->username}}</td>
+                            <td>{{$admin->first_name}}</td>
+                            <td>{{$admin->last_name}}</td>
+                            <td>{{$admin->nick_name}}</td>
+                            <td>{{$admin->email}}</td>
+                            <td>{{$admin->role}}</td>
+                            <td> <img src="/storage/image/{{$admin->image}}" style="width: 50px; hight:10px;"></td>
 
                             <td><a href="{{route('admins.edit',[$admin->id])}}"><span><i class="fas fa-edit"></i></span></a></td>
 
@@ -66,7 +66,7 @@
                                 <form method="post" action="{{route('admins.destroy',[$admin->id])}}">
                                     @csrf
                                     <input name ="_method" type="hidden" value="DELETE">
-                                    <button class="btn btn-danger"><span><i class="fas fa-trash-alt"></i></span></button>
+                                    <button onclick="return confirm('Are you sure want to delete this user?')" class="btn btn-danger"><span><i class="fas fa-trash-alt"></i></span></button>
                                 </form>
                             </td>
 

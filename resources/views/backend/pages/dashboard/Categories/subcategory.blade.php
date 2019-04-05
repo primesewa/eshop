@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item active">Add Sub Category</li>
             </ol>
             <div class="row justify-content-center">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     @if(session('success'))
 
                         <div class="alert alert-success">
@@ -31,7 +31,7 @@
 
                     @endif
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <h3>Add sub Category</h3>
                     <form action="{{route('sub.store')}}" method="post">
                         @csrf
@@ -64,6 +64,39 @@
                             @endif
                         </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Price
+                                    </label>
+                                    <input type="text" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="Enter Price" name="price" value="{{ old('price') }}" >
+                                    @if($errors->has('price'))
+                                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('price') }}</strong>
+                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label >Expire date</label>
+                                    <select  id="select" class="form-control{{ $errors->has('expire_date') ? ' is-invalid' : '' }}" name="expire_date">
+                                        <option value="">Select</option>
+
+                                        <option value="7">Week</option>
+                                        <option value="15">Half a month</option>
+                                        <option value="30">A month</option>
+                                        <option value="90">A 3 month</option>
+                                        <option value="180">A 6 month</option>
+                                        <option value="240">A 8 month</option>
+                                        <option value="365">A year</option>
+                                    </select>
+                                    @if($errors->has('expire_date'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('expire_date') }}</strong>
+                                            </span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
 
                         <center>
@@ -71,6 +104,67 @@
                         </center>
 
                     </form>
+                    <br>
+                    <div class="container">
+                        <h2>Sub Category</h2>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Sub category</th>
+                                <th>Main Category</th>
+                                <th>Price</th>
+                                <th>Expire After</th>
+                                <th>Status</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            @foreach($subcategory as $sub)
+                                <tbody>
+                                <tr>
+
+                                    <td>{{++$i}}</td>
+                                    <td>
+                                        {{$sub->sub_category}}
+                                    </td>
+                                    <td>
+                                        @foreach($maincategory as $main)
+                                            @if($main->id == $sub->main_id)
+                                        {{$main->main_category}}
+                                            @endif
+                                            @endforeach
+                                    </td>
+                                    <td>{{$sub->price}}</td>
+                                    <td>{{$sub->expire_date}} days</td>
+                                    <td> <form method="post" action="{{route('sub.conform',[$sub->id])}}">
+                                            @csrf
+                                            <input name ="_method" type="hidden" value="put">
+
+                                            @if($sub->confirmed == 1)
+                                                <button class="btn btn-success"><i class="far fa-check-circle"></i></button>
+                                            @endif
+                                            @if($sub->confirmed == 0)
+                                                <button class="btn btn-danger"><i class="far fa-times-circle"></i></button>
+                                            @endif
+
+                                        </form></td>
+                                    <td><a href="{{route('sub.edit',[$sub->id])}}" class="btn btn-primary"><i class="fas fa-edit"></i></a> </td>
+                                    <td>
+                                        <form method="post" action="{{route('sub.delete',[$sub->id])}}">
+                                            @csrf
+                                            <input name ="_method" type="hidden" value="DELETE">
+                                            <button onclick="return confirm('Are you sure want to delete this Category?')" class="btn btn-danger"><span><i class="fas fa-trash-alt"></i></span></button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            @endforeach
+                            {{ $subcategory->links() }}
+
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

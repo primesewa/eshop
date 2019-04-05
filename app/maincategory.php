@@ -9,7 +9,7 @@ class maincategory extends Model
     protected $table='maincategories';
 
     protected $fillable = [
-        'main_category','position'
+        'main_category','position','confirmed'
     ];
 
     public function subcategory()

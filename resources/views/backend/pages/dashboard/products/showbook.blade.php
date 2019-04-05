@@ -39,7 +39,9 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Author</th>
-                            <th>Mini Category</th>
+                            <th>Expire date</th>
+                            <th>Currency</th>
+                            <th>Feature</th>
                             <th>Main price</th>
                             <th>Discount price</th>
                             <th>Image</th>
@@ -56,11 +58,13 @@
                             <td>{{$book->Title}}</td>
                             <td>{{$book->Description}}</td>
                             <td>{{$book->Author}}</td>
-                            <td>{{$book->mini_id}}</td>
+                            <td>{{$book->expire_date}}</td>
+                            <td>{{$book->currency}}</td>
+                            <td>{{$book->feature}}</td>
                             <td>{{$book->Main_price}}</td>
                             <td>{{$book->Discount_price}}</td>
-                            <td> <img src="/storage/image/{{$book->Image}}" style="width: 50px; hight:10px;"></td>
-                            <td> <a href="/storage/file/{{$book->file}}"download="{{$book->file}}"><span><i class="fas fa-download"></i></span></a></td>
+                            <td> <img src="/storage/image/{{$book->Image}}" style="width: 50px; hight:50px;"></td>
+                            <td> <a href="/storage/file/{{$book->file}}"download="{{$book->file}}"><i class="fas fa-file-download"></i></a></td>
                             <td><a href="{{route('books.edit',[$book->id])}}"><span><i class="fas fa-edit"></i></span></a></td>
 
                                 <td>

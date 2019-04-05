@@ -8,18 +8,27 @@ abstract class Repository{
     }
     public  function paginate($perpage =10, $column= array('*'))
     {
-        return $this->model->paginate($perpage,$column);
+        return $this->model::orderBy('id', 'desc')->paginate($perpage,$column);
     }
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+
+        try {
+
+            return $this->model->create($data);
+
+        }
+        catch(Exception $e) {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
     }
 
     public function  find($id)
     {
         return $this->model->find($id);
     }
+
     public function show($id)
     {
         return $this->model->findorfail($id);
@@ -27,14 +36,32 @@ abstract class Repository{
 
     public  function delete($id)
     {
-        $result= $this->model->find($id);
-        return $result::destroy($id);
+
+        try {
+
+            $result= $this->model->find($id);
+            return $result::destroy($id);
+        }
+
+
+        catch(Exception $e) {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+
     }
     public function update(array $data,$id)
     {
+        try {
+            $result= $this->model->find($id);
+            return $result->update($data);
+        }
 
-        $result= $this->model->find($id);
-        return $result->update($data);
+
+        catch(Exception $e) {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+
+
     }
 }
 

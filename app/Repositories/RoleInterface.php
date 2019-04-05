@@ -15,4 +15,5 @@ interface RoleInterface{
     public function find($id);
     public function show($id);
     public  function paginate($perpage =10, $column= array('*'));
+    public  function conformed($id);
 }

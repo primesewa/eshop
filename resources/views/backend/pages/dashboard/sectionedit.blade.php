@@ -11,7 +11,7 @@
                     <a href="index.html">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active"> Home Section</li>
-                <li class="breadcrumb-item active">Add Home Section</li>
+                <li class="breadcrumb-item active">Edit Home Section</li>
 
             </ol>
             <div class="row justify-content-center">
@@ -32,7 +32,7 @@
 
                     @endif
 
-                    <h3>Add Home Section</h3>
+                    <h3>Edit Home Section</h3>
                         @foreach($section as $s)
                     <form  action="{{route('section.update',[$s->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
@@ -85,9 +85,9 @@
                                     <label >Books</label>
                                     <select id="select"  class="form-control {{ $errors->has('book_id') ? ' is-invalid' : '' }}"  name="book_id[]" multiple="multiple">
                                         @foreach($books as $book)
-                                            @foreach(json_decode($s->book_id) as $id)
-                                            <option value="{{$book->id}}" @if($id == $book->id)selected @endif>{{$book->Title}}</option>
-                                        @endforeach
+                                            {{--@foreach(json_decode($s->book_id) as $id)--}}
+                                            <option value="{{$book->id}}" @if(in_array($book->id,json_decode($s->book_id)))selected @endif>{{$book->Title}}</option>
+                                        {{--@endforeach--}}
                                         @endforeach
                                     </select>
                                     @if($errors->has('book_id'))

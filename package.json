@@ -25,5 +25,8 @@
     },
     "dependencies": {
         "startbootstrap-sb-admin": "^5.0.3"
+    },
+    "require": {
+        "ckeditor/ckeditor": "4.*"
     }
 }
