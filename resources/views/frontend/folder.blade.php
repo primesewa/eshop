@@ -14,7 +14,46 @@
     <div class="row">
         <div class="col-md-12">
             <div class="white-box">
-                <h1>wellcome to setting</h1>
+                @if(isset(Auth::user()->suborders))
+                    @foreach($suborders as $sub)
+                        @foreach($subcategory as $subc)
+                            @if($subc->id == $sub->sub_id)
+                            <h3>Read Sub-category: {{$subc->sub_category}}</h3>
+                            @endif
+                        @endforeach
+                        @endforeach
+                    <div class="container">
+                        <table class="table table-hover" style="width: 900px;">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Auther</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            @foreach($suborders as $sub)
+                                @foreach($books as $book)
+                                    @if($book->sub_id == $sub->sub_id)
+                                        <tbody>
+                                        <tr>
+
+                                            <td>{!! $book->Title !!}</td>
+                                            <td>{!! $book->Author !!}</td>
+                                            <td><a href="{{route('sub.read',[$book->id])}}" class="btn btn-primary">Read</a></td>
+
+                                        </tr>
+                                        </tr>
+                                        </tbody>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        </table>
+                        {{ $suborders->links() }}
+                    </div>
+                    @else
+                    <h6>Empty</h6>
+                @endif
             </div>
         </div>
+    </div>
 @endsection

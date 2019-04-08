@@ -17,4 +17,5 @@
                 <h1>wellcome to setting</h1>
             </div>
         </div>
+    </div>
 @endsection

@@ -77,32 +77,58 @@
         </div>
         <div class="col-md-8 col-xs-12">
             <div class="white-box">
-                <form class="form-horizontal form-material">
+                <form class="form-horizontal form-material" action="{{route('user.update',[Auth::user()->id])}}" method="post">
+                    @csrf
+                    <input name ="_method" type="hidden" value="PUT">
                     <div class="form-group">
                         <label class="col-md-12">User Name</label>
                         <div class="col-md-12">
-                            <input type="text" placeholder="{{Auth::user()->username}}" class="form-control form-control-line"> </div>
+                            <input type="text" placeholder="{{Auth::user()->username}}" name="username" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{Auth::user()->username}}">
+                            @if ($errors->has('username'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-12">Full Name</label>
                         <div class="col-md-12">
-                            <input type="text" placeholder="{{Auth::user()->name}}" class="form-control form-control-line"> </div>
+                            <input type="text" placeholder="{{Auth::user()->name}}" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{Auth::user()->name}}">
+                            @if ($errors->has('name'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="example-email" class="col-md-12">Email</label>
                         <div class="col-md-12">
-                            <input type="email" placeholder="{{Auth::user()->email}}" class="form-control form-control-line" name="example-email" id="example-email"> </div>
+                            <input type="email" placeholder="{{Auth::user()->email}}" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="example-email" value="{{Auth::user()->email}}">
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-12">Change Password</label>
                         <div class="col-md-12">
-                            <input type="password" value="" class="form-control form-control-line"> </div>
+                            <input type="password" value="" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <button class="btn btn-success">Update Profile</button>
+                            <button class="btn btn-success"  onclick="return confirm('Are you sure want to delete this product?')">Update Profile</button>
                         </div>
                     </div>
                 </form>

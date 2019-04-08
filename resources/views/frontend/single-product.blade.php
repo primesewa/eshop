@@ -88,42 +88,23 @@
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
-                                                        <center>
-                                                        <div id="magazine">
-                                                            <div class="hard" style="background-color: darkorange">
-                                                                Popular Quotes
-                                                            </div>
-                                                            <div class="hard" style="background-color: greenyellow"></div>
-                                                            <div style="background-color: lightgrey">
-                                                                “Don't cry because it's over, smile because it happened.”
-                                                                ― Dr. Seuss
-                                                            </div>
-                                                            <div style="background-color: lightgrey">
-                                                                “I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best.”
-                                                                ― Marilyn Monroe
+                                                            <div id="main">
+                                                                <div class="magazine-viewport">
+                                                                    <div class="container">
+                                                                        <div id="book"></div>
+                                                                    </div>
+                                                                </div>
 
-                                                            </div>
-                                                            <div style="background-color: lightgrey">
-                                                                “Be yourself; everyone else is already taken.”
-                                                                ― Oscar Wilde
+                                                                <div id="controls">
 
+                                                                    <button id="next">Next</button>
+                                                                    <button id="zoominbutton" type="button">zoom in</button>
+                                                                    <button id="zoomoutbutton" type="button">zoom out</button>
+                                                                    <label for="page-number">Page:</label> <input type="text" size="1" id="page-number"> of <span id="number-pages"></span>
+                                                                </div>
                                                             </div>
-                                                            <div style="background-color: lightgrey">
-                                                                “So many books, so little time.”
-                                                                ― Frank Zappa
-                                                            </div>
-                                                            <div style="background-color: lightgrey">
-                                                                “A room without books is like a body without a soul.”
-                                                                ― Marcus Tullius Cicero
-                                                            </div>
-                                                            <div style="background-color: lightgrey">
-                                                                “Always forgive your enemies; nothing annoys them so much.”
-                                                                ― Oscar Wilde
-                                                            </div>
-                                                            <div class="hard"  style="background-color: greenyellow"></div>
-                                                            <div class="hard" style="background-color: darkorange"></div>
-                                                        </div>
-                                                        </center>
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -148,107 +129,107 @@
 	                        	</div>
 	                        	<!-- End Single Tab Content -->
 	                        	<!-- Start Single Tab Content -->
-	                        	<div class="pro__tab_label tab-pane fade" id="nav-review" role="tabpanel">
-									<div class="review__attribute">
-										<h1>Customer Reviews</h1>
-										<h2>Hastech</h2>
-										<div class="review__ratings__type d-flex">
-											<div class="review-ratings">
-												<div class="rating-summary d-flex">
-													<span>Quality</span>
-			    									<ul class="rating d-flex">
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-			    									</ul>
-												</div>
+	                        	{{--<div class="pro__tab_label tab-pane fade" id="nav-review" role="tabpanel">--}}
+									{{--<div class="review__attribute">--}}
+										{{--<h1>Customer Reviews</h1>--}}
+										{{--<h2>Hastech</h2>--}}
+										{{--<div class="review__ratings__type d-flex">--}}
+											{{--<div class="review-ratings">--}}
+												{{--<div class="rating-summary d-flex">--}}
+													{{--<span>Quality</span>--}}
+			    									{{--<ul class="rating d-flex">--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+			    									{{--</ul>--}}
+												{{--</div>--}}
 
-												<div class="rating-summary d-flex">
-													<span>Price</span>
-			    									<ul class="rating d-flex">
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-			    									</ul>
-												</div>
-												<div class="rating-summary d-flex">
-													<span>value</span>
-			    									<ul class="rating d-flex">
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-			    									</ul>
-												</div>
-											</div>
-											<div class="review-content">
-												<p>Hastech</p>
-												<p>Review by Hastech</p>
-												<p>Posted on 11/6/2018</p>
-											</div>
-										</div>
-									</div>
-									<div class="review-fieldset">
-										<h2>You're reviewing:</h2>
-										<h3>Chaz Kangeroo Hoodie</h3>
-										<div class="review-field-ratings">
-											<div class="product-review-table">
-												<div class="review-field-rating d-flex">
-													<span>Quality</span>
-													<ul class="rating d-flex">
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-			    									</ul>
-												</div>
-												<div class="review-field-rating d-flex">
-													<span>Price</span>
-													<ul class="rating d-flex">
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-			    									</ul>
-												</div>
-												<div class="review-field-rating d-flex">
-													<span>Value</span>
-													<ul class="rating d-flex">
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-														<li class="off"><i class="zmdi zmdi-star"></i></li>
-			    									</ul>
-												</div>
-											</div>
-										</div>
-										<div class="review_form_field">
-											<div class="input__box">
-												<span>Nickname</span>
-												<input id="nickname_field" type="text" name="nickname">
-											</div>
-											<div class="input__box">
-												<span>Summary</span>
-												<input id="summery_field" type="text" name="summery">
-											</div>
-											<div class="input__box">
-												<span>Review</span>
-												<textarea name="review"></textarea>
-											</div>
-											<div class="review-form-actions">
-												<button>Submit Review</button>
-											</div>
-										</div>
-									</div>
-	                        	</div>
+												{{--<div class="rating-summary d-flex">--}}
+													{{--<span>Price</span>--}}
+			    									{{--<ul class="rating d-flex">--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+			    									{{--</ul>--}}
+												{{--</div>--}}
+												{{--<div class="rating-summary d-flex">--}}
+													{{--<span>value</span>--}}
+			    									{{--<ul class="rating d-flex">--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+			    									{{--</ul>--}}
+												{{--</div>--}}
+											{{--</div>--}}
+											{{--<div class="review-content">--}}
+												{{--<p>Hastech</p>--}}
+												{{--<p>Review by Hastech</p>--}}
+												{{--<p>Posted on 11/6/2018</p>--}}
+											{{--</div>--}}
+										{{--</div>--}}
+									{{--</div>--}}
+									{{--<div class="review-fieldset">--}}
+										{{--<h2>You're reviewing:</h2>--}}
+										{{--<h3>Chaz Kangeroo Hoodie</h3>--}}
+										{{--<div class="review-field-ratings">--}}
+											{{--<div class="product-review-table">--}}
+												{{--<div class="review-field-rating d-flex">--}}
+													{{--<span>Quality</span>--}}
+													{{--<ul class="rating d-flex">--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+			    									{{--</ul>--}}
+												{{--</div>--}}
+												{{--<div class="review-field-rating d-flex">--}}
+													{{--<span>Price</span>--}}
+													{{--<ul class="rating d-flex">--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+			    									{{--</ul>--}}
+												{{--</div>--}}
+												{{--<div class="review-field-rating d-flex">--}}
+													{{--<span>Value</span>--}}
+													{{--<ul class="rating d-flex">--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+														{{--<li class="off"><i class="zmdi zmdi-star"></i></li>--}}
+			    									{{--</ul>--}}
+												{{--</div>--}}
+											{{--</div>--}}
+										{{--</div>--}}
+										{{--<div class="review_form_field">--}}
+											{{--<div class="input__box">--}}
+												{{--<span>Nickname</span>--}}
+												{{--<input id="nickname_field" type="text" name="nickname">--}}
+											{{--</div>--}}
+											{{--<div class="input__box">--}}
+												{{--<span>Summary</span>--}}
+												{{--<input id="summery_field" type="text" name="summery">--}}
+											{{--</div>--}}
+											{{--<div class="input__box">--}}
+												{{--<span>Review</span>--}}
+												{{--<textarea name="review"></textarea>--}}
+											{{--</div>--}}
+											{{--<div class="review-form-actions">--}}
+												{{--<button>Submit Review</button>--}}
+											{{--</div>--}}
+										{{--</div>--}}
+									{{--</div>--}}
+	                        	{{--</div>--}}
 	                        	<!-- End Single Tab Content -->
 	                        </div>
         				</div>
@@ -370,52 +351,263 @@
 
 @endsection
 @section('script')
-<script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-<script type="text/javascript" src="{{asset('js/turn.js')}}"></script>
-<script type="text/javascript">
-    $(window).ready(function() {
-        $('#magazine').turn({
-            width: 400,
-            height: 300,
-            autoCenter: true,
 
-            gradients: !$.isTouch,
+    <script id="my_script" type="text/javascript">
 
-            when: {
-                turned: function(e, page) {
-                    /*console.log('Current view: ', $(this).turn('view'));*/
+        // $('#book .double').scissor();
+
+        var numberOfPages = 0;
+        var url = '/storage/file/{{$x}}';
+
+        var rendered = [];
+        var firstPagesRendered = false;
+
+
+
+        var pdf = null,
+            pageNum = 1,
+            scale = 0.7;
+
+        function renderPage(num) {
+
+            pdf.getPage(num).then(function(page) {
+
+                    var viewport = page.getViewport(scale);
+
+                    //
+                    // Prepare canvas using PDF page dimensions
+                    //
+                    var canvasID = 'canv' + num;
+                    var canvas = document.getElementById(canvasID);
+                    if (canvas == null) return;
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    //
+                    // Render PDF page into canvas context
+                    //
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+
+                    // Update page counters
+                    document.getElementById('page-number').textContent = pageNum;
+                    document.getElementById('number-pages').textContent = pdf.numPages;
                 }
+            )}
+
+
+        // Adds the pages that the book will need
+        function addPage(page, book) {
+            // 	First check if the page is already in the book
+            if (!book.turn('hasPage', page)) {
+
+
+                // Create an element for this page
+                var element = $('<div />', {'class': 'page '+((page%2==0) ? 'odd' : 'even'), 'id': 'page-'+page})
+                element.html('<div class="data"><canvas id="canv' + page + '"></canvas></div>');
+                // element.html('<div><i>test</i></div>');
+                // If not then add the page
+                book.turn('addPage', element, page);
+                // renderPage(page);
+                //*/
             }
+        }
+
+
+
+        $(window).ready(function(){
+
+            pdfjsLib.disableWorker = true;
+
+            pdfjsLib.getDocument(url).then(function(pdfDoc) {
+
+                numberOfPages = pdfDoc.numPages;
+                pdf = pdfDoc;
+                $('#book').turn.pages = numberOfPages;
+
+
+                $('#book').turn({acceleration: false,
+                    pages: numberOfPages,
+                    elevation: 50,
+                    gradients: !$.isTouch,
+                    // display: 'single',
+                    when: {
+                        turning: function(e, page, view) {
+
+                            // Gets the range of pages that the book needs right now
+                            var range = $(this).turn('range', page);
+
+                            // Check if each page is within the book
+                            for (page = range[0]; page<=range[1]; page++) {
+                                addPage(page, $(this));
+                            };
+
+                        },
+
+                        turned: function(e, page) {
+                            $('#page-number').val(page);
+
+                            if (firstPagesRendered) {
+                                var range = $(this).turn('range', page);
+                                for (page = range[0]; page<=range[1]; page++) {
+                                    if (!rendered[page]) {
+                                        renderPage(page);
+                                        rendered[page] = true;
+                                    }
+                                };
+                            }
+
+                        }
+                    }
+                });
+                $('#book').click(function(e) {
+                    var pos = {
+                        x: e.pageX - $(this).offset().left,
+                        y: e.pageY - $(this).offset().top
+                    };
+                    console.log(pos);
+                    $('#book').zoom('zoomIn', pos);
+                });
+
+                $('#number-pages').html(numberOfPages);
+
+                $('#page-number').keydown(function(e){
+
+                    var p = $('#page-number').val();
+                    if (e.keyCode==13) {
+                        $('#book').turn('page', p);
+                        renderPage(p);
+                    }
+
+                });
+
+                var n = numberOfPages;
+                if (n > 6 ) n = 6;
+
+                for (page = 1; page <= n; page++) {
+                    renderPage(page);
+                    rendered[page] = true;
+                };
+                firstPagesRendered = true;
+
+
+            });
+
+
         });
-    });
-    $(window).bind('keydown', function(e){
-        if (e.keyCode==37)
-            $('#magazine').turn('previous');
-        else if (e.keyCode==39)
-            $('#magazine').turn('next');
-    });
-</script>
+
+        $(window).bind('keydown', function(e){
+
+            if (e.target && e.target.tagName.toLowerCase()!='input')
+                if (e.keyCode==37)
+                    $('#book').turn('previous');
+                else if (e.keyCode==39)
+                    $('#book').turn('next');
+
+        });
+
+    </script>
+
 
 @endsection
 @section('style')
-    <style type="text/css">
-        #magazine{
-            width:400px;
-            height:300px;
-            padding-top: 100px;
-            margin-top: 50px;
-        }
-        #magazine .turn-page{
-            background-color:#ccc;
-            background-size:100% 100%;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.0.943/build/pdf.min.js"></script>
+    {{--<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>--}}
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{asset('js/turn.js')}}"></script>
+    <script type="text/javascript" src="{{asset('turnjs4/lib/zoom.js')}}"></script>
+    <style>
+    #book{
+    width:900px;
+    height:570px;
+    margin: 20px;
+    /*box-shadow: 0px 0px 20px gray;*/
+    /*z-index: -.5;*/
+    }
+
+    #book .turn-page{
+    background-color:white;
+
+    background-color:silver;
+    box-shadow: 0px 0px 10px gray;
+    }
+
+
+    #book .cover{
+    background:#333;
+    }
+
+    #book .cover h1{
+    color:white;
+    text-align:center;
+    font-size:50px;
+    line-height:500px;
+    margin:0px;
+    }
+
+    #book .loader{
+    /*background-image:url();*/
+    width:24px;
+    height:24px;
+    display:block;
+    position:relative;
+    top:238px;
+    left:188px;
+    }
+
+    #book .data{
+    text-align:center;
+    font-size:40px;
+    color:#999;
+    line-height:500px;
+    }
+
+    #controls{
+    width:800px;
+    text-align:center;
+    margin:10px 0px;
+    font:15px arial;
+    /*float: right;*/
+    position: absolute;
+    padding-left: 300px;
+    top: 575px;
+    /*z-index: 1;*/
+    }
+
+    #controls input, #controls label{
+    font:15px arial;
+
+    }
+
+    #book .odd{
+    background-image:-webkit-linear-gradient(left, #FFF 95%, #ddd 100%);
+    background-image:-moz-linear-gradient(left, #FFF 95%, #ddd 100%);
+    background-image:-o-linear-gradient(left, #FFF 95%, #ddd 100%);
+    background-image:-ms-linear-gradient(left, #FFF 95%, #ddd 100%);
+    }
+
+    #book .even{
+    background-image:-webkit-linear-gradient(right, #FFF 95%, #ddd 100%);
+    background-image:-moz-linear-gradient(right, #FFF 95%, #ddd 100%);
+    background-image:-o-linear-gradient(right, #FFF 95%, #ddd 100%);
+    background-image:-ms-linear-gradient(right, #FFF 95%, #ddd 100%);
+    }
+    #main
+    {
+    height: 500px;
+    }
         #model
         {
+            height: 800px;
+            width: 900px;
 
-            height: 400px;
         }
     </style>
     @endsection

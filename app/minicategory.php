@@ -10,7 +10,7 @@ class minicategory extends Model
 
     protected $fillable = [
         'mini_category',
-        'sub_id','confirmed','price','expire_date'
+        'sub_id','confirmed','price','expire_date','currency'
     ];
     public function subcategory()
     {
@@ -20,6 +20,10 @@ class minicategory extends Model
     public function book()
     {
         return $this->belongsTo('App\Book');
+    }
+    public function vendor()
+    {
+        return $this->belongsTo('App\Vendor');
     }
 
 }

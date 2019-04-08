@@ -21,10 +21,10 @@
                             <div class="col-md-4"  >
                                 <div class="row">
                                     <div class="card" style="width:400px;" >
-                                        <a href="{{route('user.book',[$book->id])}}"><img class="card-img-top" src="/storage/image/{{$book->Image}}" width="250px;" height="200px;" alt="Card image">
+                                        <a href="{{route('user.book',[$book->id])}}"><img class="card-img-top" src="/storage/image/{{$book->Image}}" width="200px;" height="200px;" alt="Card image">
                                             <div class="card-body">
                                                 <h4 class="card-title">{{$book->Title}}</h4>
-                                                <h4 class="card-title">{{$item['expire_at']}}</h4>
+                                                <small class="card-title">Expired: {{$item['expire_at']}}</small>
                                             </div>
                                         </a>
                                     </div>

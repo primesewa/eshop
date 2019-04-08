@@ -22,4 +22,8 @@ class maincategory extends Model
     {
         return $this->belongsTo('App\Book');
     }
+    public function vendor()
+    {
+        return $this->belongsTo('App\Vendor');
+    }
 }

@@ -24,12 +24,27 @@ Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
     route::get('/banner', 'DashboardController@banner')->name('banner');
     route::post('/createbanner', 'DashboardController@createbanner')->name('banner.store');
     route::delete('/dropbanner/{id}', 'DashboardController@dropbanner')->name('banner.drop');
-    route::get('/homesection', 'DashboardController@homesection')->name('section');//user home title and description for begining, middle and end
+
+    route::get('/homesection', 'DashboardController@homesection')->name('section');
     route::post('/createsection', 'DashboardController@createsection')->name('section.store');
     route::get('/section', 'DashboardController@showsection')->name('section.show');
     route::get('/editsection/{id}', 'DashboardController@editsection')->name('section.edit');
     route::put('/updatesection/{id}', 'DashboardController@updatesection')->name('section.update');
     route::delete('/dropsection/{id}', 'DashboardController@dropsection')->name('section.destroy');
+
+    route::get('/vendor-section', 'DashboardController@vendorsection')->name('vendor');
+    route::Post('/vendor-section/store', 'DashboardController@vendorsection_store')->name('vendor.section.store');
+    route::get('/vendor-section/show', 'DashboardController@vendorsection_show')->name('vendor.section.show');
+    route::delete('/vendor-section/{id}', 'DashboardController@vendorsection_delete')->name('vendorsection.delete');
+    route::get('/vendor-section/{id}/edit', 'DashboardController@vendorsection_edit')->name('vendorsection.edit');
+    route::put('/vendor-section/{id}/update', 'DashboardController@vendorsection_update')->name('vendorsection.update');
+
+
+
+
+
+
+
     route::resource('/books', 'BookController');
     route::resource('/admins', 'UserController');
 
@@ -148,11 +163,35 @@ Route::group(['namespace'=> 'Frontend', 'prefix'=>'/'], function(){
 
 
     Route::get('/my-category', 'PageController@folder')->name('my.category');
+    Route::get('/mimi-category', 'PageController@mini_folder')->name('mini.category');
+
     Route::get('/buy-category', 'PageController@archive')->name('buy.category');
+    Route::get('/sub-category/{id}', 'PageController@archive_subcategory')->name('archive.sub');
+    Route::get('/sub-category/buy/{id}', 'OrderController@payment_subcategory')->name('sub.pay');
+    Route::get('/sub-category/read/{id}', 'PageController@open_sub_book')->name('sub.read');
+
+
+    Route::get('/mini-category/{id}', 'PageController@archive_mimicategory')->name('archive.mini');
+    Route::get('/mini-category/buy/{id}', 'OrderController@payment_minicategory')->name('mini.pay');
+    Route::get('/mini-category/read/{id}', 'PageController@open_mini_book')->name('mini.read');
+
+    Route::get('/user/sell-book', 'PageController@sell_book')->name('user.book.sell');
+    Route::Post('/user/book/store', 'HomeController@vendor_book')->name('user.book.store');
+
+    Route::get('/vendor-book/show/{id}', 'HomepageController@show_book_vendor')->name('vendor.book.show');
+    Route::get('/vendor-book/cart/{id}', 'libraryController@add_vendor_cart')->name('vendor.book.cart');
+    Route::get('/vendor-book/remove/{id}', 'libraryController@delete_vendor')->name('vendor.remove');
+
+
+
+
+
+
+
 
     Route::get('/demo', 'PageController@demo')->name('demo.show');
 
-
+    Route::put('/user/update/{id}', 'HomeController@update')->name('user.update');
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use App\User;
 class UserloginController extends Controller
 {
     public function login(request $request)
@@ -28,4 +29,7 @@ class UserloginController extends Controller
         }
         return redirect()->back()->withInput($request->only('username_or_email','remember'))->with('error','These credentials do not match our records.');
     }
+
+
+
 }

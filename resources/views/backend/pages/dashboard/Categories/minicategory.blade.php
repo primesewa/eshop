@@ -65,16 +65,36 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Price
                                     </label>
                                     <input type="text" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="Enter Price" name="price" value="{{ old('price') }}" >
                                     @if($errors->has('price'))
                                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('price') }}</strong>
-                        </span>
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label >Currency</label>
+                                            <select  id="select" class="form-control{{ $errors->has('currency') ? ' is-invalid' : '' }}" name="currency"  >
+                                                <option value="">Select</option>
+                                                <option value="$">USD($)</option>
+                                                <option value="Rs" selected>Nepali(rupee)</option>
+                                            </select>
+                                            @if($errors->has('currency'))
+                                                <span class="invalid-feedback" role="alert">
+                                             <strong>{{ $errors->first('currency') }}</strong>
+                                             </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -114,6 +134,7 @@
                                 <th>Mini category</th>
                                 <th>Sub Category</th>
                                 <th>Price</th>
+                                <th>Currency</th>
                                 <th>Status</th>
                                 <th>Expire After</th>
                                 <th>Edit</th>
@@ -137,7 +158,7 @@
                                             @endforeach
                                     </td>
                                     <td>{{$mini->price}}</td>
-                                    <td>{{$mini->expire_date}} days</td>
+                                    <td>{{$mini->currency}}</td>
                                     <td> <form method="post" action="{{route('mini.conform',[$mini->id])}}">
                                             @csrf
                                             <input name ="_method" type="hidden" value="put">
@@ -150,6 +171,8 @@
                                             @endif
 
                                         </form></td>
+                                    <td>{{$mini->expire_date}} days</td>
+
                                     <td><a href="{{route('mini.edit',[$mini->id])}}" class="btn btn-primary"><i class="fas fa-edit"></i></a> </td>
                                     <td>
                                         <form method="post" action="{{route('mini.delete',[$mini->id])}}">

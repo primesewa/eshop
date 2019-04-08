@@ -10,6 +10,8 @@ use App\Repositories\subcategoryInterface;
 use App\Repositories\minicategoryInterface;
 use Illuminate\Support\Facades\Storage;
 use App\Icon;
+use Illuminate\Support\Facades\File;
+
 class BookController extends Controller
 {
     /**
@@ -86,8 +88,6 @@ class BookController extends Controller
             'Discount_price' => 'required|min:2|max:7|alpha_num',
             'Image' =>'image|required',
             'Image.*' =>'mimes:jpeg,png,bmp,gif,svg',
-//            'images' =>'required',
-//            'image.*' =>'image,mimes:jpeg,png,bmp,gif,svg',
             'file' => 'file|required',
             'file.*' =>'mimes:doc,pdf,docx,zip',
             'currency' =>'required',
@@ -95,48 +95,31 @@ class BookController extends Controller
             'expire_date' =>'required',
             'tag' =>'required'
         ]);
-    //    dd($validatedData);
         $validatedData['tag'] =implode(",",$request->input('tag'));
-
-//        if($request->hasfile('images'))
-//        {
-//
-//            $path = public_path('storage/image/'.$request->input('Title'));
-//           // dd($path);
-//            if (!file_exists($path)) {
-//                mkdir($path,0777,true);
-//                foreach($request->file('images') as $image)
-//                {
-//                    $name=time() . '.' . $image->getClientOriginalName();
-//                    $image->move($path,$name);
-//                    $data[] = $name;
-//                }
-//            }
-//            else
-//            {
-//                return redirect()->back()->with('error', 'Directory aleady exist, ');
-//
-//            }
-//            $validatedData['path']=$path;
-//        }
-//        $validatedData['images']=implode(",",$data);
-
-
-        /**
-         * @param $validatedData
-         */
         if($request->hasFile('Image') and $request->hasFile('file')){
            //for one image
             $image = $request->file('Image')->getClientOriginalName();
+            $file = public_path("storage/image/".$image);
+//openssl.cafile="C:\xampp\apache\bin\curl-ca-bundle.crt"
+            if (File::exists($file))
+            {
+                return redirect()->back()->with('error', 'Image Exist,Please Rename The Image Or Add Another Image');
+            }
             $path = $request->file('Image')->storeAs('public/image',$image);
             $validatedData['Image'] = $image;
             //for one file
             $file = $request->file('file')->getClientOriginalName();
+            $file1 = public_path("storage/file/". $file);
+
+            if (File::exists($file1))
+            {
+                return redirect()->back()->with('error', 'File Exist,Please Rename The File Or Add Another File');
+            }
             $path = $request->file('file')->storeAs('public/file',$file);
             $validatedData['file'] = $file;
-            //for morethan one images
 
         }
+
 
         $this->book->create($validatedData);
         return redirect()->back()->with('success', 'Book Added');
@@ -197,8 +180,7 @@ class BookController extends Controller
             'Discount_price' => 'required|min:2|max:7|alpha_num',
             'Image' =>'image',
             'Image.*' =>'mimes:jpeg,png,bmp,gif,svg',
-//            'image' =>'image',
-//            'image.*' =>'mimes:jpeg,png,bmp,gif,svg',
+
             'file' => 'file',
             'file.*' =>'mimes:doc,pdf,docx,zip',
             'currency' =>'',
@@ -225,34 +207,6 @@ class BookController extends Controller
             $path = $request->file('file')->storeAs('public/file',$file);
             $validatedData['file']=$file;
         }
-//        if($request->hasfile('images'))
-//        {
-//
-//            $path = public_path('storage/image/'.$request->input('Title'));
-//            // dd($path);
-//            if (file_exists($path)) {
-//
-//                foreach($request->file('images') as $image)
-//                {
-//                    $name=time() . '.' . $image->getClientOriginalName();
-//                    $image->move($path,$name);
-//                    $data[] = $name;
-//                }
-//            }
-//            else
-//            {
-//                return redirect()->back()->with('error', 'Directory aleady exist, ');
-//
-//            }
-//            $validatedData['path']=$path;
-//
-//        }
-//        if(isset($data))
-//        {
-//            $validatedData['images']=implode(",",$data);
-//            $validatedData['path']=$path;
-//
-//        }
 
         $this->book->update($validatedData,$id);
         return redirect()->route('books.index')->with('success', 'Book Updated');

@@ -13,15 +13,18 @@ use App\contact;
 use App\About;
 use App\Demo;
 use Illuminate\Support\Facades\File;
+use App\Vendor;
+use App\Repositories\VendorsectionInterface;
 
 class DashboardController extends Controller
 {
     //
-    private $book,$section;
-    public function __construct(BookInterface $book,HomesectionInterface $section)
+    private $book,$section,$vsection;
+    public function __construct(BookInterface $book,HomesectionInterface $section,VendorsectionInterface $vsection)
     {
         $this->book = $book;
-        $this->section=$section;
+        $this->section= $section;
+        $this->vsection = $vsection;
 //        $this->middleware('auth:admin');
 
 
@@ -312,7 +315,78 @@ class DashboardController extends Controller
 
 
     }
+    public function vendorsection()
+    {
+        $vendors = Vendor::all();
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Vendor'));
+        return view('backend.pages.dashboard.vendor',$this->data,compact('icons','vendors'));
 
 
 
-}
+
+    }
+    public function vendorsection_store(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'title' => 'required|min:3|max:50',
+            'description' => 'min:3|max:100|nullable',
+            'vendor_id' =>'required'
+        ]);
+
+        $validatedData['vendor_id'] = implode(",",$request->input('vendor_id'));
+        $this->vsection->create($validatedData);
+        return redirect()->back()->with('success','Vendor Added');
+
+
+
+    }
+
+    public function vendorsection_show()
+    {
+        $vendors = Vendor::all();
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Vendor'));
+        $sections = $this->vsection->all();
+        $i =0;
+        return view('backend.pages.dashboard.vendorshow',$this->data,compact('icons','vendors','sections','i'));
+
+    }
+
+    public function vendorsection_delete($id)
+    {
+        $sections = $this->vsection->delete($id);
+        return redirect()->back()->with('success','Vendor Deleted');
+
+    }
+
+    public function vendorsection_edit($id)
+    {
+        $s= $this->vsection->find($id);
+//        dd($section);
+        $vendors = Vendor::all();
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Vendor'));
+        return view('backend.pages.dashboard.editvendor',$this->data,compact('icons','vendors','s'));
+
+
+    }
+
+    public function vendorsection_update(Request $request,$id)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|min:3|max:50',
+            'description' => 'required|min:3|max:100',
+            'vendor_id' =>'required'
+        ]);
+
+        $validatedData['vendor_id'] = implode(",",$request->input('vendor_id'));
+
+        $this->vsection->update($validatedData,$id);
+        return redirect()->route('vendor.section.show')->with('success','Vendor Added');
+
+
+    }
+
+    }

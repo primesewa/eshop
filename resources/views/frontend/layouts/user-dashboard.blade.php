@@ -35,14 +35,14 @@
     <link href="{{asset('ample/css/style.css')}}" rel="stylesheet">
     {{--<!-- color CSS -->--}}
     <link href="{{asset('ample/css/colors/default.css')}}" id="theme" rel="stylesheet">
-
+@yield('style')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    @yield('style')
+
 
     <![endif]-->
 </head>
@@ -78,7 +78,7 @@
             <ul class="nav navbar-top-links navbar-right pull-right">
                 <li>
                     @if(isset(Auth::user()->pic->image))
-                        <a><img src="/storage/image/{{Auth::user()->pic->image}}" alt="user-img" width="36" class="img-circle">{{Auth::user()->username}}</a>
+                        <a><img src="/storage/image/{{Auth::user()->pic->image}}" alt="user-img" width="36" class="img-circle"> {{Auth::user()->username}}</a>
                     @else
                         <a ><img src="/storage/image/15TiL93a.jpg" alt="user-img" width="36" class="img-circle">{{Auth::user()->username}}</a>
                     @endif
@@ -104,7 +104,10 @@
                     <a href="{{route('user.library')}}" class="waves-effect"><i class="fas fa-book-reader" aria-hidden="true"> </i> Single books</a>
                 </li>
                 <li>
-                    <a href="{{route('my.category')}}" class="waves-effect"><i class="fas fa-folder"></i> Category</a>
+                    <a href="{{route('my.category')}}" class="waves-effect"><i class="fas fa-folder"></i> Sub-Category</a>
+                </li>
+                <li>
+                    <a href="{{route('mini.category')}}" class="waves-effect"><i class="fas fa-folder"></i> mini-Category</a>
                 </li>
                 <li>
                     <a href="{{route('buy.category')}}" class="waves-effect"><i class="fas fa-archive" aria-hidden="true"> </i>  Buy Category</a>
@@ -117,6 +120,9 @@
                 </li>
                 <li>
                     <a href="{{route('expire')}}" class="waves-effect"><i class="fa fa-globe" aria-hidden="true"> </i> Expire</a>
+                </li>
+                <li>
+                    <a href="{{route('user.book.sell')}}" class="waves-effect"><i class="fa fa-columns" aria-hidden="true"> </i> Sell Your Book</a>
                 </li>
                 <li>
                     <a href="{{route('user.setting')}}" class="waves-effect"><i class="fa fa-columns" aria-hidden="true"> </i> Setting</a>
@@ -175,6 +181,7 @@
         },2000);
     });
 </script>
+
 @yield('script')
 
 </body>

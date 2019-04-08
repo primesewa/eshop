@@ -26,7 +26,15 @@ abstract class Repository{
 
     public function  find($id)
     {
-        return $this->model->find($id);
+
+        try {
+
+            return $this->model->find($id);
+
+        }
+        catch(Exception $e) {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
     }
 
     public function show($id)

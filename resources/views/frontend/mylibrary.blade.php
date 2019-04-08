@@ -20,18 +20,19 @@
                         @if($item['expire_at']>= date("y/m/d"))
                         @foreach($books as $book)
                         @if($item['item']['id'] == $book->id)
-                            <div class="col-md-4"  >
-                                <div class="row">
-                                     <div class="card" style="width:400px;" >
-                                         <a href="{{route('user.book',[$book->id])}}"><img class="card-img-top" src="/storage/image/{{$book->Image}}" width="250px;" height="200px;" alt="Card image">
+                            <div class="col-md-4"  id="book">
+
+                                     <div class="card" style="width: 18rem;" id="book">
+                                         <a href="{{route('user.book',[$book->id])}}"><img class="card-img-top" src="/storage/image/{{$book->Image}}" width="200px;" height="200px;" alt="Card image">
                                             <div class="card-body">
                                               <h4 class="card-title">{{$book->Title}}</h4>
-                                                <h4 class="card-title">{{$item['expire_at']}}</h4>
+                                                <small class="card-title">Expires at: {{$item['expire_at']}}</small>
                                              </div>
                                          </a>
+
                                      </div>
                                 </div>
-                            </div>
+
                         @endif
                        @endforeach
                     @endif
@@ -39,4 +40,14 @@
                     @endforeach
             </div>
         </div>
+@endsection
+@section('style')
+    <style>
+        #book
+        {
+            padding-bottom: 20px;
+            padding-top: 10px;
+        }
+    </style>
+
 @endsection

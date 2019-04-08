@@ -32,6 +32,11 @@ class BookRepository extends Repository implements BookInterface
             {
                 File::delete($file);
             }
+            $file = public_path("storage/image/{$result->Image}");
+            if (File::exists($file))
+            {
+                File::delete($file);
+            }
             return $result::destroy($id);
         }
 
@@ -41,9 +46,31 @@ class BookRepository extends Repository implements BookInterface
         }
 
     }
+    public function create(array $data)
+    {
+
+        try {
+
+
+            return $this->model->create($data);
+
+        }
+        catch(Exception $e) {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+    }
     public function findbycategory($id)
     {
-        return $this->model->where('main_id','=',$id)->get();
+
+        try {
+
+            return $this->model->where('main_id','=',$id)->get();
+        }
+
+        catch(Exception $e) {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+
     }
     public function search($s)
     {
@@ -65,11 +92,18 @@ class BookRepository extends Repository implements BookInterface
     }
     public  function related($id)
     {
-        $book=$this->model->find($id);
-        $s_id=$book->subcategory->id;
-        $mi_id=$book->minicategory->id;
-       return DB::select('SELECT * FROM books WHERE (sub_id = ? or mini_id = ?) and NOT (id = ?)',[$s_id,$mi_id,$id]);
 
+        try {
+
+            $book=$this->model->find($id);
+            $s_id=$book->subcategory->id;
+            $mi_id=$book->minicategory->id;
+            return DB::select('SELECT * FROM books WHERE (sub_id = ? or mini_id = ?) and NOT (id = ?)',[$s_id,$mi_id,$id]);
+        }
+
+        catch(Exception $e) {
+            return redirect()->back();
+        }
 
 
     }

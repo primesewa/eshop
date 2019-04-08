@@ -67,15 +67,34 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Price
                                     </label>
                                     <input type="text" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="Enter Price" name="price" value="{{$minicategory->price }}" >
                                     @if($errors->has('price'))
                                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('price') }}</strong>
-                        </span>
+                                            <strong>{{ $errors->first('price') }}</strong>
+                                        </span>
                                     @endif
+                                </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group">
+                                            <label >Currency</label>
+                                            <select  id="select" class="form-control{{ $errors->has('currency') ? ' is-invalid' : '' }}" name="currency" value="{{$minicategory->currency}}">
+                                                <option value="">Select</option>
+                                                <option value="$" @if($minicategory->currency=='$')selected @endif>USD($)</option>
+                                                <option value="Rs" @if($minicategory->currency=='Rs')selected @endif>Nepali(rupee)</option>
+                                            </select>
+                                            @if($errors->has('currency'))
+                                                <span class="invalid-feedback" role="alert">
+                                             <strong>{{ $errors->first('currency') }}</strong>
+                                             </span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">

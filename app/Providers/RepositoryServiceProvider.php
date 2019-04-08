@@ -21,6 +21,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->minicategoryrepo();
         $this->homesection();
         $this->order();
+        $this->user();
+        $this->vendorsection();
+        $this->vendor();
     }
 
     /**
@@ -72,6 +75,23 @@ class RepositoryServiceProvider extends ServiceProvider
         return $this->app->bind('App\Repositories\OrderInterface','App\Repositories\OrderRepo');
 
     }
+    public  function user()
+    {
+        return $this->app->bind('App\Repositories\UserInterface','App\Repositories\UserRepo');
+
+    }
+
+    public  function vendorsection()
+    {
+        return $this->app->bind('App\Repositories\VendorsectionInterface','App\Repositories\VendorsectionRepo');
+
+    }
+    public  function vendor()
+    {
+        return $this->app->bind('App\Repositories\VendorInterface','App\Repositories\VendorRepo');
+
+    }
+
 
 
 }

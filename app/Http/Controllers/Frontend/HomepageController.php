@@ -14,15 +14,17 @@ use  App\Repositories\MinicategoryInterface;
 use App\contact;
 use App\About;
 use  App\Repositories\BookInterface;
+use  App\Repositories\VendorInterface;
 class HomepageController extends Controller
 {
-    private $maincategory,$minicategory,$book;
-    public function __construct(BookInterface $book,MaincategoryInterface $maincategory,MinicategoryInterface $minicategory)
+    private $maincategory,$minicategory,$book,$vendor;
+    public function __construct(BookInterface $book,MaincategoryInterface $maincategory,MinicategoryInterface $minicategory, VendorInterface $vendor)
     {
 
         $this->maincategory = $maincategory;
         $this->minicategory = $minicategory;
         $this->book=$book;
+        $this->vendor=$vendor;
 
 
 
@@ -37,7 +39,13 @@ class HomepageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
 
         $this->data('title',$this->make_title('Book Searched'));
         $contact = Contactinfo::all();
@@ -55,7 +63,12 @@ class HomepageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
 
         $this->data('title',$this->make_title('Contacts'));
 
@@ -71,7 +84,13 @@ class HomepageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
 
         $this->data('title',$this->make_title('About us'));
         $contact = Contactinfo::all();
@@ -88,7 +107,13 @@ class HomepageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
 
         $this->data('title',$this->make_title('Term&condition'));
         $contact = Contactinfo::all();
@@ -106,7 +131,13 @@ class HomepageController extends Controller
 
             $oldlibrary =Session::has('library') ? Session::get('library') :'';
             $library = new Library($oldlibrary);
-            $count=$library->totalQty;
+            $count1=$library->totalQty;
+
+            $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+            $newvendor = new Library($oldvendor);
+            $count2=$newvendor->totalQty;
+            $count = $count1+$count2;
+
 
             $this->data('title',$this->make_title('Privacy&policy'));
             $contact = Contactinfo::all();
@@ -124,7 +155,13 @@ class HomepageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
 
         $this->data('title',$this->make_title('Plan&pricing'));
         $contact = Contactinfo::all();
@@ -141,7 +178,13 @@ class HomepageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
 
         $this->data('title',$this->make_title('Category'));
 
@@ -160,7 +203,13 @@ class HomepageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
 
         $this->data('title',$this->make_title('Category'));
 
@@ -185,4 +234,32 @@ class HomepageController extends Controller
         contact::create($validateData);
         return redirect()->back()->with('success', 'Message sent');
     }
+        public function show_book_vendor($id)
+        {
+            $icon=Icon::all()->take(1);
+
+            $categorys = $this->maincategory->takefour();
+
+            $banner = banner::all();
+
+            $oldlibrary =Session::has('library') ? Session::get('library') :'';
+            $library = new Library($oldlibrary);
+            $count1=$library->totalQty;
+
+            $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+            $newvendor = new Library($oldvendor);
+            $count2=$newvendor->totalQty;
+            $count = $count1+$count2;
+
+            $categorylist = $this->maincategory->categorybycount();
+
+            $this->data('title',$this->make_title("Vendor's book"));
+            $contact = Contactinfo::all();
+            $vendor=$this->vendor->find($id);
+            return view('frontend.vendorbook_show',$this->data,compact('icon','banner','categorys','count','contact','vendor','categorylist'));
+
+
+        }
+
+
 }

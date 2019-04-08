@@ -33,7 +33,7 @@
                 @endif
             </div>
 
-                <h3>Add Product</h3>
+                <h3>Add Books</h3>
                 <form action="{{route('books.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">

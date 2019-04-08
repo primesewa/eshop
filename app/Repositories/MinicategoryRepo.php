@@ -33,6 +33,7 @@ class MinicategoryRepo extends Repository implements MinicategoryInterface
     {
         return $this->model->where('confirmed', '=',1)->get();
     }
+
     public function conformed($id)
     {
 

@@ -46,8 +46,10 @@
                                             <th class="product-remove">Remove</th>
                                         </tr>
                                     </thead>
-                                    @foreach($librarys as $library)
+
+
                                     <tbody>
+                                    @foreach($librarys as $library)
                                         <tr>
                                             <td><img src="/storage/image/{{$library['item']['Image']}}" width="100" ></td>
 
@@ -57,10 +59,21 @@
                                             <td class="product-remove"><a href="{{route('delete.library',[$library['item']['id']])}}"><span><i class="far fa-trash-alt"></i></span></a></td>
                                         </tr>
                                         @endforeach
+
+                                    @foreach($vendors as $vendor)
+                                        <tr>
+                                        <td><img src="/storage/image/{{$vendor['item']['Image']}}" width="100" ></td>
+
+                                        <td>{{$vendor['item']['Title']}}</td>
+                                        <td>{{$vendor['item']['Discount_price']}}</td>
+                                        <td>{{$vendor['expire_at']}}</td>
+                                        <td class="product-remove"><a href="{{route('vendor.remove',[$vendor['item']['id']])}}"><span><i class="far fa-trash-alt"></i></span></a></td>
+                                        </tr>
+                                        @endforeach
                                     <tr>
                                         <td><a href="{{route('user.pay')}}" class="btn btn-primary">Buy</a></td>
-                                        <td>Total Qty: {{$totalqty}}</td>
-                                        <td>Total Amount: {{$totalprice}}</td>
+                                        <td>Total Qty: {{$totalqty + $totalqty_vendor}}</td>
+                                        <td>Total Amount: {{$totalprice + $totalprice_vendor}}</td>
                                         <td></td>
                                     </tr>
                                     </tbody>

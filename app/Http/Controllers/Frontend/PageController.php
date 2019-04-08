@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\View;
 use  App\Repositories\BookInterface;
 use  App\Repositories\MaincategoryInterface;
 use  App\Repositories\MinicategoryInterface;
+use  App\Repositories\SubcategoryInterface;
 use phpDocumentor\Reflection\Types\Null_;
 use Session;
 use App\Library;
@@ -18,21 +19,29 @@ use App\Userpic;
 use Auth;
 use App\Icon;
 Use App\Contactinfo;
+use App\Subcategoryorder;
+use  App\Repositories\VendorsectionInterface;
+use App\Vendor;
+
 
 class PageController extends Controller
 {
     //
-    private $book,$maincategory,$minicategory;
-    public function __construct(BookInterface $book,MaincategoryInterface $maincategory,MinicategoryInterface $minicategory)
+    private $book,$maincategory,$minicategory,$subcategory,$vsection;
+    public function __construct(BookInterface $book,MaincategoryInterface $maincategory,MinicategoryInterface $minicategory,SubcategoryInterface $subcategory, VendorsectionInterface $vsection)
     {
         $this->book = $book;
         $this->maincategory = $maincategory;
-
+        $this->subcategory = $subcategory;
+        $this->minicategory =$minicategory;
+        $this->vsection = $vsection;
         $this->middleware('auth')->except(['index','show']);
 
     }
     public function index(){
         $icon=Icon::all()->take(1);
+        $vsections = $this->vsection->all();
+        $vendors = Vendor::all();
         $categorys = $this->maincategory->takefour();
         $banner = banner::all();
         $sections=$this->book->getsection();
@@ -40,35 +49,59 @@ class PageController extends Controller
 
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $library = new Library($oldlibrary);
-        $count=$library->totalQty;
+        $count1=$library->totalQty;
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
         $this->data('title',$this->make_title('Home | e-library in Nepal'));
 
         $contact = Contactinfo::all();
-        return view('frontend.index',$this->data,compact('books','sections','banner','categorys','count','icon','contact'));
+        return view('frontend.index',$this->data,compact('books','sections','banner','categorys','count','icon','contact','vsections','vendors'));
     }
 
 
 
 public function show($id)
 {
-    $demo = Demo::all()->take(1);
-
-    $icon=Icon::all()->take(1);
-    $categorys = $this->maincategory->takefour();
-    $relatedbooks =$this->book->related($id);
-    $categorylist = $this->maincategory->categorybycount();
     $book =$this->book->find($id);
-    $tags = Tag::where('book_id','=',$id)->get();
+    if(isset($book)) {
+        $demo = Demo::inRandomOrder()->take(1)->get();
+        foreach ($demo as $d)
+        {
+           $x= $d->file;
+        }
+
+        $icon = Icon::all()->take(1);
+        $categorys = $this->maincategory->takefour();
+        $relatedbooks = $this->book->related($id);
+        $categorylist = $this->maincategory->categorybycount();
+
+        $tags = Tag::where('book_id', '=', $id)->get();
 
 
-    $this->data('title',$this->make_title('Book | e-library in Nepal'));
+        $this->data('title', $this->make_title('Book | e-library in Nepal'));
 
-    $oldlibrary =Session::has('library') ? Session::get('library') :'';
-    $library = new Library($oldlibrary);
-    $count=$library->totalQty;
+        $oldlibrary =Session::has('library') ? Session::get('library') :'';
+        $library = new Library($oldlibrary);
+        $count1=$library->totalQty;
 
-    $contact = Contactinfo::all();
-    return view('frontend.single-product',$this->data,compact('book','tags','categorys','count','icon','categorylist','relatedbooks','contact','demo'));
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+        $count2=$newvendor->totalQty;
+        $count = $count1+$count2;
+
+
+        $contact = Contactinfo::all();
+
+        return view('frontend.single-product', $this->data, compact('book', 'tags', 'categorys', 'count', 'icon', 'categorylist', 'relatedbooks', 'contact', 'x'));
+    }
+    else
+        {
+            return redirect()->back();
+        }
 }
     public function getbookorderbycate($id)
     {
@@ -81,9 +114,9 @@ public function show($id)
     {
         $icon=Icon::all()->take(1);
 
-        if(!Session::has('library') || Session::get('library')->totalprice == 0){
-
-            return redirect('/')->with('error','No Book Found');
+        if(!Session::has('library') || Session::get('library')->totalprice == 0 and !Session::has('vendor') || Session::get('vendor')->totalprice == 0 ){
+            Session::flash('error', 'No Book Found');
+            return redirect()->route('home');
         }
         $this->data('title',$this->make_title('Pending Books'));
 
@@ -91,9 +124,12 @@ public function show($id)
         $banner = banner::all();
         $oldlibrary =Session::has('library') ? Session::get('library') :'';
         $librarys = new Library($oldlibrary);
-//        dd($librarys);
-        $count=$librarys->totalQty;
-        return view('frontend.pending',$this->data,['librarys'=>$librarys->items,'totalprice'=>$librarys->totalprice,'totalqty'=>$librarys->totalQty],compact('categorys','count'))->with('icon',$icon);
+
+        $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
+        $newvendor = new Library($oldvendor);
+
+
+       return view('frontend.pending',$this->data,['librarys'=>$librarys->items,'vendors' => $newvendor->items,'totalprice'=>$librarys->totalprice,'totalprice_vendor'=>$newvendor->totalprice,'totalqty'=>$librarys->totalQty,'totalqty_vendor'=>$newvendor->totalQty,'books' => ['librarys'=>$librarys->items,'vendors' => $newvendor->items]],compact('categorys'))->with('icon',$icon);
     }
     public  function userpic(Request $request)
     {
@@ -196,8 +232,28 @@ public function show($id)
     }
     public function openbook($id)
     {
+        $orders = Auth::user()->orders;
+        $orders->transform(function($order, $key) {
+            $order->library = unserialize($order->library);
+            return $order;
+        });
+//        dd($orders);
+        foreach($orders as $order)
+        {
+            foreach($order->library->items as $item)
+            {
+                if($item['item']['id'] == $id and $item['expire_at']>= date("y/m/d"))
+                {
+                    $book=$this->book->find($id);
+                }
+
+            }
+        }
+        if(!isset($book))
+        {
+         return redirect()->route('home');
+        }
         $this->data('title',$this->make_title(' My Book'));
-        $book=$this->book->find($id);
         $icon=Icon::all()->take(1);
         $categorys = $this->maincategory->takefour();
         return view('frontend.openbook',$this->data,compact('book','icon','categorys'));
@@ -205,23 +261,136 @@ public function show($id)
     }
     public function archive()
     {
+
+        $subcategorys = $this->subcategory->paginate(10);
+        $minicategorys = $this->minicategory->paginate(10);
         $this->data('title',$this->make_title('Buy category'));
         $icon=Icon::all()->take(1);
-        return view('frontend.archive',$this->data,compact('icon'));
+        return view('frontend.archive',$this->data,compact('icon','subcategorys','minicategorys'));
+
+    }
+    public  function archive_subcategory($id)
+    {
+        $books=$this->book->all();
+        $subcategory = $this->subcategory->find($id);
+        $this->data('title',$this->make_title('Buy category'));
+        $icon=Icon::all()->take(1);
+        return view('frontend.subarchive',$this->data,compact('icon','books','subcategory'));
+
+    }
+    public function archive_mimicategory($id)
+    {
+        $books=$this->book->all();
+        $minicategory = $this->minicategory->find($id);
+        $this->data('title',$this->make_title('Buy category'));
+        $icon=Icon::all()->take(1);
+        return view('frontend.miniarchive',$this->data,compact('icon','books','minicategory'));
 
     }
     public function folder()
     {
-        $subcategorys = $this->subcategory->all();
-        $minicategorys = $this->minicategory->all();
-
-        $this->data('title',$this->make_title('Buy category'));
+       $suborders = Auth::user()->suborders()->paginate(1);
+        $books=$this->book->all();
+       $miniorder = Auth::user()->miniorders()->paginate(1);
+        $subcategory = $this->subcategory->all();
+        $minicategory = $this->minicategory->all();
+        $this->data('title',$this->make_title('Sub-category'));
         $icon=Icon::all()->take(1);
-        return view('frontend.folder',$this->data,compact('icon'));
+        return view('frontend.folder',$this->data,compact('icon','books','suborders','subcategory','minicategory','miniorder'));
+
+    }
+    public function mini_folder()
+    {
+
+        $books=$this->book->all();
+        $miniorder = Auth::user()->miniorders()->paginate(1);
+        $minicategory = $this->minicategory->all();
+        $this->data('title',$this->make_title('Mini-category'));
+        $icon=Icon::all()->take(1);
+        return view('frontend.mini_folder',$this->data,compact('icon','books','minicategory','miniorder'));
+    }
+
+    public function open_sub_book($id)
+    {
+
+            foreach (Auth::user()->suborders as $sub)
+            {
+                $subbook=$this->book->find($id);
+                if(isset($subbook)) {
+                    if ($subbook->sub_id == $sub->sub_id and $sub->expire_date >= date("y/m/d")) {
+                        $book = $subbook;
+                    }
+                }
+                else
+                {
+                    return redirect()->route('my.category');
+
+                }
+
+
+
+            }
+        if(isset($book)) {
+            return view('frontend.openbook',$this->data,compact('book'));
+
+        }
+        else{
+            return redirect()->route('my.category');
+        }
+
+
 
     }
 
+    public function open_mini_book($id)
+    {
+
+            foreach (Auth::user()->miniorders as $mini)
+            {
+                $subbook=$this->book->find($id);
+                if(isset($subbook)) {
+                    if ($subbook->mini_id == $mini->mini_id and $mini->expire_date >= date("y/m/d")) {
+                        $book = $subbook;
+                    }
+                    }
+                    else
+                    {
+                        return redirect()->route('mini.category');
+
+                    }
 
 
+            }
+        if(isset($book)) {
+            return view('frontend.openbook',$this->data,compact('book'));
+
+
+        }
+        else{
+            return redirect()->route('mini.category');
+        }
+
+
+    }
+    public  function sell_book()
+    {
+        $icon=Icon::all()->take(1);
+        $maincategory=$this->maincategory->all();
+        $this->data('title',$this->make_title('Settings'));
+        return view('frontend.sellbook',$this->data,compact('icon','maincategory'));
+
+    }
+
+    public function demo()
+    {
+        $demo = Demo::inRandomOrder()->take(1)->get();
+        foreach ($demo as $d)
+        {
+            $x = $d->file;
+        }
+        return response()->json([
+            'name' => $x
+        ]);
+    }
 
 }

@@ -25,23 +25,19 @@ class AdminloginController extends Controller
             'username_or_email' => 'required',
         ]);
 
-//        if(filter_var($validatedData['username_or_email'], FILTER_VALIDATE_EMAIL)) {
-//            //user sent their email
-//            Auth::guard('admin')->attempt(['email' => $request->username_or_email, 'password' => $request->password,'remember_token' =>$request->remember]);
-//        } else {
-//            //they sent their username instead
-//            Auth::guard('admin')->attempt(['username' => $request->username_or_email, 'password' => $request->password,'remember_token' =>$request->remember]);
-//        }
-//
-//        if ( Auth::check() ) {
-//            //send them where they are going
-//            return redirect()->intended(route('dashboard'));
-//        }
-//        dd($request->all());
-        if (Auth::guard('admin')->attempt(['username' => $request->username_or_email, 'password' => $request->password,'remember_token' =>$request->remember])) {
-            // Authentication passed...
+        if(filter_var($validatedData['username_or_email'], FILTER_VALIDATE_EMAIL)) {
+            //user sent their email
+            Auth::guard('admin')->attempt(['email' => $request->username_or_email, 'password' => $request->password,'remember_token' =>$request->remember]);
+        } else {
+            //they sent their username instead
+            Auth::guard('admin')->attempt(['username' => $request->username_or_email, 'password' => $request->password,'remember_token' =>$request->remember]);
+        }
+
+        if ( Auth::check() ) {
+            //send them where they are going
             return redirect()->intended(route('dashboard'));
         }
-        return redirect()->back()->withInput($request->only('username','password'))->with('error','These credentials do not match our records.');
+
+        return redirect()->back()->withInput($request->only('username_or_email','remember'))->with('error','These credentials do not match our records.');
     }
 }

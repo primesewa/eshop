@@ -65,16 +65,36 @@
                         </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Price
-                                    </label>
-                                    <input type="text" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="Enter Price" name="price" value="{{ old('price') }}" >
-                                    @if($errors->has('price'))
-                                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('price') }}</strong>
-                        </span>
-                                    @endif
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Price
+                                            </label>
+                                            <input type="text" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="Enter Price" name="price" value="{{ old('price') }}" >
+                                            @if($errors->has('price'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('price') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label >Currency</label>
+                                            <select  id="select" class="form-control{{ $errors->has('currency') ? ' is-invalid' : '' }}" name="currency"  >
+                                                <option value="">Select</option>
+                                                <option value="$">USD($)</option>
+                                                <option value="Rs" selected>Nepali(rupee)</option>
+                                            </select>
+                                            @if($errors->has('currency'))
+                                                <span class="invalid-feedback" role="alert">
+                                             <strong>{{ $errors->first('currency') }}</strong>
+                                             </span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -114,6 +134,7 @@
                                 <th>Sub category</th>
                                 <th>Main Category</th>
                                 <th>Price</th>
+                                <th>Currency</th>
                                 <th>Expire After</th>
                                 <th>Status</th>
                                 <th>Edit</th>
@@ -136,6 +157,7 @@
                                             @endforeach
                                     </td>
                                     <td>{{$sub->price}}</td>
+                                    <td>{{$sub->currency}}</td>
                                     <td>{{$sub->expire_date}} days</td>
                                     <td> <form method="post" action="{{route('sub.conform',[$sub->id])}}">
                                             @csrf

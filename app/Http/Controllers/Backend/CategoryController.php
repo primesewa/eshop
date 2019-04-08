@@ -112,7 +112,8 @@ class CategoryController extends Controller
             'sub_category' => 'required|min:3|max:50',
             'main_id' =>'required',
             'price' =>'required',
-            'expire_date' =>'required'
+            'expire_date' =>'required',
+            'currency' => 'required'
 
         ]);
         $this->subcategory->update($validatedData,$id);
@@ -126,7 +127,8 @@ class CategoryController extends Controller
             'sub_category' => 'required|min:3|max:50',
             'main_id' =>'required',
             'price' =>'required',
-            'expire_date' =>'required'
+            'expire_date' =>'required',
+            'currency' => 'required'
         ]);
 
         $this->subcategory->create($validatedData);
@@ -152,7 +154,8 @@ class CategoryController extends Controller
             'mini_category' => 'required|min:3|max:50',
             'sub_id' =>'required',
             'price' =>'required',
-            'expire_date' =>'required'
+            'expire_date' =>'required',
+            'currency' => 'required'
 
 
         ]);
@@ -185,7 +188,8 @@ class CategoryController extends Controller
             'mini_category' => 'required|min:3|max:50',
             'sub_id' =>'required',
             'price' =>'required',
-            'expire_date' =>'required'
+            'expire_date' =>'required',
+            'currency' =>'required'
 
         ]);
         $this->minicategory->update($validatedData,$id);

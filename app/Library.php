@@ -27,42 +27,42 @@ class Library
         if($days==7)
         {
             $enddate=strtotime("+7 day". $today);
-            $finaldate=date("y/m/d",$enddate);
+            $finaldate=date("Y/m/d",$enddate);
         }
         else if($days==15)
         {
             $enddate=strtotime("+15 day". $today);
-            $finaldate=date("y/m/d",$enddate);
+            $finaldate=date("Y/m/d",$enddate);
 
         }
         else if($days==30)
         {
             $enddate=strtotime("+1 month". $today);
-            $finaldate=date("y/m/d",$enddate);
+            $finaldate=date("Y/m/d",$enddate);
 
         }
         else if($days==90)
         {
             $enddate=strtotime("+3 month". $today);
-            $finaldate=date("y/m/d",$enddate);
+            $finaldate=date("Y/m/d",$enddate);
 
         }
         else if($days== 180)
         {
             $enddate=strtotime("+6 month". $today);
-            $finaldate=date("y/m/d",$enddate);
+            $finaldate=date("Y/m/d",$enddate);
 
         }
         else if($days==240)
         {
             $enddate=strtotime("+8 month". $today);
-            $finaldate=date("y/m/d",$enddate);
+            $finaldate=date("Y/m/d",$enddate);
 
         }
         else
         {
             $enddate=strtotime("+1 year". $today);
-            $finaldate=date("y/m/d",$enddate);
+            $finaldate=date("Y/m/d",$enddate);
         }
 
 

@@ -229,7 +229,6 @@
                     }
                 }
             });
-
             $('#book').click(function(e) {
                 var pos = {
                     x: e.pageX - $(this).offset().left,

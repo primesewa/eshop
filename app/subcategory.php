@@ -10,12 +10,18 @@ class subcategory extends Model
 
     protected $fillable = [
         'sub_category',
-        'main_id','confirmed','price','expire_date'
+        'main_id','confirmed','price','expire_date','currency'
     ];
     public function minicategory()
     {
         return $this->hasMany('App\minicategory','sub_id','id');
     }
+
+    public function suborder()
+    {
+        return $this->hasMany('App\Subcategoryorder','sub_id','id');
+    }
+
     public function maincategory()
     {
         return $this->belongsTo('App\maincategory');
@@ -23,6 +29,10 @@ class subcategory extends Model
     public function book()
     {
         return $this->belongsTo('App\Book');
+    }
+    public function vendor()
+    {
+        return $this->belongsTo('App\Vendor');
     }
 
 }

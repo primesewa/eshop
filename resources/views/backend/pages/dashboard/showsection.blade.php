@@ -52,7 +52,7 @@
                         <td>{{$section->description}}</td>
                         <td>
                             <select class="form-control" >
-                                <option value="">Select</option>
+                                <option value="">View Books</option>
                             @foreach($section->book_id as $id)
                                 @foreach($books as $book)
                                     @if($book->id == $id)
