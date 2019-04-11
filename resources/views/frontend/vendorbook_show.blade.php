@@ -1,4 +1,10 @@
 @extends('frontend.layouts.layout')
+@section('meta')
+    <meta name="Title" content="{{$vendor->Title}}">
+    <meta name="Description" content="{{$vendor->Description}}">
+    <meta name="Tag" content="{{$vendor->tag}}">
+    <meta name="Keyword" content="{{$vendor->tag}}">
+@endsection
 @section('content')
 
     <div class="maincontent bg--white pt--80 pb--55">

@@ -26,16 +26,16 @@ class BookRepository extends Repository implements BookInterface
         try {
 
             $result= $this->model->find($id);
-            $file = public_path("storage/file/{$result->file}");
+            $file = public_path("storage/file/$result->file");
 
             if (File::exists($file))
             {
                 File::delete($file);
             }
-            $file = public_path("storage/image/{$result->Image}");
-            if (File::exists($file))
+            $ifile = public_path("storage/image/$result->Image");
+            if (File::exists($ifile))
             {
-                File::delete($file);
+                File::delete($ifile);
             }
             return $result::destroy($id);
         }

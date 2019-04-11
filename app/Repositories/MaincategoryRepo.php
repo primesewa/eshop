@@ -15,6 +15,10 @@ class MaincategoryRepo extends Repository implements MaincategoryInterface
     {
         $this->model = $model;
     }
+    public  function search($s)
+    {
+        return $this->model->Where('main_category','like','%' .$s. '%')->get();
+    }
     public  function takefour()
     {
        return $this->model->take(4)->where('confirmed', '=',1)->get();

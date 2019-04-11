@@ -14,10 +14,11 @@
     <div class="row">
 
         <div class="col-md-12">
-                @foreach($orders as $order)
+            @if(!empty($orders))
+            @foreach($orders as $order)
                     {{--{{dd($order->library['expire_at'])}}--}}
                     @foreach($order->library->items as $item)
-                        @if($item['expire_at']>= date("y/m/d"))
+                        @if($item['expire_at']>= date("Y/m/d"))
                         @foreach($books as $book)
                         @if($item['item']['id'] == $book->id)
                             <div class="col-md-4"  id="book">
@@ -37,7 +38,26 @@
                        @endforeach
                     @endif
                   @endforeach
+                @endforeach
+                @endif
+                @if(!empty($vorders))
+                    @foreach($vorders as $vorder)
+                        @if($vorder->vendor['expire_at']>= date("Y/m/d"))
+                            <div class="col-md-4"  id="book">
+
+                                <div class="card" style="width: 18rem;" id="book">
+                                    <a href=""><img class="card-img-top" src="/storage/image/{{$vorder->vendor['item']['Image']}}" width="200px;" height="200px;" alt="Card image">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{$vorder->vendor['item']['Title']}}</h4>
+                                            <small class="card-title">Expires at: {{$vorder->vendor['expire_at']}}</small>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                        @endif
                     @endforeach
+                @endif
             </div>
         </div>
 @endsection

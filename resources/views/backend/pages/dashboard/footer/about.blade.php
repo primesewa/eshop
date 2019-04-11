@@ -126,14 +126,10 @@
     <script src="{{asset('js/tinymce.min.js')}}"></script>
     <script src="{{asset('js/jquery.tinymce.min.js')}}"></script>
     <script src="{{asset('js/theme.min.js')}}"></script>
-    {{--<script src="{{asset('ckeditor/js/ckeditor.js')}}"></script>--}}
-    {{--<script src="{{asset('ckeditor/js/en.js')}}"></script>--}}
-    {{--<script src="{{asset('ckeditor/js/config.js')}}"></script>--}}
-    {{--<script src="{{asset('ckeditor/js/styles.js')}}"></script>--}}
-    {{--<script src="//cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>--}}
+
 
     <script>
-        // CKEDITOR.replace( 'mytextarea' );
+
         tinymce.init({
             selector: '#mytextarea'
         });
@@ -144,8 +140,5 @@
     <link href="{{url('css/skin.min.css')}}" rel="stylesheet">
     <link href="{{url('css/content.min.css ')}}" rel="stylesheet">
     <link href="{{url('css/extra/content.min.css ')}}" rel="stylesheet">
-    {{--<link href="{{url('ckeditor/css/contents.css')}}" rel="stylesheet">--}}
-    {{--<link href="{{url('ckeditor/css/editor.css')}}" rel="stylesheet">--}}
-
 
 @endsection

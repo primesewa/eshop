@@ -40,11 +40,6 @@ Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
     route::put('/vendor-section/{id}/update', 'DashboardController@vendorsection_update')->name('vendorsection.update');
 
 
-
-
-
-
-
     route::resource('/books', 'BookController');
     route::resource('/admins', 'UserController');
 
@@ -54,6 +49,9 @@ Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
     route::get('/edit/maincategory/{id}', 'CategoryController@edit_main_category')->name('main.edit');
     route::put('/update/maincategory/{id}', 'CategoryController@update_main_category')->name('main.update');
     route::delete('/delete/maincategory/{id}', 'CategoryController@delete_main_category')->name('main.delete');
+    route::get('/search/maincategory/', 'CategoryController@search_main_category')->name('main.category.search');
+
+
 
     route::get('/add/subcategory', 'CategoryController@get_sub_category')->name('sub.category');
     route::post('/add/subcategory', 'CategoryController@add_sub_category')->name('sub.store');
@@ -61,14 +59,16 @@ Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
     route::get('/edit/subcategory/{id}', 'CategoryController@edit_sub_category')->name('sub.edit');
     route::put('/update/subcategory/{id}', 'CategoryController@update_sub_category')->name('sub.update');
     route::delete('/delete/subcategory/{id}', 'CategoryController@delete_sub_category')->name('sub.delete');
+    route::get('/search/subcategory/', 'CategoryController@search_sub_category')->name('sub.category.search');
 
-    route::get('/add/minicategory', 'CategoryController@get_mini_category')->name('mini.category');
+
+    route::get('/add/minicategory', 'CategoryController@get_mini_category')->name('minii.category');
     route::post('/add/minicategory', 'CategoryController@add_mini_category')->name('mini.store');
     route::put('/status/minicategory/{id}', 'CategoryController@status_mini_category')->name('mini.conform');
     route::get('/edit/minicategory/{id}', 'CategoryController@edit_mini_category')->name('mini.edit');
     route::put('/update/minicategory/{id}', 'CategoryController@update_mini_category')->name('mini.update');
     route::delete('/delete/minicategory/{id}', 'CategoryController@delete_mini_category')->name('mini.delete');
-
+    route::get('/search/minicategory/', 'CategoryController@search_mini_category')->name('mini.category.search');
 
     route::get('/subcategory/{id}', 'BookController@getsubcategory');
     route::get('/minicategory/{id}', 'BookController@getminicategory');
@@ -109,16 +109,18 @@ Route::group(['namespace'=> 'Backend', 'prefix'=>'ebook-admin'], function(){
     route::post('/demo/store', 'DashboardController@demo_store')->name('demo.store');
     route::delete('/demo/delete/{id}', 'DashboardController@demo_delete')->name('demo.delete');
 
-
-
-
-
-
-
-
-
+    route::get('/book-search', 'DashboardController@book_search')->name('book.search');
+    route::get('/book-search', 'DashboardController@book_search')->name('book.search');
+    route::get('/title/{id?}', 'RoleController@title')->name('title');
+    route::post('/title', 'RoleController@title_create')->name('title.create');
+    route::delete('/title/delete/{id}', 'RoleController@title_delete')->name('title.delete');
 
     route::get('/contact_messages', 'DashboardController@contact_message')->name('contact.message');
+
+    route::get('/vendor', 'UserController@get_vendor')->name('fake.vendor');
+    route::post('/vendor/create', 'UserController@fake_vendor_create')->name('fake.vendor.create');
+    route::delete('/vendor/delete/{id}', 'UserController@fake_vendor_delete')->name('fake.vendor.delete');
+
 
 
 
@@ -177,14 +179,24 @@ Route::group(['namespace'=> 'Frontend', 'prefix'=>'/'], function(){
 
     Route::get('/user/sell-book', 'PageController@sell_book')->name('user.book.sell');
     Route::Post('/user/book/store', 'HomeController@vendor_book')->name('user.book.store');
+    Route::put('/user/bookupdate/{id}', 'HomeController@vendorbook_update')->name('user.book.update');
+    Route::get('/user/books', 'PageController@mybook')->name('user.book.my');
+    Route::get('/user/books-edit/{id}', 'PageController@mybook_edit')->name('user.book.edit');
+    Route::delete('/user/book-drop/{id}', 'PageController@mybook_delete')->name('user.book.drop');
+
+
 
     Route::get('/vendor-book/show/{id}', 'HomepageController@show_book_vendor')->name('vendor.book.show');
     Route::get('/vendor-book/cart/{id}', 'libraryController@add_vendor_cart')->name('vendor.book.cart');
     Route::get('/vendor-book/remove/{id}', 'libraryController@delete_vendor')->name('vendor.remove');
 
 
+    route::get('/subcategorys/{id}', 'HomeController@getsubcategory');
+    route::get('/minicategorys/{id}', 'HomeController@getminicategory');
 
+    route::post('/account-create', 'HomeController@account_create')->name('create.sewa');
 
+    route::put('/account-update/{id}', 'HomeController@account_update')->name('update.sewa');
 
 
 
@@ -192,20 +204,6 @@ Route::group(['namespace'=> 'Frontend', 'prefix'=>'/'], function(){
     Route::get('/demo', 'PageController@demo')->name('demo.show');
 
     Route::put('/user/update/{id}', 'HomeController@update')->name('user.update');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
 Auth::routes();

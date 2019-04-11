@@ -1,4 +1,10 @@
 ﻿@extends('frontend.layouts.layout')
+@section('meta')
+    <meta name="Title" content="{{$book->Title}}">
+    <meta name="Description" content="{{$book->Description}}">
+    <meta name="Tag" content="{{$book->tag}}">
+    <meta name="Keyword" content="{{$book->tag}}">
+    @endsection
 @section('content')
 
         <div class="maincontent bg--white pt--80 pb--55">
@@ -53,9 +59,12 @@
         								<div class="price-box">
         									<span>{{$book->currency}} {{$book->Discount_price}}</span>
         								</div>
-										<div class="product__overview">
-        									<p>{{$book->currency}} {{$book->Description}}</p>
-        								</div>
+                                        @if(isset($book->name))
+                                        <div class="product__overview">
+
+                                            <p>Vendor Name: {!!  $book->name !!}</p>
+                                        </div>
+                                        @endif
         								<div class="box-tocart d-flex">
 
         									<div class="addtocart__actions">
@@ -72,43 +81,43 @@
 											</span>
 										</div>
                                         <br>
-                                        <div class="box-tocart d-flex">
+                                        {{--<div class="box-tocart d-flex">--}}
 
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                Show Demo
-                                            </button>
+                                            {{--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">--}}
+                                                {{--Show Demo--}}
+                                            {{--</button>--}}
 
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content" id="model">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Demo</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                            <div id="main">
-                                                                <div class="magazine-viewport">
-                                                                    <div class="container">
-                                                                        <div id="book"></div>
-                                                                    </div>
-                                                                </div>
+                                            {{--<!-- Modal -->--}}
+                                            {{--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+                                                {{--<div class="modal-dialog" role="document">--}}
+                                                    {{--<div class="modal-content" id="model">--}}
+                                                        {{--<div class="modal-header">--}}
+                                                            {{--<h5 class="modal-title" id="exampleModalLabel">Demo</h5>--}}
+                                                            {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                                                                {{--<i class="fas fa-times"></i>--}}
+                                                            {{--</button>--}}
+                                                        {{--</div>--}}
+                                                            {{--<div id="main">--}}
+                                                                {{--<div class="magazine-viewport">--}}
+                                                                    {{--<div class="container">--}}
+                                                                        {{--<div id="book"></div>--}}
+                                                                    {{--</div>--}}
+                                                                {{--</div>--}}
 
-                                                                <div id="controls">
+                                                                {{--<div id="controls">--}}
 
-                                                                    <button id="next">Next</button>
-                                                                    <button id="zoominbutton" type="button">zoom in</button>
-                                                                    <button id="zoomoutbutton" type="button">zoom out</button>
-                                                                    <label for="page-number">Page:</label> <input type="text" size="1" id="page-number"> of <span id="number-pages"></span>
-                                                                </div>
-                                                            </div>
+                                                                    {{--<button id="next">Next</button>--}}
+                                                                    {{--<button id="zoominbutton" type="button">zoom in</button>--}}
+                                                                    {{--<button id="zoomoutbutton" type="button">zoom out</button>--}}
+                                                                    {{--<label for="page-number">Page:</label> <input type="text" size="1" id="page-number"> of <span id="number-pages"></span>--}}
+                                                                {{--</div>--}}
+                                                            {{--</div>--}}
 
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
 
 
         							</div>
@@ -124,7 +133,11 @@
 	                        	<!-- Start Single Tab Content -->
 	                        	<div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
 									<div class="description__attribute">
-                                        <p>{{$book->Description}}</p>
+                                        <p>Title : {{$book->Title}}</p>
+                                        <p>Author : {{$book->Author }}</p>
+
+
+                                        <p>Description : <br>{!! $book->Description !!}</p>
 									</div>
 	                        	</div>
 	                        	<!-- End Single Tab Content -->

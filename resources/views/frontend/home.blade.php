@@ -12,7 +12,7 @@
                             <li>
                                 <div id="sparklinedash"></div>
                             </li>
-                            <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-success">{{count(Auth::user()->orders)}}</span></li>
+                            <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-success">{{count(Auth::user()->orders) + count(Auth::user()->vorders)}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -29,17 +29,38 @@
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="white-box analytics-info">
-                        <h3 class="box-title">Unique Visitor</h3>
+                        <h3 class="box-title">Book Sold</h3>
                         <ul class="list-inline two-part">
                             <li>
                                 <div id="sparklinedash3"></div>
                             </li>
-                            <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">911</span></li>
+                            <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">{{$sold_book}}</span></li>
                         </ul>
                     </div>
                 </div>
+
+                <div class="col-md-12">
+                    <center>
+                        @if(session('success'))
+
+                            <div class="alert alert-success">
+                                {{session('success')}}
+                            </div>
+
+                        @endif
+
+                        @if(session('error'))
+
+                            <div class="alert alert-danger">
+                                {{session('error')}}
+                            </div>
+
+                        @endif
+                    </center>
+                </div>
+
             </div>
-            @if(isset($orders))
+            @if(count($orders)>0)
             <div class="row">
                 <div class="col-md-12">
 
@@ -62,7 +83,8 @@
                     </div>
                 </div>
             @endif
-            @if(isset($suborders))
+
+            @if(count($suborders)>0)
             <div class="row">
                 <div class="col-md-12">
                     <h5>Your Sub-Category <a href="{{route('my.category')}}">View all category</a> </h5>
@@ -87,7 +109,7 @@
             </div>
             @endif
 
-            @if(isset($miniorders))
+            @if(count($miniorders)>0)
 
                 <div class="row">
                     <div class="col-md-12">

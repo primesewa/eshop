@@ -18,7 +18,7 @@ class libraryController extends Controller
         $this->vendor = $vendor;
         $this->book = $book;
         $this->maincategory = $maincategory;
-        $this->middleware('auth')->except(['add_to_library']);
+        $this->middleware('auth')->except(['add_to_library','add_vendor_cart']);
 
 
     }
@@ -42,6 +42,7 @@ class libraryController extends Controller
         // dd($oldlibrary);
         $newvendor = new Library($oldv);
         $newvendor->add($id, $vendor);
+
 
         $request->session()->put('vendor',$newvendor);
         return redirect()->back()->with('success','Book Added');

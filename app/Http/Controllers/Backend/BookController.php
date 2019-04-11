@@ -11,6 +11,7 @@ use App\Repositories\minicategoryInterface;
 use Illuminate\Support\Facades\Storage;
 use App\Icon;
 use Illuminate\Support\Facades\File;
+use App\Fakevendor;
 
 class BookController extends Controller
 {
@@ -51,7 +52,8 @@ class BookController extends Controller
         $icons = Icon::all()->take(1);
         $maincategory=$this->maincategory->all();
         $this->data('title',$this->make_title('Add Books'));
-        return view('backend.pages.dashboard.products.addbooks',$this->data,compact('maincategory','icons'));
+        $vendors = Fakevendor::all();
+        return view('backend.pages.dashboard.products.addbooks',$this->data,compact('maincategory','icons','vendors'));
 
     }
     public function getsubcategory($id)
@@ -93,14 +95,15 @@ class BookController extends Controller
             'currency' =>'required',
             'feature' =>'required',
             'expire_date' =>'required',
-            'tag' =>'required'
+            'tag' =>'required',
+            'name' => 'required|min:3|max:50',
         ]);
         $validatedData['tag'] =implode(",",$request->input('tag'));
         if($request->hasFile('Image') and $request->hasFile('file')){
            //for one image
             $image = $request->file('Image')->getClientOriginalName();
             $file = public_path("storage/image/".$image);
-//openssl.cafile="C:\xampp\apache\bin\curl-ca-bundle.crt"
+
             if (File::exists($file))
             {
                 return redirect()->back()->with('error', 'Image Exist,Please Rename The Image Or Add Another Image');
@@ -153,10 +156,11 @@ class BookController extends Controller
         $subcategory=$this->subcategory->all();
         $minicategory=$this->minicategory->all();
         $icons = Icon::all()->take(1);
+        $vendors = Fakevendor::all();
 
         $this->data('title',$this->make_title('Add Books'));
 
-        return view('backend.pages.dashboard.products.editbooks',$this->data,compact('book','maincategory','subcategory','minicategory','icons','books'));
+        return view('backend.pages.dashboard.products.editbooks',$this->data,compact('book','maincategory','subcategory','minicategory','icons','books','vendors'));
 
     }
 
@@ -186,15 +190,24 @@ class BookController extends Controller
             'currency' =>'',
             'feature' =>'',
             'expire_date' =>'',
-            'tag' =>'required'
+            'tag' =>'required',
+            'name' => 'required|min:3|max:50',
+
 
         ]);
+        $book=$this->book->find($id);
 
         /**
          * @param $validatedData
          */
         $validatedData['tag'] =implode(",",$request->input('tag'));
         if($request->hasFile('Image')){
+            $ifile = public_path("storage/image/".$book->Image);
+            if (File::exists($ifile))
+            {
+                File::delete($ifile);
+            }
+
             $image = $request->file('Image')->getClientOriginalName();
 
             $path = $request->file('Image')->storeAs('public/image',$image);
@@ -202,8 +215,12 @@ class BookController extends Controller
         }
 
         if($request->hasFile('file')){
+            $file1 = public_path("storage/file/".$book->file);
+            if (File::exists($file1))
+            {
+                File::delete($file1);
+            }
             $file = $request->file('file')->getClientOriginalName();
-
             $path = $request->file('file')->storeAs('public/file',$file);
             $validatedData['file']=$file;
         }

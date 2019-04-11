@@ -8,7 +8,7 @@ class Book extends Model
 {
     protected $table ='books';
 
-    protected $fillable = ['Title','Description','tag','expire_date', 'Author', 'Categories', 'Main_price', 'Image', 'Discount_price', 'file', 'main_id', 'sub_id', 'mini_id','currency','feature'];
+    protected $fillable = ['Title','Description','tag','expire_date', 'Author', 'Categories', 'Main_price', 'Image', 'Discount_price', 'file', 'main_id', 'sub_id', 'mini_id','currency','feature','name'];
 
 
     public function maincategory()

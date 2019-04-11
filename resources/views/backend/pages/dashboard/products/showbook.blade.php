@@ -31,7 +31,17 @@
 
                     </div>
 
-                    <h2>Books</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Books</h3>
+                    </div>
+                    <div class="col-md-6" style="padding-left: 200px;">
+                        <form class="form-inline my-2 my-lg-0" method="get" action="{{route('book.search')}}">
+                            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-primary">search</button>
+                        </form>
+                    </div>
+                </div>
                     <table class="table table-hover">
                         <thead>
                         <tr>

@@ -52,8 +52,9 @@ class HomepageController extends Controller
 
         $s = $request->input('search');
         $books=$this->book->search($s);
+        $abouts = About::all();
 
-        return view('frontend.searched',$this->data,compact('icon','banner','categorys','count','books','contact','s'));
+        return view('frontend.searched',$this->data,compact('icon','banner','categorys','count','books','contact','s','abouts'));
     }
     public function contact()
     {
@@ -71,10 +72,11 @@ class HomepageController extends Controller
         $count = $count1+$count2;
 
         $this->data('title',$this->make_title('Contacts'));
+        $abouts = About::all();
 
         $contact = Contactinfo::all();
 
-        return view('frontend.contact',$this->data,compact('icon','banner','categorys','count','contact'));
+        return view('frontend.contact',$this->data,compact('icon','banner','categorys','count','contact','abouts'));
     }
     public function aboutus()
     {
@@ -185,6 +187,7 @@ class HomepageController extends Controller
         $count2=$newvendor->totalQty;
         $count = $count1+$count2;
 
+        $abouts = About::all();
 
         $this->data('title',$this->make_title('Category'));
 
@@ -192,7 +195,7 @@ class HomepageController extends Controller
 
         $categorybybook = $this->maincategory->bookbycategory($id);
         $main = $this->maincategory->find($id);
-        return view('frontend.category',$this->data,compact('icon','banner','categorys','count','contact','categorybybook','main'));
+        return view('frontend.category',$this->data,compact('icon','banner','categorys','count','contact','categorybybook','main','abouts'));
 
     }
     public function minicategory($id)
@@ -210,6 +213,7 @@ class HomepageController extends Controller
         $count2=$newvendor->totalQty;
         $count = $count1+$count2;
 
+        $abouts = About::all();
 
         $this->data('title',$this->make_title('Category'));
 
@@ -217,7 +221,7 @@ class HomepageController extends Controller
 
         $categorybybook = $this->minicategory->bookbycategory($id);
         $mini = $this->minicategory->find($id);
-        return view('frontend.minicategory',$this->data,compact('icon','banner','categorys','count','contact','categorybybook','mini'));
+        return view('frontend.minicategory',$this->data,compact('icon','banner','categorys','count','contact','categorybybook','mini','abouts'));
 
     }
     public function message(Request $request)
@@ -256,7 +260,9 @@ class HomepageController extends Controller
             $this->data('title',$this->make_title("Vendor's book"));
             $contact = Contactinfo::all();
             $vendor=$this->vendor->find($id);
-            return view('frontend.vendorbook_show',$this->data,compact('icon','banner','categorys','count','contact','vendor','categorylist'));
+            $abouts = About::all();
+
+            return view('frontend.vendorbook_show',$this->data,compact('icon','banner','categorys','count','contact','vendor','categorylist','abouts'));
 
 
         }

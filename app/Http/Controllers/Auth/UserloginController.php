@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -11,7 +11,7 @@ class UserloginController extends Controller
     public function login(request $request)
     {
         $validatedData = $request->validate([
-            'password' => 'required|min:4',
+            'password' => ['required', 'string', 'min:8'],
             'username_or_email' => 'required',
         ]);
 

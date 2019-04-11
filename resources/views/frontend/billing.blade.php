@@ -18,7 +18,7 @@
 
                                 <div class="container">
                                     <h4>Books</h4>
-                                    @if(isset($orders))
+
                                     <table class="table table-hover" style="margin-right: 100px; width: 900px;">
                                         <thead>
                                         <tr>
@@ -27,8 +27,10 @@
                                             <th>Payed At</th>
                                         </tr>
                                         </thead>
-                                        @foreach($orders as $order)
+
                                         <tbody>
+                                        @if(!empty($orders))
+                                        @foreach($orders as $order)
                                         @foreach($order->library->items as $item)
                                         <tr>
                                             <td>{{$item['item']['Title']}}</td>
@@ -36,12 +38,20 @@
                                             <td> {{$order->created_at->diffForHumans()}}</td>
                                         </tr>
                                         @endforeach
-                                        </tbody>
-                                            @endforeach
-                                    </table>
-                                        @else
-                                    <h4>Empty</h4>
+                                        @endforeach
                                         @endif
+                                        @if(!empty($vorders))
+                                        @foreach($vorders as $vorder)
+                                                <tr>
+                                                    <td>{{$vorder->vendor['item']['Title']}}</td>
+                                                    <td> {{$vorder->vendor['price']}}</td>
+                                                    <td> {{$vorder->created_at->diffForHumans()}}</td>
+                                                </tr>
+                                        @endforeach
+                                        @endif
+                                        </tbody>
+
+                                    </table>
                                 </div>
                             </div>
                         </div>

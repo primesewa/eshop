@@ -19,6 +19,10 @@ class MinicategoryRepo extends Repository implements MinicategoryInterface
     {
         return DB::select('SELECT  b.* FROM minicategories as m JOIN books as b where(confirmed = 1 and m.id = ? and b.mini_id = ?)',[$id,$id]);
     }
+    public  function search($s)
+    {
+        return $this->model->Where('mini_category','like','%' .$s. '%')->paginate(10);
+    }
     public function getminicategory($id)
     {
         return $minicategory = $this->model->where('sub_id','=',$id)->get();

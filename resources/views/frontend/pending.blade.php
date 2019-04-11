@@ -1,6 +1,6 @@
 ﻿@extends('frontend.layouts.user-dashboard')
 @section('content')
-   @if(Session::has('library'))
+
        <div class="row bg-title">
            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                <h4 class="page-title">Pending Books</h4> </div>
@@ -16,7 +16,7 @@
            <div class="row">
                <div class="col-md-12">
                         <div class="row justify-content-center">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <center>
                             @if(session('success'))
 
@@ -46,9 +46,9 @@
                                             <th class="product-remove">Remove</th>
                                         </tr>
                                     </thead>
-
-
                                     <tbody>
+                                    @if(!empty($librarys))
+                                    @if(is_array($librarys))
                                     @foreach($librarys as $library)
                                         <tr>
                                             <td><img src="/storage/image/{{$library['item']['Image']}}" width="100" ></td>
@@ -59,11 +59,12 @@
                                             <td class="product-remove"><a href="{{route('delete.library',[$library['item']['id']])}}"><span><i class="far fa-trash-alt"></i></span></a></td>
                                         </tr>
                                         @endforeach
-
+                                    @endif
+                                    @endif
+                                    @if(is_array($vendors))
                                     @foreach($vendors as $vendor)
                                         <tr>
                                         <td><img src="/storage/image/{{$vendor['item']['Image']}}" width="100" ></td>
-
                                         <td>{{$vendor['item']['Title']}}</td>
                                         <td>{{$vendor['item']['Discount_price']}}</td>
                                         <td>{{$vendor['expire_at']}}</td>
@@ -71,20 +72,17 @@
                                         </tr>
                                         @endforeach
                                     <tr>
+                                        @endif
                                         <td><a href="{{route('user.pay')}}" class="btn btn-primary">Buy</a></td>
                                         <td>Total Qty: {{$totalqty + $totalqty_vendor}}</td>
                                         <td>Total Amount: {{$totalprice + $totalprice_vendor}}</td>
                                         <td></td>
                                     </tr>
                                     </tbody>
-
                                 </table>
-
                     </div>
                 </div>
             </div>
-
-    @endif
 @endsection
 @section('style')
 <style>

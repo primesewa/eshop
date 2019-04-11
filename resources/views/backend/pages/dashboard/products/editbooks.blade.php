@@ -30,7 +30,7 @@
                         </div>
 
                     @endif
-
+                <div>
                     <form action="{{route('books.update',[$book->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input name ="_method" type="hidden" value="PUT">
@@ -74,6 +74,23 @@
                                     @if($errors->has('expire_date'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('expire_date') }}</strong>
+                                            </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label >Vendor name</label>
+                                    <select  id="select" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name">
+                                        <option value="">Select</option>
+                                        @foreach($vendors as $vendor)
+                                            <option value="{{$vendor->name}}" @if($book->name == $vendor->name) selected @endif>{{$vendor->name}}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @if($errors->has('name'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('name') }}</strong>
                                             </span>
                                     @endif
                                 </div>
@@ -160,7 +177,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label >Description</label>
-                                    <textarea rows="10" cols="50" type="text" class="form-control  {{ $errors->has('Description') ? ' is-invalid' : '' }}" placeholder="Description" name="Description"  >{{$book->Description}}</textarea>
+                                    <textarea rows="10" id="mytextarea" cols="50" type="text" class="form-control  {{ $errors->has('Description') ? ' is-invalid' : '' }}" placeholder="Description" name="Description"  >{{$book->Description}}</textarea>
                                     @if($errors->has('Description'))
                                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('Description') }}</strong>
@@ -209,7 +226,7 @@
                                             <label >Books</label>
                                             <select id="select2"  class="form-control {{ $errors->has('tag') ? ' is-invalid' : '' }}"  name="tag[]" multiple="multiple">
                                                 @foreach($books as $boo)
-                                                    <?php echo $boo;?>
+
                                                     @foreach(explode(",",$book->tag) as $ta)
                                                         @if($boo->id != $book->id)
                                                             @continue
@@ -268,12 +285,26 @@
                         </div>
 
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
-
+    </div>
 @endsection
+@section('style')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .row{
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    </style>
+    <link href="{{url('css/skin.min.css')}}" rel="stylesheet">
+    <link href="{{url('css/content.min.css ')}}" rel="stylesheet">
+    <link href="{{url('css/extra/content.min.css ')}}" rel="stylesheet">
+@endsection
+
 @section('script')
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -348,5 +379,17 @@
             }
         }
     </script>
+    <script src="{{asset('js/tinymce.min.js')}}"></script>
+    <script src="{{asset('js/jquery.tinymce.min.js')}}"></script>
+    <script src="{{asset('js/theme.min.js')}}"></script>
 
+
+    <script>
+
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+
+    </script>
 @endsection
+

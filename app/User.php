@@ -20,6 +20,10 @@ class User extends Authenticatable
         'name', 'email', 'password','username'
     ];
 
+    public function sewa()
+    {
+        return $this->hasOne('App\Usersewainfo');
+    }
     public function pic()
     {
         return $this->hasOne('App\Userpic', 'user_id', 'id');
@@ -28,18 +32,29 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Vendor');
     }
+
     public function orders()
     {
         return $this->hasMany('App\Order');
     }
+
+    public function vorders()
+    {
+        return $this->hasMany('App\Vendororder');
+    }
+
+
         public function suborders()
     {
         return $this->hasMany('App\Subcategoryorder');
     }
+
+
     public function miniorders()
     {
         return $this->hasMany('App\Minicategoryorder');
     }
+
     public function setPasswordAttribute($value){
 
         $this->attributes['password'] = Hash::make($value);

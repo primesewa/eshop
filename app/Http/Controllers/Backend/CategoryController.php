@@ -68,6 +68,19 @@ class CategoryController extends Controller
         $this->maincategory->create($validatedData);
         return redirect()->back()->with('success','Main-category added');
     }
+    public function search_main_category(Request $request)
+    {
+        $s = $request->input('search');
+        $maincategory=$this->maincategory->search($s);
+        $icons = Icon::all()->take(1);
+        $i=0;
+        $this->data('title',$this->make_title('Search MainCategory'));
+        return view('backend.pages.dashboard.Categories.maincategory',$this->data,compact('maincategory','i','icons'));
+
+
+
+
+    }
 
     public function delete_main_category($id)
     {
@@ -84,7 +97,21 @@ class CategoryController extends Controller
         $this->data('title',$this->make_title('Add SubCategory'));
         return view('backend.pages.dashboard.Categories.subcategory',$this->data,compact('maincategory','icons','i','subcategory'));
     }
+    public function search_sub_category(Request $request)
+    {
+        $s = $request->input('search');
+        $subcategory=$this->subcategory->search($s);
+        $icons = Icon::all()->take(1);
+        $maincategory = $this->maincategory->all();//get all main category status 1
 
+        $i=0;
+        $this->data('title',$this->make_title('Search SubCategory'));
+        return view('backend.pages.dashboard.Categories.subcategory',$this->data,compact('subcategory','i','icons','maincategory'));
+
+
+
+
+    }
 
     public function status_sub_category($id)
     {
@@ -146,6 +173,20 @@ class CategoryController extends Controller
         $icons = Icon::all()->take(1);
         $this->data('title',$this->make_title('Add MiniCategory'));
         return view('backend.pages.dashboard.Categories.minicategory',$this->data,compact('subcategory','icons','minicategory','i'));
+
+    }
+    public function search_mini_category(Request $request)
+    {
+        $s = $request->input('search');
+        $minicategory=$this->minicategory->search($s);
+        $icons = Icon::all()->take(1);
+        $subcategory = $this->subcategory->all();
+        $i=0;
+        $this->data('title',$this->make_title('Search MiniCategory'));
+        return view('backend.pages.dashboard.Categories.minicategory',$this->data,compact('subcategory','i','icons','minicategory'));
+
+
+
 
     }
     public  function add_mini_category(Request $request)

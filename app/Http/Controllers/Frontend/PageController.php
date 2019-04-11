@@ -22,8 +22,8 @@ Use App\Contactinfo;
 use App\Subcategoryorder;
 use  App\Repositories\VendorsectionInterface;
 use App\Vendor;
-
-
+use Illuminate\Support\Facades\File;
+use App\About;
 class PageController extends Controller
 {
     //
@@ -59,7 +59,8 @@ class PageController extends Controller
         $this->data('title',$this->make_title('Home | e-library in Nepal'));
 
         $contact = Contactinfo::all();
-        return view('frontend.index',$this->data,compact('books','sections','banner','categorys','count','icon','contact','vsections','vendors'));
+        $abouts = About::all();
+        return view('frontend.index',$this->data,compact('books','sections','banner','categorys','count','icon','contact','vsections','vendors','abouts'));
     }
 
 
@@ -92,11 +93,12 @@ public function show($id)
         $newvendor = new Library($oldvendor);
         $count2=$newvendor->totalQty;
         $count = $count1+$count2;
+        $abouts = About::all();
 
 
         $contact = Contactinfo::all();
 
-        return view('frontend.single-product', $this->data, compact('book', 'tags', 'categorys', 'count', 'icon', 'categorylist', 'relatedbooks', 'contact', 'x'));
+        return view('frontend.single-product', $this->data, compact('book','abouts', 'tags', 'categorys', 'count', 'icon', 'categorylist', 'relatedbooks', 'contact', 'x'));
     }
     else
         {
@@ -127,9 +129,9 @@ public function show($id)
 
         $oldvendor =Session::has('vendor') ? Session::get('vendor') :'';
         $newvendor = new Library($oldvendor);
+//        dd($librarys);
 
-
-       return view('frontend.pending',$this->data,['librarys'=>$librarys->items,'vendors' => $newvendor->items,'totalprice'=>$librarys->totalprice,'totalprice_vendor'=>$newvendor->totalprice,'totalqty'=>$librarys->totalQty,'totalqty_vendor'=>$newvendor->totalQty,'books' => ['librarys'=>$librarys->items,'vendors' => $newvendor->items]],compact('categorys'))->with('icon',$icon);
+       return view('frontend.pending',$this->data,['librarys'=>$librarys->items,'vendors' => $newvendor->items,'totalprice'=>$librarys->totalprice,'totalprice_vendor'=>$newvendor->totalprice,'totalqty'=>$librarys->totalQty,'totalqty_vendor'=>$newvendor->totalQty],compact('categorys'))->with('icon',$icon);
     }
     public  function userpic(Request $request)
     {
@@ -140,6 +142,12 @@ public function show($id)
         ]);
         if($request->hasFile('image') ){
             $image = $request->file('image')->getClientOriginalName();
+            $file = public_path("storage/image/".$image);
+            if (File::exists($file))
+            {
+                return redirect()->back()->with('error', 'Image Exist,Please Rename The Image Or Add Another Image');
+            }
+
             $path = $request->file('image')->storeAs('public/image',$image);
             $validatedData['image'] = $image;
         }
@@ -152,7 +160,7 @@ public function show($id)
     }
     public  function updatepic(Request $request,$id)
     {
-        // dd($request->input('image'));
+        $pic = Userpic::find($id);
         $validatedData = $request->validate([
             'image' =>'required',
             'image.*' =>'image,mimes:jpeg,png,bmp,gif,svg',
@@ -160,11 +168,15 @@ public function show($id)
         if($request->hasFile('image') ){
 
             $image = $request->file('image')->getClientOriginalName();
+            $ifile = public_path("storage/image/".$pic->image);
+            if (File::exists($ifile))
+            {
+                File::delete($ifile);
+            }
             $path = $request->file('image')->storeAs('public/image',$image);
             $validatedData['image'] = $image;
         }
 
-        $pic = Userpic::find($id);
          $pic->update($validatedData);
         return redirect()->back()->with('success', 'Pic Updated');
 
@@ -185,13 +197,14 @@ public function show($id)
             $order->library = unserialize($order->library);
             return $order;
         });
-//        foreach ($orders as $order)
-//        {
-//            dd($order->library);
-//        }
+        $vorders =Auth::user()->vorders;
+        $vorders->transform(function($vorder, $key) {
+            $vorder->vendor = unserialize($vorder->vendor);
+            return $vorder;
+        });
         $icon=Icon::all()->take(1);
 
-        return view('frontend.mylibrary',$this->data,compact('books','orders','icon'));
+        return view('frontend.mylibrary',$this->data,compact('books','orders','icon','vorders'));
 
     }
     public  function expire()
@@ -206,14 +219,23 @@ public function show($id)
             return $order;
         });
         $this->data('title',$this->make_title('Expire'));
-        return view('frontend.expire',$this->data,compact('icon','orders','books'));
+
+        $vorders =Auth::user()->vorders;
+        $vorders->transform(function($vorder, $key) {
+            $vorder->vendor = unserialize($vorder->vendor);
+            return $vorder;
+        });
+
+        return view('frontend.expire',$this->data,compact('icon','orders','books','vorders'));
 
     }
     public  function setting()
     {
         $icon=Icon::all()->take(1);
+        $sewa_acc = Auth::user()->sewa;
+//        dd($sewa_acc);
         $this->data('title',$this->make_title('Settings'));
-        return view('frontend.setting',$this->data,compact('icon'));
+        return view('frontend.setting',$this->data,compact('icon','sewa_acc'));
 
     }
     public  function billing()
@@ -226,8 +248,13 @@ public function show($id)
             $order->library = unserialize($order->library);
             return $order;
         });
-
-        return view('frontend.billing',$this->data,compact('orders','icon'));
+        $vorders =Auth::user()->vorders;
+        $vorders->transform(function($vorder, $key) {
+            $vorder->vendor = unserialize($vorder->vendor);
+            return $vorder;
+        });
+//dd($vorders);
+        return view('frontend.billing',$this->data,compact('orders','icon','vorders'));
 
     }
     public function openbook($id)
@@ -376,8 +403,50 @@ public function show($id)
     {
         $icon=Icon::all()->take(1);
         $maincategory=$this->maincategory->all();
-        $this->data('title',$this->make_title('Settings'));
+        $this->data('title',$this->make_title('Sell Books'));
         return view('frontend.sellbook',$this->data,compact('icon','maincategory'));
+
+    }
+    public function mybook()
+    {
+        $icon=Icon::all()->take(1);
+        $this->data('title',$this->make_title('My books'));
+        return view('frontend.user_book',$this->data,compact('icon'));
+
+    }
+
+    public function mybook_delete($id)
+    {
+        $vbook=Auth::user()->vendor()->find($id);
+
+        $ifile = public_path("storage/image/$vbook->Image");
+
+        if (File::exists($ifile))
+        {
+            File::delete($ifile);
+        }
+        $file = public_path("storage/file/$vbook->file");
+
+        if (File::exists($file))
+        {
+            File::delete($file);
+        }
+        $vbook->delete($id);
+        return redirect()->back()->with('success','Your Book is Beleted');
+    }
+    public function mybook_edit($id)
+    {
+        $book=Auth::user()->vendor()->find($id);
+        $books = Vendor::all();
+        $maincategory=$this->maincategory->all();
+        $subcategory=$this->subcategory->all();
+        $minicategory=$this->minicategory->all();
+        $icon=Icon::all()->take(1);
+        $this->data('title',$this->make_title('Edit User Book'));
+
+        return view('frontend.userbook_edit',$this->data,compact('icon','maincategory','minicategory','subcategory','book','books'));
+
+
 
     }
 

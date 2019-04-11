@@ -21,6 +21,10 @@ class SubcategoryRepo extends Repository implements SubcategoryInterface
         return $subcategory = $this->model->where('main_id','=',$id)->get();
         response()->json(['data'=>$subcategory]);
     }
+    public  function search($s)
+    {
+        return $this->model->Where('sub_category','like','%' .$s. '%')->paginate(10);
+    }
 
 public function conformed($id)
 {

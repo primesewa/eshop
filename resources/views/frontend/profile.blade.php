@@ -30,7 +30,7 @@
                             @if(isset(Auth::user()->pic->image))
                             <a href="javascript:void(0)"><img src="/storage/image/{{Auth::user()->pic->image}}"  class="thumb-lg img-circle" alt="img"></a>
                             @else
-                                <a href="javascript:void(0)"><img src="/storage/image/15TiL93a.jpg"  class="thumb-lg img-circle" alt="img"></a>
+                                <a href="javascript:void(0)"><img src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"  class="thumb-lg img-circle" alt="img"></a>
                             @endif
                                 <h4 class="text-white">{{Auth::user()->name}}</h4>
                             <h5 class="text-white">{{Auth::user()->email}}</h5> </div>

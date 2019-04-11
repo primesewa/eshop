@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Backend;
+use App\Book;
 use  App\Repositories\BookInterface;
 use  App\Repositories\HomesectionInterface;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,10 @@ use App\Demo;
 use Illuminate\Support\Facades\File;
 use App\Vendor;
 use App\Repositories\VendorsectionInterface;
-
+use App\Order;
+use App\Subcategoryorder;
+use App\Minicategoryorder;
+use App\User;
 class DashboardController extends Controller
 {
     //
@@ -25,14 +29,20 @@ class DashboardController extends Controller
         $this->book = $book;
         $this->section= $section;
         $this->vsection = $vsection;
-//        $this->middleware('auth:admin');
-
+//       $this->middleware('auth:admin');
 
     }
     public function index(){
         $icons = Icon::all()->take(1);
+        $count_contact = count(contact::all());
+        $count_books = count($this->book->all());
+        $c1 = count(Order::all());
+        $c2 = count(Subcategoryorder::all());
+        $c3 = count(Minicategoryorder::all());
+        $total_order = $c1+$c2+$c3;
+        $count_user = count(User::all());
         $this->data('title',$this->make_title('Wellcome Dashboard'));
-        return view('backend.pages.dashboard.dashboard',$this->data,compact('icons'));
+        return view('backend.pages.dashboard.dashboard',$this->data,compact('icons','count_contact','count_books','total_order','count_user'));
     }
 
         public function tag()
@@ -97,10 +107,16 @@ class DashboardController extends Controller
     $validatedData = $request->validate([
         'image' =>'image|required',
         'image.*' =>'mimes:jpeg,png,bmp,gif,svg',
+        'title' =>'required|min:3|max:100'
     ]);
 
     if($request->hasFile('image')  ){
         $filename = $request->file('image')->getClientOriginalName();
+        $file = public_path("storage/image/".$filename);
+        if (File::exists($file))
+        {
+            return redirect()->back()->with('error', 'Image Exist,Please Rename The Image Or Add Another Image');
+        }
         $path = $request->file('image')->storeAs('public/image',$filename);
         $validatedData['image'] = $filename;
     }
@@ -110,7 +126,12 @@ class DashboardController extends Controller
 
 }
     public function dropbanner($id){
-
+        $banner=banner::find($id);
+        $ifile = public_path("storage/image/".$banner->image);
+        if (File::exists($ifile))
+        {
+            File::delete($ifile);
+        }
         $banner=banner::find($id);
         $banner->destroy($id);
         return redirect()->back()->with('success','Banner Destroyed');
@@ -138,7 +159,7 @@ class DashboardController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|min:3|max:50',
-            'description' => 'required|min:3|max:100',
+            'description' => 'nullable|min:3|max:100',
             'position' => 'required|unique:homesections,position',
             'book_id' =>'required'
             ]);
@@ -160,7 +181,7 @@ class DashboardController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|min:3|max:50',
-            'description' => 'required|min:3|max:100',
+            'description' => 'nullable|min:3|max:100',
             'position' => 'required',
             'book_id' =>'required'
         ]);
@@ -377,7 +398,7 @@ class DashboardController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|min:3|max:50',
-            'description' => 'required|min:3|max:100',
+            'description' => 'nullable|min:3|max:100',
             'vendor_id' =>'required'
         ]);
 
@@ -385,6 +406,18 @@ class DashboardController extends Controller
 
         $this->vsection->update($validatedData,$id);
         return redirect()->route('vendor.section.show')->with('success','Vendor Added');
+
+
+    }
+
+    public  function book_search(Request $request)
+    {
+        $s =$request->input('search');
+        $icons = Icon::all()->take(1);
+        $books = $this->book->search($s);
+        $this->data('title',$this->make_title('Book Searched'));
+        $i=0;
+        return view('backend.pages.dashboard.products.booksearch',$this->data,compact('icons','books','s','i'));
 
 
     }

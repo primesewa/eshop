@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Htitle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\RoleInterface;
@@ -23,6 +24,29 @@ class RoleController extends Controller
         return view('backend.pages.dashboard.Role.role',$this->data,compact('roles','i','icons'));
 
     }
+    public function title()
+    {
+        $icons = Icon::all()->take(1);
+        $this->data('title',$this->make_title('Add Title'));
+        $titles =  Htitle::all();
+
+        return view('backend.pages.dashboard.title',$this->data,compact('icons','titles'));
+
+    }
+    public function title_create(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|min:3|max:50',
+        ]);
+        Htitle::create($validatedData);
+        return redirect()->back()->with('sucess','Title Added');
+    }
+    public function title_delete($id)
+    {
+        $title =  Htitle::find($id);
+        $title->delete($id);
+        return redirect()->back()->with('sucess','Title Added');
+    }
     public function store(Request $request)
 {
     $validatedData = $request->validate([
@@ -32,6 +56,7 @@ class RoleController extends Controller
     return redirect()->back()->with('success','Role Added');
 
 }
+
     public function delete($id)
     {
 

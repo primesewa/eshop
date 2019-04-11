@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 use Illuminate\Support\Facades\Config;
+use App\Htitle;
 trait Title{
     public $data = [];
     public function data($key,$value=NULL)
@@ -10,10 +11,12 @@ trait Title{
     }
     public function make_title($page_name,$seprate = '::',$project_name = null)
     {
-        if(!isset($project_name))
-        {
-            $project_name = Config::get('title.name');;
-        }
-        return $project_name.$seprate.$page_name;
+        $title = Htitle::all()->take(1);
+        foreach ($title as $t)
+    {
+        return $t->title.$seprate.$page_name;
+    }
+
+
     }
 }

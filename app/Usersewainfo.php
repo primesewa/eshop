@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Vendororder extends Model
+class Usersewainfo extends Model
 {
     protected $fillable = [
-        'user_id', 'vendor', 'payment_id','expire_date','vendor_id'
+        'user_id','account'
     ];
-
 
     public function user()
     {

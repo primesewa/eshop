@@ -20,9 +20,9 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-comments"></i>
                             </div>
-                            <div class="mr-5">26 New Messages!</div>
+                            <div class="mr-5">{{$count_contact}} Messages!</div>
                         </div>
-                        <a class="card-footer text-white clearfix small z-1" href="#">
+                        <a class="card-footer text-white clearfix small z-1" href="{{route('contact.message')}}">
                             <span class="float-left">View Details</span>
                             <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -36,9 +36,9 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-list"></i>
                             </div>
-                            <div class="mr-5">11 New Tasks!</div>
+                            <div class="mr-5">{{$count_books}} Books Added</div>
                         </div>
-                        <a class="card-footer text-white clearfix small z-1" href="#">
+                        <a class="card-footer text-white clearfix small z-1" href="{{route('books.index')}}">
                             <span class="float-left">View Details</span>
                             <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -52,9 +52,9 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-shopping-cart"></i>
                             </div>
-                            <div class="mr-5">123 New Orders!</div>
+                            <div class="mr-5">{{$total_order}} Total Orders</div>
                         </div>
-                        <a class="card-footer text-white clearfix small z-1" href="#">
+                        <a class="card-footer text-white clearfix small z-1" href="{{route('customer')}}">
                             <span class="float-left">View Details</span>
                             <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -68,9 +68,9 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-life-ring"></i>
                             </div>
-                            <div class="mr-5">13 New Tickets!</div>
+                            <div class="mr-5"> Total {{$count_user}} User</div>
                         </div>
-                        <a class="card-footer text-white clearfix small z-1" href="#">
+                        <a class="card-footer text-white clearfix small z-1" href="{{route('customer')}}">
                             <span class="float-left">View Details</span>
                             <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -584,6 +584,7 @@
             </div>
 
         </div>
+    </div>
 @endsection
 @section('style')
 <style>

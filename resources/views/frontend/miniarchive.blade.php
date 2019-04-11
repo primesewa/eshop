@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="white-box">
                 <div class="container">
-                    <h2>Sub-Category</h2>
+                    <h2>Mini-Category</h2>
                     <p>You will get these books if buy this Category</p>
                     <table class="table table-hover" style="width: 900px;">
                         <thead>

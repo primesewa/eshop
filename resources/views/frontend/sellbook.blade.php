@@ -276,7 +276,7 @@
 @endsection
 @section('script')
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    {{--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
     <script type="text/javascript">
@@ -312,7 +312,7 @@
             if (main_id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/ebook-admin/subcategory/' + main_id,
+                    url: '/subcategorys/' + main_id,
                     dataType: 'json',
                     success: function (data) {
                         $('#model').empty();
@@ -333,7 +333,7 @@
             if (sub_id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/ebook-admin/minicategory/' + sub_id,
+                    url: '/minicategorys/' + sub_id,
                     dataType: 'json',
                     success: function (data) {
                         $('#mini').empty();

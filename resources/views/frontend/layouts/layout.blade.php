@@ -4,16 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@yield('title',$title)</title>
-    <meta name="description" content="">
+    <meta name="Title" content="@yield('title',$title)">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('meta')
 
     @foreach($icon as $i)
         <link rel="shortcut icon" href="/storage/image/{{$i->image}}">
 
     @endforeach
-
-
     <link rel="apple-touch-icon" href="{{asset('assets/images/icon.png')}}">
 
 
@@ -187,7 +186,6 @@
         </div>
     </div>
 </div>
-
     @yield('content')
 
 
@@ -198,10 +196,12 @@
             <div class="row">
                 <div class="col-md-5 footer-about wow fadeInUp">
                     <h5 style="color: #505050; margin-bottom: 9%;">About Us </h5>
-                    @foreach($contact as $c)
-                    <p style="color: #303030">
-                       {{$c->about_us}}
-                    </p>
+                    @foreach($abouts as $a)
+                        @if($a->status== 'About_us')
+                            <p style="color: #303030">
+                               {!! $a->description !!}
+                            </p>
+                        @endif
                     @endforeach
                     <!--	<p>&copy; E-library.</p> -->
                 </div>

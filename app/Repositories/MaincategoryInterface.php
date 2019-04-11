@@ -20,6 +20,7 @@ interface MaincategoryInterface{
     public  function allcategory();
     public  function getmaincategory();
     public  function conformed($id);
+    public  function search($s);
     public  function paginate($perpage =10, $column= array('*'));
 
 }

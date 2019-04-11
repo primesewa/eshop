@@ -34,20 +34,33 @@
                 <h3>Add Banner</h3>
                 <form  action="{{route('banner.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
-                        <label >Upload image</label>
-                        <input type="file" class="form-control-file  {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image">
-
-
-                        @if($errors->has('image'))
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('image') }}</strong>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>title</label>
+                                <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" placeholder="Title" name="title" value="{{ old('title') }}" >
+                                @if($errors->has('title'))
+                                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('title') }}</strong>
                         </span>
-                        @endif
-                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label >Upload image</label>
+                                <input type="file" class="form-control-file  {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image">
+                                @if($errors->has('image'))
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('image') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
 
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="col-md-12">
+                        <button type="submit"  class="btn btn-primary btn-lg btn-block">Submit</button>
+                    </div>
                     </div>
                 </form>
                         <br>
@@ -57,6 +70,7 @@
                             <tr>
                                 <th>S.N</th>
                                 <th>Banner</th>
+                                <th>Title</th>
                                 <th>Delete</th>
 
                             </tr>
@@ -67,8 +81,7 @@
                                 <tr>
                                     <td>{{++$i}}</td>
                                     <td> <img src="/storage/image/{{$ban->image}}" style="width: 50px; hight:10px;"></td>
-
-
+                                    <td> {{$ban->title}}</td>
                                     <td>
                                         <form method="post" action="{{route('banner.drop',[$ban->id])}}">
                                             @csrf

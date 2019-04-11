@@ -16,6 +16,7 @@ interface SubcategoryInterface{
     public function show($id);
     public function conformed($id);
     public function getsubcategory($id);
+    public  function search($s);
    // public function subcategory();//get all sub category with ststus 0
     public  function paginate($perpage =10, $column= array('*'));
 

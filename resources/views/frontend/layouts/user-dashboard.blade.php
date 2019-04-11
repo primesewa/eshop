@@ -80,7 +80,7 @@
                     @if(isset(Auth::user()->pic->image))
                         <a><img src="/storage/image/{{Auth::user()->pic->image}}" alt="user-img" width="36" class="img-circle"> {{Auth::user()->username}}</a>
                     @else
-                        <a ><img src="/storage/image/15TiL93a.jpg" alt="user-img" width="36" class="img-circle">{{Auth::user()->username}}</a>
+                        <a ><img src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" alt="user-img" width="36" class="img-circle">{{Auth::user()->username}}</a>
                     @endif
                 </li>
             </ul>
@@ -104,28 +104,31 @@
                     <a href="{{route('user.library')}}" class="waves-effect"><i class="fas fa-book-reader" aria-hidden="true"> </i> Single books</a>
                 </li>
                 <li>
-                    <a href="{{route('my.category')}}" class="waves-effect"><i class="fas fa-folder"></i> Sub-Category</a>
+                    <a href="{{route('my.category')}}" class="waves-effect"><i class="fas fa-folder"></i> My Sub-Category</a>
                 </li>
                 <li>
-                    <a href="{{route('mini.category')}}" class="waves-effect"><i class="fas fa-folder"></i> mini-Category</a>
+                    <a href="{{route('mini.category')}}" class="waves-effect"><i class="fas fa-folder"></i> My Mini-Category</a>
                 </li>
                 <li>
                     <a href="{{route('buy.category')}}" class="waves-effect"><i class="fas fa-archive" aria-hidden="true"> </i>  Buy Category</a>
                 </li>
                 <li>
-                    <a href="{{route('billing')}}" class="waves-effect"><i class="fa fa-table" aria-hidden="true"> </i> Billing</a>
+                    <a href="{{route('billing')}}" class="waves-effect"><i class="fas fa-receipt"></i> Billing</a>
                 </li>
                 <li>
-                    <a href="{{route('pending')}}" class="waves-effect"><i class="fa fa-font " aria-hidden="true"> </i> Pending</a>
+                    <a href="{{route('pending')}}" class="waves-effect"><i class="fas fa-shopping-basket"></i> </i> Pending</a>
                 </li>
                 <li>
-                    <a href="{{route('expire')}}" class="waves-effect"><i class="fa fa-globe" aria-hidden="true"> </i> Expire</a>
+                    <a href="{{route('expire')}}" class="waves-effect"><i class="fas fa-clock"></i> </i>Expired Books</a>
                 </li>
                 <li>
                     <a href="{{route('user.book.sell')}}" class="waves-effect"><i class="fa fa-columns" aria-hidden="true"> </i> Sell Your Book</a>
                 </li>
                 <li>
-                    <a href="{{route('user.setting')}}" class="waves-effect"><i class="fa fa-columns" aria-hidden="true"> </i> Setting</a>
+                    <a href="{{route('user.book.my')}}" class="waves-effect"><i class="fa fa-columns" aria-hidden="true"> </i>My books</a>
+                </li>
+                <li>
+                    <a href="{{route('user.setting')}}" class="waves-effect"><i class="fas fa-user-cog"></i> </i> Setting</a>
                 </li>
                 <li>
                     <a  href="{{ route('logout') }}"  onclick="event.preventDefault();
@@ -147,11 +150,17 @@
 
 
 
-        <footer class="footer text-center">sdkhk </footer>
+        <footer class="footer text-center">
+            <p style="font-size: 13px; font-style: italic"><a href="https://elibrary.com/">Designed by Prime IT Sewa. All Rights Reserved &copy; 2019</a></p>
+        </footer>
     </div>
 
 </div>
 </div>
+<script
+    src="http://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+    crossorigin="anonymous"></script>
 <script src="{{asset('ample/plugins/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="{{asset('ample/bootstrap/dist/js/bootstrap.min.js')}}"></script>

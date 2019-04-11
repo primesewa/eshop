@@ -29,11 +29,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                     <h6 class="dropdown-header">Pages:</h6>
-                    <a class="dropdown-item" href="{{route('aboutus')}}">About Us</a>
-                    <a class="dropdown-item" href="register.html">Plans & pricing</a>
-                    <a class="dropdown-item" href="register.html">Our Clients</a>
-                    <a class="dropdown-item" href="register.html">Terms & Conditions</a>
-                    <a class="dropdown-item" href="register.html">Privacy Policy</a>
+                    <a class="dropdown-item" href="{{route('aboutus')}}">Footer Info</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -45,6 +41,8 @@
                     <h6 class="dropdown-header">All Users</h6>
                     <a class="dropdown-item" href="{{route('admins.create')}}">Add Users</a>
                     <a class="dropdown-item" href="{{route('admins.index')}}">Show User</a>
+                    <a class="dropdown-item" href="{{route('fake.vendor')}}">Fake Vendor</a>
+
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -56,7 +54,7 @@
                     <h6 class="dropdown-header">All Category</h6>
                     <a class="dropdown-item" href="{{route('main.category')}}">Add Main-Category</a>
                     <a class="dropdown-item" href="{{route('sub.category')}}">Add Sub-Category</a>
-                    <a class="dropdown-item" href="{{route('mini.category')}}">Add Mini-Category</a>
+                    <a class="dropdown-item" href="{{route('minii.category')}}">Add Mini-Category</a>
 
                 </div>
             </li>
@@ -68,6 +66,7 @@
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                     <a class="dropdown-item" href="{{route('role')}}">Add Role</a>
                     <a class="dropdown-item" href="{{route('icon')}}">Add Icon</a>
+                    <a class="dropdown-item" href="{{route('title')}}">Add Title</a>
                     <a class="dropdown-item" href="{{route('banner')}}">Add Banner</a>
                     <a class="dropdown-item" href="{{route('section')}}">Add Section</a>
                     <a class="dropdown-item" href="{{route('section.show')}}">Show Section</a>
